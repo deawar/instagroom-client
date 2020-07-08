@@ -1,17 +1,19 @@
 import React from 'react';
 import {
     StyleSheet,
-    View
+    SafeAreaView,
 } from 'react-native';
+import Constants from 'expo-constants'
+
 
 import colors from '../config/colors'
 
 
-const AppScreen = ({ children }) => {
+const AppScreen = ({ children, style }) => {
     return (
-        <View style={styles.container} >
+        <SafeAreaView style={[styles.container, style]} >
             {children}
-        </View>
+        </SafeAreaView>
     );
 }
 
@@ -19,9 +21,8 @@ const AppScreen = ({ children }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.primary,
-        justifyContent: 'center',
-        alignItems: 'center',
+        backgroundColor: colors.white,
+        paddingTop: Constants.statusBarHeight,
     }
 });
 

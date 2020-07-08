@@ -3,24 +3,17 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import AppScreen from './app/components/AppScreen'
+import AppButton from './app/components/AppButton';
 
 
 
 
 export default function App() {
   return (
-    <AppScreen style={styles.container}>
-      <Text>I'm working!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</Text>
-      <StatusBar style="auto" />
+    <AppScreen >
+      <AppButton title='Instagroom.me 1st Button' color='red' onPress={() => console.log('Im working')} />
     </AppScreen>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
