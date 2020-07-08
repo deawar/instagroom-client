@@ -6,12 +6,14 @@ import {
 
 
 } from 'react-native';
+import MaterialCommunityIcon from '@expo/vector-icons'
 
 import colors from '../config/colors'
 
-const AppButton = ({ title, onPress, color = colors.primary, op }) => {
+const AppButton = ({ name, title, onPress, color = colors.primary, op }) => {
     return (
         <TouchableOpacity style={[styles.button, { backgroundColor: colors[color] }, { opacity: op }]} onPress={onPress}>
+
             <Text style={styles.text}>
                 {title}
             </Text>
@@ -22,8 +24,7 @@ const AppButton = ({ title, onPress, color = colors.primary, op }) => {
 
 const styles = StyleSheet.create({
     button: {
-
-        // backgroundColor: colors.primary,
+        flexDirection: 'row',
         height: '8%',
         width: '75%',
         marginVertical: 10,

@@ -11,6 +11,7 @@ import colors from '../config/colors'
 import AppScreen from '../components/AppScreen'
 import LogoIcon from '../components/LogoIcon';
 import AppButton from '../components/AppButton';
+import AppTextInput from '../components/AppTextInput'
 
 
 const LoginScreen = () => {
@@ -20,8 +21,14 @@ const LoginScreen = () => {
                 <View style={styles.logo} >
                     <LogoIcon size={100} />
                 </View>
+                <AppTextInput icon='email' />
+                <AppTextInput icon='lock' />
+                <AppButton style={styles.button} title="Login" color='black' op={.5} />
+                <AppButton style={styles.button} title='Login with Apple' color='black' op={.5} />
+                <AppButton style={styles.button} title='Login with Google' color='black' op={.5} />
 
-                <AppButton title="Login" color='primary' op={1} />
+
+
             </ImageBackground>
         </AppScreen>
 
@@ -31,10 +38,19 @@ const LoginScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center'
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'flex-end'
     },
     logo: {
-        marginVertical: 20,
+        position: 'absolute',
+        top: 10,
+
+    },
+    button: {
+
+        bottom: 20,
+
     }
 });
 
