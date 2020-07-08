@@ -9,9 +9,9 @@ import {
 
 import colors from '../config/colors'
 
-const AppButton = ({ title, onPress, color = colors.primary }) => {
+const AppButton = ({ title, onPress, color = colors.primary, op }) => {
     return (
-        <TouchableOpacity style={styles.button} onPress={onPress}>
+        <TouchableOpacity style={[styles.button, { backgroundColor: colors[color] }, { opacity: op }]} onPress={onPress}>
             <Text style={styles.text}>
                 {title}
             </Text>
@@ -22,18 +22,21 @@ const AppButton = ({ title, onPress, color = colors.primary }) => {
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: colors.primary,
+
+        // backgroundColor: colors.primary,
         height: '8%',
         width: '75%',
         marginVertical: 10,
         justifyContent: 'center',
+        alignItems: 'center',
         alignSelf: 'center',
         padding: 15,
         borderRadius: 5,
+        // opacity: .7,
     },
     text: {
         fontSize: 18,
-        color: colors.black,
+        color: colors.white,
         textTransform: 'uppercase',
         fontWeight: '500',
 

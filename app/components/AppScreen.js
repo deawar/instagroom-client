@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: colors.white,
         paddingTop: Constants.statusBarHeight,
+        margin: 5
     }
 });
 
