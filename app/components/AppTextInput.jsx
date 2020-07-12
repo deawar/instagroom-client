@@ -11,7 +11,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import colors from '../config/colors'
 
-const AppTextInput = ({ icon, placeholder, ...otherProps }) => {
+const AppTextInput = (props) => {
+    const { icon, placeholder, ...otherProps } = props;
 
     const [userInput, setUserInput] = useState('');
     return (
@@ -47,8 +48,7 @@ const styles = StyleSheet.create({
         width: '85%',
         color: colors.dark,
         fontSize: 18,
-        // borderBottomColor: colors.medium,
-        // borderBottomWidth: 1,
+
     },
     icon: {
         marginRight: 10,
