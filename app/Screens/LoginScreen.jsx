@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 
 import colors from '../config/colors'
-
 import AppScreen from '../components/AppScreen'
 import LogoIcon from '../components/LogoIcon';
 import AppButton from '../components/AppButton';
@@ -24,8 +23,9 @@ const LoginScreen = () => {
                 <AppTextInput icon='email' />
                 <AppTextInput icon='lock' />
                 <AppButton style={styles.button} title="Login" color='black' op={.5} />
-                <AppButton style={styles.button} title='Login with Apple' color='black' op={.5} />
-                <AppButton style={styles.button} title='Login with Google' color='black' op={.5} />
+                <AppButton style={styles.button} title="Register" color='black' op={.5} />
+                <AppButton icon='apple' style={styles.button} title='Login with Apple' color='black' op={.5} />
+                <AppButton icon='google' style={styles.button} title='Login with Google' color='black' op={.5} />
 
 
 

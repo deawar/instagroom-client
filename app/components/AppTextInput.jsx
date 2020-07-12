@@ -8,18 +8,18 @@ import {
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
+
 import colors from '../config/colors'
 
 const AppTextInput = ({ icon, placeholder, ...otherProps }) => {
 
-    const [userName, setUserName] = useState('');
+    const [userInput, setUserInput] = useState('');
     return (
         <View style={styles.container}>
-            <Text>{userName}</Text>
             {icon && <MaterialCommunityIcons style={styles.icon} name={icon} size={25} color={colors.black} />}
 
             <TextInput
-                onChangeText={text => setUserName(text)}
+                onChangeText={text => setUserInput(text)}
                 placeholder={placeholder}
                 style={styles.text}
                 {...otherProps}
@@ -35,7 +35,7 @@ const AppTextInput = ({ icon, placeholder, ...otherProps }) => {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        backgroundColor: colors.light,
+        backgroundColor: colors.white,
         borderRadius: 25,
         width: '75%',
         padding: 15,
