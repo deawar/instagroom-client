@@ -10,9 +10,6 @@ import AppScreen from '../components/AppScreen'
 import AppTextInput from '../components/AppTextInput';
 import AppTextInput2 from '../components/AppTextInput2'
 
-
-
-
 class UserRegister extends Component {
     state = {
         businessName: '',

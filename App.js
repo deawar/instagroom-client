@@ -10,7 +10,8 @@ import { NativeRouter, Switch, Route } from "react-router-native";
 
 import LoginScreen from './app/Screens/LoginScreen'
 import UserRegister from './app/Screens/UserRegister';
-import ClientRoute from './app/Screens/ClientRoute'
+import UserRoute from './app/Screens/Route'
+import UserPage from './app/Screens/UserPage'
 
 
 
@@ -21,7 +22,8 @@ export default function App() {
         <Switch>
           <Route exact path='/' component={LoginScreen} />
           <Route exact path='/register' component={UserRegister} />
-          <Route exact path='/route' component={ClientRoute} />
+          <Route exact path='/userpage' component={UserPage} />
+          <Route exact path='/route' component={UserRoute} />
 
         </Switch>
       </View>
