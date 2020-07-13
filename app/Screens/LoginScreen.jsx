@@ -25,9 +25,6 @@ const LoginScreen = ({ history }) => {
                 <AppButton style={styles.button} title="Register" color='black' op={.5} onPress={() => history.push('/register')} />
                 <AppButton icon='apple' style={styles.button} title='Login with Apple' color='black' op={.5} />
                 <AppButton icon='google' style={styles.button} title='Login with Google' color='black' op={.5} />
-
-
-
             </ImageBackground>
         </AppScreen>
 

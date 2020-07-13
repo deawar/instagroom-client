@@ -30,7 +30,8 @@ class UserPage extends Component {
                     </View>
                     <View style={styles.buttonContainer}>
                         <AppUserButton icon='book' color='light' op={.75} title='Billing Form' />
-                        <AppUserButton icon='book' color='light' op={.75} title='Enter Client Info' />
+                        <AppUserButton icon='book' color='light' op={.75} title='Enter Client Info'
+                            onPress={() => this.props.history.push('/clientinfo')} />
 
                     </View>
 

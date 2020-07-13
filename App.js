@@ -12,6 +12,7 @@ import LoginScreen from './app/Screens/LoginScreen'
 import UserRegister from './app/Screens/UserRegister';
 import UserRoute from './app/Screens/Route'
 import UserPage from './app/Screens/UserPage'
+import ClientInfo from './app/Screens/ClientInfo'
 
 
 
@@ -24,6 +25,8 @@ export default function App() {
           <Route exact path='/register' component={UserRegister} />
           <Route exact path='/userpage' component={UserPage} />
           <Route exact path='/route' component={UserRoute} />
+          <Route exact path='/clientinfo' component={ClientInfo} />
+
 
         </Switch>
       </View>

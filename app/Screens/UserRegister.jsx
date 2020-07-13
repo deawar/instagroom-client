@@ -5,10 +5,13 @@ import {
     View,
 
 } from 'react-native';
+import { browserHistory } from 'react-router';
 
 import AppScreen from '../components/AppScreen'
 import AppTextInput from '../components/AppTextInput';
 import AppTextInput2 from '../components/AppTextInput2'
+import AppButton from '../components/AppButton';
+import DropDown from '../components/DropDown';
 
 class UserRegister extends Component {
     state = {
@@ -24,6 +27,14 @@ class UserRegister extends Component {
         passWord: ''
 
     }
+
+    handleOnPress() {
+        console.log('handle onPress')
+
+    }
+
+
+
     render() {
 
         return (
@@ -71,6 +82,14 @@ class UserRegister extends Component {
                             placeholder="PassWord"
                             width='50%' />
                     </View>
+                    <AppButton
+                        icon='account-box'
+                        title='submit'
+                        color='dark'
+                        op={.75}
+                        onPress={this.handleOnPress}
+                    />
+
                 </ImageBackground>
             </AppScreen>
 

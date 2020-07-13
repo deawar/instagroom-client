@@ -35,9 +35,9 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: colors.black,
         textAlign: 'left',
-        padding: 5,
+        padding: 2,
         marginHorizontal: 5,
-        marginVertical: 10,
+        marginVertical: 5,
     }
 })
 
