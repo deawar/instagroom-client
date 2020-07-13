@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   StyleSheet,
-  Text,
   View
 } from 'react-native';
 import { NativeRouter, Switch, Route } from "react-router-native";
