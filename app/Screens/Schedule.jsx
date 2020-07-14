@@ -6,6 +6,7 @@ import {
     ImageBackground
 } from 'react-native';
 
+import TimeDatePicker from '../components/DatePicker'
 import AppButton from '../components/AppButton';
 import AppRadioButton from '../components/AppRadioButton';
 import AppScreen from '../components/AppScreen';
@@ -37,10 +38,9 @@ class Schedule extends Component {
                     <AppRadioButton style={styles.button} textcolor='white' text='Send Receipt by SMS' />
                     <AppRadioButton style={styles.button} textcolor='white' text='Send Receipt Via Email' />
 
-                    <View>
-
+                    <View style={styles.picker}>
+                        <TimeDatePicker />
                     </View>
-
 
 
                 </ImageBackground>
@@ -65,6 +65,12 @@ const styles = StyleSheet.create({
     },
     button: {
         marginVertical: 10,
+    },
+    picker: {
+        width: '100%',
+        alignSelf: 'center',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 })
 export default Schedule;

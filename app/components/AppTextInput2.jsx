@@ -12,12 +12,14 @@ import colors from '../config/colors'
 
 const AppTextInput2 = (props) => {
 
-    const { placeholder, onChange, width } = props;
+    const { placeholder, onChange, width, lines } = props;
     return (
 
         <TextInput style={[styles.input, { width: width }]}
             placeholder={placeholder}
             onChange={onChange}
+            multiline={true}
+            numberOfLines={lines}
 
         />
 
