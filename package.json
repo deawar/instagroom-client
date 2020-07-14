@@ -19,7 +19,8 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.1.tar.gz",
     "react-native-web": "~0.11.7",
     "react-router-native": "^5.2.0",
-    "url-parse": "^1.4.7"
+    "url-parse": "^1.4.7",
+    "@react-native-community/datetimepicker": "2.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",

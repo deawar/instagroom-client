@@ -12,7 +12,12 @@ import AppTextInput2 from '../components/AppTextInput2';
 import AppButton from '../components/AppButton';
 
 class ClientInfo extends Component {
-    state = {}
+    constructor(props) {
+        super(props);
+        this.state = {
+
+        };
+    }
 
 
     render() {
@@ -54,10 +59,16 @@ class ClientInfo extends Component {
                     </View >
                     <View style={[styles.inputContainerV, { height: 120 }]}>
                         <AppTextInput2 placeholder='Medical Issues/Medication' width='95%' />
-                        <AppButton icon='plus-circle' color='dark' op={.7} height='45%' title='Add Pet' />
-                        <AppButton icon='google' title='Login with Google' height='45%' color='black' op={.5} />
+                        <AppButton icon='plus-circle' color='black' op={.7} height='45%' title='Add Pet' />
+                        <AppButton
+                            icon='plus-circle-outline'
+                            title='Add All Info'
+                            height='45%'
+                            color='black'
+                            op={.7}
+                            onPress={() => this.props.history.push('./userpage')}
+                        />
                     </View>
-
                 </View>
             </ImageBackground>
 

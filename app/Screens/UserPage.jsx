@@ -11,8 +11,11 @@ import AppUserButton from '../components/AppUserButton';
 import AppScreen from '../components/AppScreen';
 
 class UserPage extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
 
-    state = {
+        };
 
     }
     render() {
@@ -22,7 +25,7 @@ class UserPage extends Component {
 
                     <View style={styles.buttonContainer}>
                         <AppUserButton icon='book' color='light' op={.75} title='Set Appointment' />
-                        <AppUserButton icon='book' color='light' op={.75} title=' Schedule' />
+                        <AppUserButton icon='book' color='light' op={.75} title=' Schedule' onPress={() => this.props.history.push('/schedule')} />
                     </View >
                     <View style={styles.buttonContainer}>
                         <AppUserButton icon='logout' color='light' op={.75} title='Logout'
