@@ -12,12 +12,14 @@ import colors from '../config/colors'
 
 const AppTextInput2 = (props) => {
 
-    const { placeholder, onChange, width } = props;
+    const { placeholder, onChange, width, lines } = props;
     return (
 
-        <TextInput style={[styles.button, { width: width }]}
+        <TextInput style={[styles.input, { width: width }]}
             placeholder={placeholder}
             onChange={onChange}
+            multiline={true}
+            numberOfLines={lines}
 
         />
 
@@ -25,7 +27,7 @@ const AppTextInput2 = (props) => {
 }
 
 const styles = StyleSheet.create({
-    button: {
+    input: {
         color: colors.black,
         fontSize: 18,
         backgroundColor: colors.white,
@@ -35,7 +37,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: colors.black,
         textAlign: 'left',
-        padding: 2,
+        padding: 10,
         marginHorizontal: 5,
         marginVertical: 5,
     }

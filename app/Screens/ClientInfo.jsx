@@ -9,9 +9,15 @@ import {
 import Constants from 'expo-constants'
 
 import AppTextInput2 from '../components/AppTextInput2';
+import AppButton from '../components/AppButton';
 
 class ClientInfo extends Component {
-    state = {}
+    constructor(props) {
+        super(props);
+        this.state = {
+
+        };
+    }
 
 
     render() {
@@ -42,7 +48,7 @@ class ClientInfo extends Component {
                             width='20%' />
                     </View>
                 </View>
-                <View style={[styles.inputContainerV, { marginTop: 50 }]}>
+                <View style={[styles.inputContainerV, { marginTop: 45 }]}>
                     <Text style={styles.header}>Pet Information</Text>
                     <AppTextInput2 placeholder='Enter Dog Breed' width='80%' />
                     <AppTextInput2 placeholder='Dogs Name' width='80%' />
@@ -51,14 +57,19 @@ class ClientInfo extends Component {
                         <AppTextInput2 placeholder='Weight' width='45%' />
                         <AppTextInput2 placeholder='Age/Birthday' width='45%' />
                     </View >
-                    <View style={styles.inputContainerV}>
+                    <View style={[styles.inputContainerV, { height: 120 }]}>
                         <AppTextInput2 placeholder='Medical Issues/Medication' width='95%' />
-
+                        <AppButton icon='plus-circle' color='black' op={.7} height='45%' title='Add Pet' />
+                        <AppButton
+                            icon='plus-circle-outline'
+                            title='Add All Info'
+                            height='45%'
+                            color='black'
+                            op={.7}
+                            onPress={() => this.props.history.push('./userpage')}
+                        />
                     </View>
-
                 </View>
-
-
             </ImageBackground>
 
 
@@ -71,21 +82,23 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         minHeight: '100%',
-        paddingTop: Constants.statusBarHeight + 20,
+        paddingTop: Constants.statusBarHeight + 10,
     },
     header: {
         alignSelf: 'center',
         fontSize: 20,
+        fontWeight: 'bold'
     },
     inputContainerH: {
         flexDirection: 'row',
         height: '5%',
-        marginVertical: 5,
+        marginBottom: 5,
     },
     inputContainerV: {
         flexDirection: 'column',
         width: '100%',
-        marginVertical: 20,
+        marginTop: 25,
+        padding: 0,
 
 
 
