@@ -26,6 +26,18 @@ const DropDown = (props) => {
             user: 'Dan Allen',
             dog: 'Gregor',
             address: '123 Atlanta Rd., Atlanta, GA 30309'
+        },
+        {
+            key: 3,
+            user: 'b',
+            dog: 'c',
+            address: 'd'
+        },
+        {
+            key: 4,
+            user: 'a',
+            dog: 'b',
+            address: 'c'
         }
     ]
 

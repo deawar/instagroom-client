@@ -6,7 +6,6 @@ import {
 import { NativeRouter, Switch, Route } from "react-router-native";
 
 
-
 import LoginScreen from './app/Screens/LoginScreen'
 import UserRegister from './app/Screens/UserRegister';
 import UserRoute from './app/Screens/Route'

@@ -5,6 +5,7 @@ import {
     StyleSheet,
     ImageBackground
 } from 'react-native';
+import Constants from 'expo-constants'
 
 import TimeDatePicker from '../components/DatePicker'
 import AppButton from '../components/AppButton';
@@ -12,50 +13,52 @@ import AppRadioButton from '../components/AppRadioButton';
 import AppScreen from '../components/AppScreen';
 import AppTextInput2 from '../components/AppTextInput2';
 import colors from '../config/colors';
-
-class Schedule extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-
-        };
-    }
-    render() {
-        return (
-            <AppScreen>
-                <ImageBackground style={styles.container} blurRadius={10} source={require('../../assets/dog_schedule.jpg')} >
-
-                    <Text style={styles.header}>Next Appointment</Text>
-                    <AppTextInput2 placeholder='Services Dropdown' width='85%' />
-                    <Text style={styles.header} >Services Detail</Text>
-                    <AppTextInput2 placeholder='Client Name' width='90%' />
-                    <AppTextInput2 placeholder='Comments/Notes' width='90%' />
-
-                    <Text style={styles.header}>Send ETA to next Appointment</Text>
-                    <AppRadioButton style={styles.button} textcolor='white' text='Add 30 minutes to travel time' />
-                    <AppRadioButton style={styles.button} textcolor='white' text='Used proposed ETA given by Google Maps' />
-                    <Text style={styles.header}>Radio Button Group Label</Text>
-                    <AppRadioButton style={styles.button} textcolor='white' text='Send Receipt by SMS' />
-                    <AppRadioButton style={styles.button} textcolor='white' text='Send Receipt Via Email' />
-
-                    <View style={styles.picker}>
-                        <TimeDatePicker />
-                    </View>
+import AppBackButton from '../components/AppBackButton';
 
 
-                </ImageBackground>
+const Schedule = ({ history }) => {
+    return (
 
-            </AppScreen>
-        );
-    }
+        <AppScreen>
+            <ImageBackground style={styles.container} blurRadius={10} source={require('../../assets/dog_schedule.jpg')} >
+                <AppBackButton onPress={() => history.push('/userpage')} />
+                <Text style={styles.header}>Next Appointment</Text>
+                <AppTextInput2 placeholder='Services Dropdown' width='85%' />
+                <Text style={styles.header} >Services Detail</Text>
+                <AppTextInput2 placeholder='Client Name' width='90%' />
+                <AppTextInput2 placeholder='Comments/Notes' width='90%' />
+
+                <Text style={styles.header}>Send ETA to next Appointment</Text>
+                <AppRadioButton style={styles.button} textcolor='white' text='Add 30 minutes to travel time' />
+                <AppRadioButton style={styles.button} textcolor='white' text='Used proposed ETA given by Google Maps' />
+                <Text style={styles.header}>Radio Button Group Label</Text>
+                <AppRadioButton style={styles.button} textcolor='white' text='Send Receipt by SMS' />
+                <AppRadioButton style={styles.button} textcolor='white' text='Send Receipt Via Email' />
+
+                <View style={styles.picker}>
+                    <TimeDatePicker />
+                </View>
+
+
+            </ImageBackground>
+
+        </AppScreen>
+    );
+
+
+
 }
 
+
+
 const styles = StyleSheet.create({
+
     container: {
         flex: 1,
         flexDirection: 'column',
         alignItems: 'flex-start',
         paddingLeft: 15,
+        paddingTop: 10,
 
     },
     header: {
