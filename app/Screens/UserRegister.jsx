@@ -127,6 +127,7 @@ const UserRegister = () => {
                     op={.75}
                     onPress={() => console.log(userDataObj)}
                 />
+                <DropDown />
 
             </ImageBackground>
         </AppScreen>
