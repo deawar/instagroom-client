@@ -12,6 +12,7 @@ import UserRoute from './app/Screens/Route'
 import UserPage from './app/Screens/UserPage'
 import ClientInfo from './app/Screens/ClientInfo'
 import Schedule from './app/Screens/Schedule'
+import Billing from './app/Screens/Billing';
 
 
 
@@ -27,6 +28,8 @@ export default function App() {
           <Route exact path='/route' component={UserRoute} />
           <Route exact path='/clientinfo' component={ClientInfo} />
           <Route exact path='/schedule' component={Schedule} />
+          <Route exact path='/billing' component={Billing} />
+
         </Switch>
       </View>
     </NativeRouter>

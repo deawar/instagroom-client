@@ -20,6 +20,7 @@ const ClientInfo = ({ history }) => {
         <ImageBackground style={styles.container} blurRadius={4} source={require('../../assets/dog_haircut.jpg')}>
             <ScrollView>
                 <AppBackButton onPress={() => history.push('/userpage')} />
+
                 <Text style={styles.header}>Customer Address/Phone/Email</Text>
                 <View style={styles.inputContainerH}>
                     <AppTextInput2 placeholder='First Name' width='45%' />
@@ -41,7 +42,7 @@ const ClientInfo = ({ history }) => {
                             width='25%' />
                         <AppTextInput2
                             placeholder="Country"
-                            width='20%' />
+                            width='40%' />
                     </View>
                 </View>
                 <View style={[styles.inputContainerV, { marginTop: 45 }]}>
