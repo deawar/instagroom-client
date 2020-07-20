@@ -12,15 +12,15 @@ import AppScreen from '../components/AppScreen'
 import colors from '../config/colors'
 import AppTextInput2 from '../components/AppTextInput2';
 import AppBackButton from '../components/AppBackButton';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-
+import { MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
+import AppButton from '../components/AppButton'
 const Billing = ({ history }) => {
     return (
         <AppScreen>
             <ImageBackground style={styles.container} blurRadius={2} source={require('../../assets/dog_banker.jpg')}>
                 <ScrollView style={styles.scroll}>
                     <AppBackButton onPress={() => history.push('/userpage')} />
-                    <View style={[styles.styleHorizontal, { alignItems: 'center', justifyContent: 'center' }]}>
+                    <View style={styles.headerContainer}>
                         <MaterialCommunityIcons style={{ color: colors.white }} name='account' size={25} />
                         <Text style={styles.header}>CUSTOMER BILLING</Text>
                     </View>
@@ -46,8 +46,30 @@ const Billing = ({ history }) => {
                         <AppTextInput2
                             placeholder="Country"
                             width='40%' />
-
                     </View>
+                    <View style={styles.headerContainer}>
+                        <Entypo name='scissors' size={25} color={colors.white} />
+                        <Text style={styles.header}>Payment Info</Text>
+                    </View>
+                    <View style={[styles.styleVertical, { paddingBottom: 50 }]}>
+                        <AppTextInput2 placeholder='Name on Card' width='80%' />
+                        <AppTextInput2 placeholder='Card Number' width='80%' />
+                        <AppTextInput2 placeholder='Card Type' width='40%' />
+                        <AppTextInput2 placeholder='exp ##/##' width='20%' />
+                        <AppTextInput2 placeholder='Fees' width='80%' />
+                        <AppTextInput2 placeholder='Transaction Notes' width='80%' />
+                        <AppButton
+                            icon='credit-card-outline'
+                            title='Submit Payment'
+                            height='20%'
+                            color='black'
+                            op={.7}
+                            onPress={() => history.push('./userpage')}
+                        />
+                    </View>
+                    <View />
+
+
                 </ScrollView>
 
             </ImageBackground>
@@ -63,15 +85,14 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
     },
     header: {
-        // alignSelf: 'center',
         fontSize: 20,
         fontWeight: 'bold',
         color: colors.white,
         marginVertical: 10,
+        marginLeft: 5,
 
     },
     scroll: {
-        // backgroundColor: colors.black,
         padding: 5,
         borderColor: colors.white,
         borderWidth: 1,
@@ -83,7 +104,16 @@ const styles = StyleSheet.create({
     },
     styleVertical: {
         flexDirection: 'column'
-    }
+    },
+    headerContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderBottomColor: colors.white,
+        borderBottomWidth: 2,
+
+    },
 
 })
 
