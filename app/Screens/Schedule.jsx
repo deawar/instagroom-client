@@ -3,7 +3,8 @@ import {
     Text,
     View,
     StyleSheet,
-    ImageBackground
+    ImageBackground,
+    ScrollView
 } from 'react-native';
 import Constants from 'expo-constants'
 
@@ -14,31 +15,24 @@ import AppScreen from '../components/AppScreen';
 import AppTextInput2 from '../components/AppTextInput2';
 import colors from '../config/colors';
 import AppBackButton from '../components/AppBackButton';
+import AppRouteButton from '../components/AppRouteButton';
 
 
 const Schedule = ({ history }) => {
     return (
 
         <AppScreen>
-            <ImageBackground style={styles.container} blurRadius={10} source={require('../../assets/dog_schedule.jpg')} >
-                <AppBackButton onPress={() => history.push('/userpage')} />
-                <Text style={styles.header}>Next Appointment</Text>
-                <AppTextInput2 placeholder='Services Dropdown' width='85%' />
-                <Text style={styles.header} >Services Detail</Text>
-                <AppTextInput2 placeholder='Client Name' width='90%' />
-                <AppTextInput2 placeholder='Comments/Notes' width='90%' />
+            <ImageBackground style={styles.container} blurRadius={2} source={require('../../assets/dog_book.jpg')} >
+                <View style={styles.transparent} />
+                <ScrollView style={styles.scroll}>
+                    <View style={[styles.styleHorizontal, { justifyContent: 'space-between' }]}>
+                        <AppBackButton onPress={() => history.push('/userpage')} />
+                        <AppRouteButton onPress={() => history.push('/route')} />
+                    </View>
+                    <View>
+                    </View>
 
-                <Text style={styles.header}>Send ETA to next Appointment</Text>
-                <AppRadioButton style={styles.button} textcolor='white' text='Add 30 minutes to travel time' />
-                <AppRadioButton style={styles.button} textcolor='white' text='Used proposed ETA given by Google Maps' />
-                <Text style={styles.header}>Radio Button Group Label</Text>
-                <AppRadioButton style={styles.button} textcolor='white' text='Send Receipt by SMS' />
-                <AppRadioButton style={styles.button} textcolor='white' text='Send Receipt Via Email' />
-
-                <View style={styles.picker}>
-                    <TimeDatePicker />
-                </View>
-
+                </ScrollView>
 
             </ImageBackground>
 
@@ -55,25 +49,40 @@ const styles = StyleSheet.create({
 
     container: {
         flex: 1,
+    },
+    scroll: {
+        flex: 1,
         flexDirection: 'column',
-        alignItems: 'flex-start',
-        paddingLeft: 15,
-        paddingTop: 10,
+        borderWidth: 2,
+        borderColor: colors.dark,
+        margin: 4,
+        padding: 5,
+    },
+    transparent: {
+        height: '99%',
+        width: '98%',
+        position: 'absolute',
+        margin: 4,
+        backgroundColor: colors.black,
+        opacity: .6,
+    },
+
+    styleHorizontal: {
+        flexDirection: 'row',
+        flexWrap: 'wrap'
+    },
+    styleVertical: {
+        flexDirection: 'column'
+    },
+    headerContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderBottomColor: colors.white,
+        borderBottomWidth: 2,
 
     },
-    header: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: colors.white,
-    },
-    button: {
-        marginVertical: 10,
-    },
-    picker: {
-        width: '100%',
-        alignSelf: 'center',
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
+
 })
 export default Schedule;

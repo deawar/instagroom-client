@@ -68,8 +68,6 @@ const Billing = ({ history }) => {
                         />
                     </View>
                     <View />
-
-
                 </ScrollView>
 
             </ImageBackground>
