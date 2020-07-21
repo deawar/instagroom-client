@@ -37,12 +37,10 @@ const DropDown = (props) => {
             key: 4,
             user: 'a',
             dog: 'b',
-            address: 'c'
+            address: 'c',
+
         }
     ]
-
-
-
 
     const [show, setShow] = useState(false)
     const [data, setData] = useState(listData)

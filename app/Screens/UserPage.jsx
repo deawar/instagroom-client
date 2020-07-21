@@ -24,8 +24,8 @@ class UserPage extends Component {
                 <ImageBackground style={styles.container} blurRadius={3} source={require('../../assets/dog_secretary.png')}>
 
                     <View style={styles.buttonContainer}>
-                        <AppUserButton icon='book' color='light' op={.75} title='Set Appointment' />
-                        <AppUserButton icon='book' color='light' op={.75} title=' Schedule' onPress={() => this.props.history.push('/schedule')} />
+                        <AppUserButton icon='book' color='light' op={.75} title='View Schedule ' onPress={() => this.props.history.push('/schedule')} />
+                        <AppUserButton icon='book' color='light' op={.75} title=' Set Appointment' onPress={() => this.props.history.push('/setappointment')} />
                     </View >
                     <View style={styles.buttonContainer}>
                         <AppUserButton icon='logout' color='light' op={.75} title='Logout'

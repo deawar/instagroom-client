@@ -11,8 +11,9 @@ import AppScreen from '../components/AppScreen'
 import AppTextInput2 from '../components/AppTextInput2'
 import AppButton from '../components/AppButton';
 import DropDown from '../components/DropDown';
+import AppBackButton from '../components/AppBackButton'
 
-const UserRegister = () => {
+const UserRegister = ({ history }) => {
 
     const [firstName, setfirstName] = useState();
     const [lastName, setLastName] = useState();
@@ -46,11 +47,11 @@ const UserRegister = () => {
     }
 
 
-
-
     return (
         < AppScreen >
             <ImageBackground style={styles.container} blurRadius={2} source={require('../../assets/grooming1.jpg')}>
+                <AppBackButton onPress={() => history.push('/')} />
+
                 <View style={styles.inputsHor}>
                     <AppTextInput2
                         name='firstName'
