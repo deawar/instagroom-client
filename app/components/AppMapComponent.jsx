@@ -14,9 +14,9 @@ import colors from '../config/colors'
 
 const AppMapComponent = () => {
     return (
-         
+        <Text>I am a map component</Text>
 
-     );
+    );
 }
 
 const styles = StyleSheet.create({
