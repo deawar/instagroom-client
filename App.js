@@ -14,6 +14,7 @@ import ClientInfo from './app/Screens/ClientInfo'
 import Schedule from './app/Screens/Schedule'
 import Billing from './app/Screens/Billing';
 import SetAppointment from './app/Screens/SetAppointment';
+import { UserContext } from './app/util/UserContext';
 
 
 
@@ -23,16 +24,17 @@ export default function App() {
     <NativeRouter>
       <View style={styles.container}>
         <Switch>
-          <Route exact path='/' component={LoginScreen} />
-          <Route exact path='/register' component={UserRegister} />
-          <Route exact path='/userpage' component={UserPage} />
-          <Route exact path='/route' component={UserRoute} />
-          <Route exact path='/clientinfo' component={ClientInfo} />
-          <Route exact path='/schedule' component={Schedule} />
-          <Route exact path='/setappointment' component={SetAppointment} />
+          <UserContext.Provider>
+            <Route exact path='/' component={LoginScreen} />
+            <Route exact path='/register' component={UserRegister} />
+            <Route exact path='/userpage' component={UserPage} />
+            <Route exact path='/route' component={UserRoute} />
+            <Route exact path='/clientinfo' component={ClientInfo} />
+            <Route exact path='/schedule' component={Schedule} />
+            <Route exact path='/setappointment' component={SetAppointment} />
+            <Route exact path='/billing' component={Billing} />
 
-          <Route exact path='/billing' component={Billing} />
-
+          </UserContext.Provider>
         </Switch>
       </View>
     </NativeRouter>

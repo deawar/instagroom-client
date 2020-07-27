@@ -14,12 +14,36 @@ import AppScreen from '../components/AppScreen';
 import colors from '../config/colors'
 import AppBackButton from '../components/AppBackButton';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import Polyline from '@mapbox/polyline'
 
+const GoogleApiKey = 'AIzaSyA4R5VAItbCh_G_3-mxJ9zg2U7YvVjcSjI'
 
 const Route = ({ history }) => {
     const [location, setLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
     const [userLocation, setUserLocation] = useState({ latitude: 0, longitude: 0 });
+    const [clientLocation, setClientLocation] = useState({ latitude: 33.9809694, longitude: -84.2196431 })
+    const [coords, setCoords] = useState([]);
+
+    // const getDirections = (start, finish) => {
+    //     try {
+    //         let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${userLocation.latitude},${userLocation.longitude}&destination=${clientLocation.latitude},${clientLocation.longitude}&key=${GoogleApiKey}`)
+    //         let respJson = await resp.json();
+    //         let points = Polyline.decode(respJson.routes[0].overview_polyline.points);
+    //         let coords = points.map((point, index) => {
+    //             return {
+    //                 latitude: point[0],
+    //                 longitude: point[1]
+    //             }
+    //         })
+
+
+    //         return coords
+    //     } catch (error) {
+    //         alert(error)
+    //         return error
+    //     }
+    // }
 
 
     useEffect(() => {
@@ -40,10 +64,10 @@ const Route = ({ history }) => {
                     latitude: location.coords.latitude,
                     longitude: location.coords.longitude
                 })
+
             })();
         }
     }, []);
-
 
 
     return (
@@ -67,7 +91,23 @@ const Route = ({ history }) => {
                             latitude: userLocation.latitude,
                             longitude: userLocation.longitude
                         }}
-                    ><MaterialCommunityIcons name='dog' size={50} color={colors.secondary} /></Marker>
+                    ><MaterialCommunityIcons
+                            name='dog'
+                            size={50}
+                            color={colors.secondary}
+                        /></Marker>
+                    <Marker
+                        coordinate={{
+                            latitude: clientLocation.latitude,
+                            longitude: clientLocation.longitude
+                        }}
+                    ><MaterialCommunityIcons
+                            name='dog'
+                            size={50}
+                            color={colors.secondary}
+                        /></Marker>
+
+
                 </MapView>
 
             </ScrollView>
