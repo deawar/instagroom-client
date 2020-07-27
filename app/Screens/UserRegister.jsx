@@ -19,13 +19,13 @@ import colors from '../config/colors';
 
 
 const phoneRegExp = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/
-
+const passWordRegExp = /^[0-9A-Za-z]*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?][0-9a-zA-Z]*$/
 
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().required().email().label('Email'),
-    passWord: Yup.string().required().min(8).label('Password'),
-    passWord: Yup.string().required().min(8).label('Password2'),
+    passWord: Yup.string().required().matches(passWordRegExp, 'Password not valid').label('Password'),
+    passWord2: Yup.string().required().matches(passWordRegExp, 'Password not valid').label('Password2'),
     firstName: Yup.string().required().nullable(),
     lastName: Yup.string().required().nullable(),
     street: Yup.string().required().nullable(),
@@ -34,7 +34,7 @@ const validationSchema = Yup.object().shape({
     zip: Yup.string().required().nullable().min(5),
     phone: Yup.string().required().nullable().matches(phoneRegExp, 'Enter valid phone number'),
     country: Yup.string().required().nullable().min(4)
-})
+});
 
 
 
@@ -158,9 +158,9 @@ const UserRegister = ({ history, ...props }) => {
                                         placeholder="PassWord"
                                         width='50%'
                                         secureTextEntry={true}
-                                        onChangeText={handleChange('password')}
+                                        onChangeText={handleChange('passWord')}
                                     />
-                                    {errors.passWord && <Text style={styles.errors}>Enter valid Password</Text>}
+                                    {errors.passWord && <Text style={styles.errors}>{errors.passWord}</Text>}
                                     <AppTextInput2
                                         placeholder="PassWord2"
                                         width='50%'
@@ -168,7 +168,7 @@ const UserRegister = ({ history, ...props }) => {
                                         password={true}
                                         onChangeText={handleChange('passWord2')}
                                     />
-                                    {errors.passWord2 && <Text style={styles.errors}>Enter valid Password </Text>}
+                                    {errors.passWord2 && <Text style={styles.errors}>{errors.passWord2}</Text>}
 
                                 </View>
                                 <AppButton
