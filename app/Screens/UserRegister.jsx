@@ -5,6 +5,7 @@ import {
     View,
     Text,
     TextInput,
+    ScrollView,
 
 } from 'react-native';
 import { Formik } from 'formik';
@@ -16,6 +17,11 @@ import AppButton from '../components/AppButton';
 import AppBackButton from '../components/AppBackButton';
 import colors from '../config/colors';
 
+
+const phoneRegExp = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/
+
+
+
 const validationSchema = Yup.object().shape({
     email: Yup.string().required().email().label('Email'),
     passWord: Yup.string().required().min(8).label('Password'),
@@ -26,7 +32,7 @@ const validationSchema = Yup.object().shape({
     city: Yup.string().required().nullable(),
     state: Yup.string().required().nullable().min(2).max(2),
     zip: Yup.string().required().nullable().min(5),
-    phone: Yup.string().required().nullable().min(10),
+    phone: Yup.string().required().nullable().matches(phoneRegExp, 'Enter valid phone number'),
     country: Yup.string().required().nullable().min(4)
 })
 
@@ -63,110 +69,121 @@ const UserRegister = ({ history, ...props }) => {
     return (
         < AppScreen >
             <ImageBackground style={styles.container} blurRadius={2} source={require('../../assets/grooming1.jpg')}>
-                <AppBackButton onPress={() => history.push('/')} />
-                <Formik
-                    initialValues={{
-                        firstName: null,
-                        lastName: null,
-                        street: null,
-                        city: null,
-                        state: null,
-                        zip: null,
-                        phone: null,
-                        email: null,
-                        passWord: null,
-                        passWord2: null,
-                        country: null
-                    }}
-                    onSubmit={values => console.log(values)}
-                    validationSchema={validationSchema}
-                >
-                    {({ handleChange, handleSubmit, errors }) => (
-                        <>
-                            <View style={styles.inputsHor}>
-                                <AppTextInput2
-                                    name='firstName'
-                                    placeholder="First Name"
-                                    width='40%'
-                                    onChangeText={handleChange('firstName')}
-                                />
-                                <AppTextInput2
-                                    name='lastName'
-                                    placeholder="Last Name"
-                                    width='40%'
-                                    onChangeText={handleChange('lastName')}
-                                />
-                            </View>
-                            {errors.firstName && <Text style={styles.errors}>{errors.firstName}</Text>}
-                            {errors.lastName && <Text style={styles.errors}>{errors.lastName}</Text>}
+                <ScrollView style={{ flex: 1 }}>
 
-                            <View style={styles.inputsHor}>
-                                <AppTextInput2
-                                    placeholder="Street"
-                                    onChangeText={handleChange('street')}
-                                    width='75%'
-                                />
+                    <AppBackButton onPress={() => history.push('/')} />
+                    <Formik
+                        initialValues={{
+                            firstName: null,
+                            lastName: null,
+                            street: null,
+                            city: null,
+                            state: null,
+                            zip: null,
+                            phone: null,
+                            email: null,
+                            passWord: null,
+                            passWord2: null,
+                            country: null
+                        }}
+                        onSubmit={values => console.log(values)}
+                        validationSchema={validationSchema}
+                    >
+                        {({ handleChange, handleSubmit, errors }) => (
+                            <>
+                                <View style={styles.inputsHor}>
+                                    <AppTextInput2
+                                        name='firstName'
+                                        placeholder="First Name"
+                                        width='40%'
+                                        onChangeText={handleChange('firstName')}
+                                    />
+                                    <AppTextInput2
+                                        name='lastName'
+                                        placeholder="Last Name"
+                                        width='40%'
+                                        onChangeText={handleChange('lastName')}
+                                    />
+                                </View>
+                                {errors.firstName && <Text style={styles.errors}>{errors.firstName}</Text>}
+                                {errors.lastName && <Text style={styles.errors}>{errors.lastName}</Text>}
 
-                            </View>
-                            <View style={styles.inputsHor}>
-                                <AppTextInput2
-                                    placeholder="City"
-                                    onChangeText={handleChange('city')}
-                                    width='20%'
-                                />
-                                <AppTextInput2
-                                    placeholder="State"
-                                    onChangeText={handleChange('state')}
-                                    width='20%'
-                                />
-                                <AppTextInput2
-                                    placeholder="Postal/Zip"
-                                    onChangeText={handleChange('zip')}
-                                    width='20%'
-                                />
-                                <AppTextInput2
-                                    placeholder="Country"
-                                    width='20%'
-                                    onChangeText={handleChange('country')}
-                                />
+                                <View style={styles.inputsHor}>
+                                    <AppTextInput2
+                                        placeholder="Street"
+                                        onChangeText={handleChange('street')}
+                                        width='75%'
+                                    />
+                                </View>
+                                {errors.street && <Text style={styles.errors}>{errors.street}</Text>}
 
-                            </View>
-                            <View style={styles.inputsVert}>
-                                <AppTextInput2
-                                    placeholder="Phone"
-                                    width='50%'
-                                    onChangeText={handleChange('phone')}
+                                <View style={[styles.inputsHor, { flexWrap: 'wrap' }]}>
+                                    <AppTextInput2
+                                        placeholder="City"
+                                        onChangeText={handleChange('city')}
+                                        width='40%'
+                                    />
+                                    <AppTextInput2
+                                        placeholder="State"
+                                        onChangeText={handleChange('state')}
+                                        width='20%'
+                                    />
+                                    <AppTextInput2
+                                        placeholder="Postal/Zip"
+                                        onChangeText={handleChange('zip')}
+                                        width='30%'
+                                    />
+                                    <AppTextInput2
+                                        placeholder="Country"
+                                        width='40%'
+                                        onChangeText={handleChange('country')}
+                                    />
 
+                                </View>
+                                <View style={styles.inputsVert}>
+                                    <AppTextInput2
+                                        placeholder="Phone"
+                                        width='50%'
+                                        onChangeText={handleChange('phone')}
+                                    />
+                                    {errors.phone && <Text style={styles.errors}>{errors.phone}</Text>}
+                                    <AppTextInput2
+                                        placeholder="Email"
+                                        width='50%'
+                                        textContentType='emailAddress'
+                                        onChangeText={handleChange('email')}
+                                    />
+                                    {errors.email && <Text style={styles.errors}>Valid Email Required</Text>}
+                                    <AppTextInput2
+                                        placeholder="PassWord"
+                                        width='50%'
+                                        secureTextEntry={true}
+                                        onChangeText={handleChange('password')}
+                                    />
+                                    {errors.passWord && <Text style={styles.errors}>Enter valid Password</Text>}
+                                    <AppTextInput2
+                                        placeholder="PassWord2"
+                                        width='50%'
+                                        secureTextEntry={true}
+                                        password={true}
+                                        onChangeText={handleChange('passWord2')}
+                                    />
+                                    {errors.passWord2 && <Text style={styles.errors}>Enter valid Password </Text>}
+
+                                </View>
+                                <AppButton
+                                    icon='account-box'
+                                    title='submit'
+                                    color='dark'
+                                    op={.75}
+                                    onPress={handleSubmit}
+                                    height={'15%'}
                                 />
-                                <AppTextInput2
-                                    placeholder="Email"
-                                    width='50%'
-                                    textContentType='emailAddress'
-                                    onChangeText={handleChange('email')}
-                                />
-                                {errors.email && <Text style={styles.errors}>Valid Email Required</Text>}
-                                <AppTextInput2
-                                    placeholder="PassWord"
-                                    width='50%'
-                                    onChangeText={handleChange('password')}
-                                />
-                                <AppTextInput2
-                                    placeholder="PassWord2"
-                                    width='50%'
-                                    onChangeText={handleChange('passWord2')}
-                                />
-                            </View>
-                            <AppButton
-                                icon='account-box'
-                                title='submit'
-                                color='dark'
-                                op={.75}
-                                onPress={handleSubmit}
-                            />
-                        </>
-                    )
-                    }
-                </Formik>
+                            </>
+                        )
+                        }
+                    </Formik>
+                </ScrollView>
             </ImageBackground>
         </AppScreen >
 
@@ -204,7 +221,8 @@ const styles = StyleSheet.create({
     errors: {
         color: colors.secondary,
         fontSize: 16,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        marginLeft: '3%',
     }
 
 })

@@ -9,7 +9,7 @@ import {
 
 import colors from '../config/colors'
 
-const AppTextInput2 = ({ onChangeText, placeholder, onChange, width, lines, name }) => {
+const AppTextInput2 = ({ onChangeText, placeholder, onChange, width, lines, name, ...props }) => {
 
     return (
 
@@ -20,6 +20,7 @@ const AppTextInput2 = ({ onChangeText, placeholder, onChange, width, lines, name
             numberOfLines={lines}
             onChangeText={onChangeText}
             name={name}
+
 
 
         />
