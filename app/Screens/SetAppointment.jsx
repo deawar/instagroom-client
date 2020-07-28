@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Text,
     View,
     StyleSheet,
-    ImageBackground
+    ImageBackground,
+    ScrollView
 } from 'react-native';
 import Constants from 'expo-constants'
 
@@ -14,32 +15,69 @@ import AppScreen from '../components/AppScreen';
 import AppTextInput2 from '../components/AppTextInput2';
 import colors from '../config/colors';
 import AppBackButton from '../components/AppBackButton';
+import AppTextArea from '../components/AppTextArea'
 
 
 const SetAppointment = ({ history }) => {
+
+    const [appointment, setAppointment] = useState({
+        date: null,
+        time: null,
+        clientName: '',
+        notes: '',
+        travelTime: 0
+    })
     return (
 
         <AppScreen>
             <ImageBackground style={styles.container} blurRadius={10} source={require('../../assets/dog_schedule.jpg')} >
-                <AppBackButton onPress={() => history.push('/userpage')} />
-                <Text style={styles.header}>Next Appointment</Text>
-                <AppTextInput2 placeholder='Services Dropdown' width='85%' />
-                <Text style={styles.header} >Services Detail</Text>
-                <AppTextInput2 placeholder='Client Name' width='90%' />
-                <AppTextInput2 placeholder='Comments/Notes' width='90%' />
+                <ScrollView>
+                    <View style={{ alignContent: 'center', paddingHorizontal: '10%' }}>
 
-                <Text style={styles.header}>Send ETA to next Appointment</Text>
-                <AppRadioButton style={styles.button} textcolor='white' text='Add 30 minutes to travel time' />
-                <AppRadioButton style={styles.button} textcolor='white' text='Used proposed ETA given by Google Maps' />
-                <Text style={styles.header}>Radio Button Group Label</Text>
-                <AppRadioButton style={styles.button} textcolor='white' text='Send Receipt by SMS' />
-                <AppRadioButton style={styles.button} textcolor='white' text='Send Receipt Via Email' />
+                        <AppBackButton onPress={() => history.push('/userpage')} />
+                        <Text style={styles.header}>Set Next Appointment</Text>
+                        <View style={styles.picker}>
+                            <TimeDatePicker
+                                onChange={event => console.log(event.nativeEvent)}
+                            />
+                        </View>
+                        <View style={{ alignContent: 'flex-start' }}>
+                            <Text style={styles.header} >Services Detail</Text>
+                            <AppTextInput2
+                                placeholder='Client Name'
+                                width='90%'
+                            />
+                            <AppTextArea
+                                placeholder='Services'
+                            />
+                            <AppTextArea
+                                placeholder='Comments/Notes/Medical'
+                            />
+                        </View>
+                        <View style={{ alignContent: 'flex-start', justifyContent: 'center' }}>
 
-                <View style={styles.picker}>
-                    <TimeDatePicker />
-                </View>
-
-
+                            <Text style={styles.header}>Send ETA to next Appointment</Text>
+                            <AppRadioButton
+                                style={styles.button}
+                                textcolor='white'
+                                text='Add 30 minutes to travel time'
+                            />
+                            <AppRadioButton
+                                style={styles.button}
+                                textcolor='white'
+                                text='Use ETA given by Google Maps'
+                            />
+                        </View>
+                        <AppButton
+                            icon='dog'
+                            title='submit'
+                            color='medium'
+                            op={.75}
+                            onPress={console.log('submitted')}
+                            height={'12%'}
+                        />
+                    </View>
+                </ScrollView>
             </ImageBackground>
 
         </AppScreen>
@@ -59,7 +97,6 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         paddingLeft: 15,
         paddingTop: 10,
-
     },
     header: {
         fontSize: 20,
@@ -74,6 +111,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center'
-    }
+    },
+
 })
 export default SetAppointment;

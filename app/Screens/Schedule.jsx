@@ -16,6 +16,7 @@ import AppTextInput2 from '../components/AppTextInput2';
 import colors from '../config/colors';
 import AppBackButton from '../components/AppBackButton';
 import AppRouteButton from '../components/AppRouteButton';
+import AppTextArea from '../components/AppTextArea';
 
 
 const Schedule = ({ history }) => {
@@ -29,6 +30,7 @@ const Schedule = ({ history }) => {
                         <AppBackButton onPress={() => history.push('/userpage')} />
                         <AppRouteButton onPress={() => history.push('/route')} />
                     </View>
+                    <AppTextArea />
                     <View>
                     </View>
 

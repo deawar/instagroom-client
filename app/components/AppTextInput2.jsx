@@ -3,16 +3,14 @@ import React from 'react';
 import {
     StyleSheet,
     TextInput,
-    Text,
-    View
+
 
 } from 'react-native';
 
 import colors from '../config/colors'
 
-const AppTextInput2 = (props) => {
+const AppTextInput2 = ({ onChangeText, placeholder, onChange, width, lines, name, ...props }) => {
 
-    const { placeholder, onChange, width, lines } = props;
     return (
 
         <TextInput style={[styles.input, { width: width }]}
@@ -20,6 +18,10 @@ const AppTextInput2 = (props) => {
             onChange={onChange}
             multiline={true}
             numberOfLines={lines}
+            onChangeText={onChangeText}
+            name={name}
+
+
 
         />
 
@@ -40,6 +42,7 @@ const styles = StyleSheet.create({
         padding: 10,
         marginHorizontal: 5,
         marginVertical: 5,
+
     }
 })
 

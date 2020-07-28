@@ -63,7 +63,7 @@ const ClientInfo = ({ history }) => {
                             height='45%'
                             color='black'
                             op={.7}
-                            onPress={() => props.history.push('./userpage')}
+                            onPress={() => history.push('./userpage')}
                         />
                     </View>
                 </View>
