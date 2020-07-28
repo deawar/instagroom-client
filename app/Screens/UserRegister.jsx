@@ -39,31 +39,6 @@ const validationSchema = Yup.object().shape({
 
 const UserRegister = ({ history, ...props }) => {
 
-    // const [firstName, setfirstName] = useState();
-    // const [lastName, setLastName] = useState();
-    // const [street, setStreet] = useState();
-    // const [city, setCity] = useState();
-    // const [state, setState] = useState();
-    // const [zip, setZip] = useState();
-    // const [phone, setPhone] = useState();
-    // const [email, setEmail] = useState();
-    // const [UserName, setUserName] = useState();
-    // const [passWord, setPassWord] = useState();
-    // const [passWord2, setPassWord2] = useState();
-    // const [country, setCountry] = useState();
-    // const userDataObj = {
-    //     firstName,
-    //     lastName,
-    //     street,
-    //     city,
-    //     state,
-    //     zip,
-    //     phone,
-    //     email,
-    //     passWord,
-    //     country
-    // };
-
 
     return (
         < AppScreen >
@@ -95,7 +70,6 @@ const UserRegister = ({ history, ...props }) => {
                                         name='firstName'
                                         placeholder="First Name"
                                         width='40%'
-                                        onBlur={handleBlur}
                                         onChangeText={handleChange('firstName')}
                                         value={values.firstName}
 

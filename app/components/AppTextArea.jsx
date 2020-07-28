@@ -8,14 +8,16 @@ import {
 } from 'react-native';
 import colors from '../config/colors'
 
-const AppTextArea = () => {
+const AppTextArea = ({ placeholder, style, ...props }) => {
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { style }]}>
             <TextInput
                 style={styles.input}
                 multiline={true}
                 numberOfLines={12}
-                textAlignVertical="top" />
+                textAlignVertical="top"
+                placeholder={placeholder}
+            />
         </View>
     );
 }
@@ -27,13 +29,13 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: 5,
         justifyContent: 'center',
-        alignItems: 'center'
+        marginLeft: 10,
+        marginTop: 10,
     },
     input: {
         width: '98%',
-        borderColor: colors.medium,
-        borderWidth: 2,
-        borderRadius: 5
+        height: '98%',
+        justifyContent: 'flex-start'
     }
 })
 
