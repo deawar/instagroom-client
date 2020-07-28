@@ -4,7 +4,6 @@ import {
     ImageBackground,
     View,
     Text,
-    TextInput,
     ScrollView,
 
 } from 'react-native';
@@ -33,7 +32,7 @@ const validationSchema = Yup.object().shape({
     state: Yup.string().required().nullable().min(2).max(2),
     zip: Yup.string().required().nullable().min(5),
     phone: Yup.string().required().nullable().matches(phoneRegExp, 'Enter valid phone number'),
-    country: Yup.string().required().nullable().min(4)
+    country: Yup.string().required().nullable().min(3)
 });
 
 
@@ -89,14 +88,17 @@ const UserRegister = ({ history, ...props }) => {
                         onSubmit={values => console.log(values)}
                         validationSchema={validationSchema}
                     >
-                        {({ handleChange, handleSubmit, errors }) => (
+                        {({ handleChange, handleSubmit, handleBlur, errors, values }) => (
                             <>
                                 <View style={styles.inputsHor}>
                                     <AppTextInput2
                                         name='firstName'
                                         placeholder="First Name"
                                         width='40%'
+                                        onBlur={handleBlur}
                                         onChangeText={handleChange('firstName')}
+                                        value={values.firstName}
+
                                     />
                                     <AppTextInput2
                                         name='lastName'
@@ -105,8 +107,8 @@ const UserRegister = ({ history, ...props }) => {
                                         onChangeText={handleChange('lastName')}
                                     />
                                 </View>
-                                {errors.firstName && <Text style={styles.errors}>{errors.firstName}</Text>}
-                                {errors.lastName && <Text style={styles.errors}>{errors.lastName}</Text>}
+                                {errors.firstName && <Text style={styles.errors}>Enter first name</Text>}
+                                {errors.lastName && <Text style={styles.errors}>enter last name</Text>}
 
                                 <View style={styles.inputsHor}>
                                     <AppTextInput2
@@ -115,7 +117,6 @@ const UserRegister = ({ history, ...props }) => {
                                         width='75%'
                                     />
                                 </View>
-                                {errors.street && <Text style={styles.errors}>{errors.street}</Text>}
 
                                 <View style={[styles.inputsHor, { flexWrap: 'wrap' }]}>
                                     <AppTextInput2
@@ -125,6 +126,7 @@ const UserRegister = ({ history, ...props }) => {
                                     />
                                     <AppTextInput2
                                         placeholder="State"
+                                        maxLength={2}
                                         onChangeText={handleChange('state')}
                                         width='20%'
                                     />
@@ -138,6 +140,7 @@ const UserRegister = ({ history, ...props }) => {
                                         width='40%'
                                         onChangeText={handleChange('country')}
                                     />
+                                    {errors.country || errors.zip || errors.state || errors.city || errors.street ? <Text style={styles.errors}>All Address fields are required</Text> : null}
 
                                 </View>
                                 <View style={styles.inputsVert}>
@@ -146,30 +149,30 @@ const UserRegister = ({ history, ...props }) => {
                                         width='50%'
                                         onChangeText={handleChange('phone')}
                                     />
-                                    {errors.phone && <Text style={styles.errors}>{errors.phone}</Text>}
+                                    {errors.phone && <Text style={styles.errors}>enter valid phone number</Text>}
                                     <AppTextInput2
                                         placeholder="Email"
-                                        width='50%'
+                                        width='75%'
                                         textContentType='emailAddress'
                                         onChangeText={handleChange('email')}
                                     />
-                                    {errors.email && <Text style={styles.errors}>Valid Email Required</Text>}
+                                    {errors.email && <Text style={styles.errors}>Enter valid email</Text>}
                                     <AppTextInput2
                                         placeholder="PassWord"
-                                        width='50%'
+                                        width='75%'
                                         secureTextEntry={true}
                                         onChangeText={handleChange('passWord')}
                                     />
-                                    {errors.passWord && <Text style={styles.errors}>{errors.passWord}</Text>}
+                                    {errors.passWord && <Text style={styles.errors}>Valid password Required</Text>}
                                     <AppTextInput2
                                         placeholder="PassWord2"
-                                        width='50%'
+                                        width='75%'
                                         secureTextEntry={true}
                                         password={true}
                                         onChangeText={handleChange('passWord2')}
                                     />
-                                    {errors.passWord2 && <Text style={styles.errors}>{errors.passWord2}</Text>}
-
+                                    {errors.passWord2 && <Text style={styles.errors}>Valid password Required</Text>}
+                                    {/* {errors && <Text>{JSON.stringify(errors)}</Text>} */}
                                 </View>
                                 <AppButton
                                     icon='account-box'
@@ -191,10 +194,6 @@ const UserRegister = ({ history, ...props }) => {
 
     );
 }
-
-
-
-
 
 
 const styles = StyleSheet.create({
