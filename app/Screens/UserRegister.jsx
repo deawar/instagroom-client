@@ -19,7 +19,7 @@ import colors from '../config/colors';
 
 const phoneRegExp = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/
 const passWordRegExp = /^[0-9A-Za-z]*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?][0-9a-zA-Z]*$/
-
+const token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJncm9vbWVySWQiOiI1ZjIwNTYxNTg4NzUwZjRjZmVjYTgzYjIiLCJpYXQiOjE1OTU5NTQ3MTB9.eZ73uEi770JYyri3PpSXToaQf34pZG7_RnYZTyzDk6A"
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().required().email().label('Email'),

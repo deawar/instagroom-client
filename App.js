@@ -15,6 +15,7 @@ import Schedule from './app/Screens/Schedule'
 import Billing from './app/Screens/Billing';
 import SetAppointment from './app/Screens/SetAppointment';
 import { UserContext } from './app/util/UserContext';
+import Verify from './app/Screens/Verify';
 
 
 
@@ -33,7 +34,7 @@ export default function App() {
             <Route exact path='/schedule' component={Schedule} />
             <Route exact path='/setappointment' component={SetAppointment} />
             <Route exact path='/billing' component={Billing} />
-
+            <Route exact path='/verify' component={Verify} />
           </UserContext.Provider>
         </Switch>
       </View>

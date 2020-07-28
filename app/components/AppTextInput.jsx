@@ -11,7 +11,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import colors from '../config/colors'
 
-const AppTextInput = ({ onChange, icon, placeholder, ...props }) => {
+const AppTextInput = ({ onChange, icon, placeholder, name, ...props }) => {
 
     return (
         <View style={styles.container}>
@@ -21,6 +21,7 @@ const AppTextInput = ({ onChange, icon, placeholder, ...props }) => {
                 onChangeText={onChange}
                 placeholder={placeholder}
                 style={styles.text}
+                name={name}
                 {...props}
             />
 
