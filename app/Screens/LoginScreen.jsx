@@ -5,24 +5,43 @@ import {
     View,
     Text,
 } from 'react-native';
+import { Formik } from 'formik';
+import * as Yup from 'yup'
+import Axios from 'axios';
 
 import AppScreen from '../components/AppScreen'
 import LogoIcon from '../components/LogoIcon';
 import AppButton from '../components/AppButton';
 import AppTextInput from '../components/AppTextInput'
+import AppModal from '../components/AppModal'
 import { UserContext } from '../util/UserContext'
+
+
+const validationSchema = Yup.object().shape({
+    email: Yup.string().required().nullable().label('Email'),
+    password: Yup.string().required().nullable().label('Password')
+});
+
+const submitLogin = (loginData) => {
+    console.log(`Here is the login data:${JSON.stringify(loginData)}`)
+    Axios({
+        method: 'post',
+        url: 'https://d0caab433f52.ngrok.io/api/signin',
+        data: {
+            ...loginData
+        }
+    })
+        .then(res => {
+            console.log(res.data.error)
+            return res.data.error
+        })
+
+}
+
 
 
 const LoginScreen = ({ history }) => {
 
-    const loginCall = () => {
-        console.log(`${login.userName} ${login.passWord}`)
-    }
-
-    const [login, setLogin] = useState({
-        userName: '',
-        passWord: ''
-    })
 
     return (
         <AppScreen>
@@ -30,20 +49,45 @@ const LoginScreen = ({ history }) => {
                 <View style={styles.logo} >
                     <LogoIcon size={100} />
                 </View>
-                <Text>{login.userName}</Text>
-                <Text>{login.passWord}</Text>
+                <Formik
+                    initialValues={{
+                        email: null,
+                        password: null,
+                    }}
+                    onSubmit={values =>
+                        !submitLogin(values) ? history.push('/verify') : null
 
-                <AppTextInput icon='email'
-                    onChange={(text) => setLogin({ ...login, userName: text })}
-                />
-                <AppTextInput icon='lock'
-                    onChange={(text) => setLogin({ ...login, passWord: text })}
-                    secureTextEntry={true}
-                />
-                <AppButton style={styles.button} title="Login" color='black' op={.5} onPress={() => history.push('./userpage')} />
-                <AppButton style={styles.button} title="Register" color='black' op={.5} onPress={() => history.push('/register')} />
-                {/* <AppButton icon='apple' style={styles.button} title='Login with Apple' color='black' op={.5} /> */}
-                <AppButton icon='google' style={styles.button} title='Login with Google' color='black' op={.5} />
+
+
+                    }
+                    validationSchema={validationSchema}
+                >
+                    {({ handleChange, handleSubmit, handleBlur, errors, values }) => (
+                        <>
+                            {errors.email && <Text>{values.email}</Text>}
+                            <AppTextInput
+                                id='email'
+                                name='email'
+                                icon='email'
+                                onChangeText={handleChange('email')}
+                                value={values.email}
+                            />
+                            <AppTextInput
+                                name='password'
+                                icon='lock'
+                                secureTextEntry={true}
+                                onChangeText={handleChange('password')}
+                                value={values.passWord}
+                            />
+
+
+                            <AppButton name='submit' style={styles.button} title="Login" color='black' op={.5} onPress={handleSubmit} />
+                            <AppButton style={styles.button} title="Register" color='black' op={.5} onPress={() => history.push('/register')} />
+                            <AppButton icon='google' style={styles.button} title='Login with Google' color='black' op={.5} />
+                        </>
+                    )
+                    }
+                </Formik>
             </ImageBackground>
         </AppScreen>
 
