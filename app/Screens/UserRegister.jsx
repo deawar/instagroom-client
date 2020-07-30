@@ -9,7 +9,9 @@ import {
 } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import Axios from 'axios'
 
+import AppModal from '../components/AppModal'
 import AppScreen from '../components/AppScreen';
 import AppTextInput2 from '../components/AppTextInput2';
 import AppButton from '../components/AppButton';
@@ -19,12 +21,10 @@ import colors from '../config/colors';
 
 const phoneRegExp = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/
 const passWordRegExp = /^[0-9A-Za-z]*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?][0-9a-zA-Z]*$/
-const token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJncm9vbWVySWQiOiI1ZjIwNTYxNTg4NzUwZjRjZmVjYTgzYjIiLCJpYXQiOjE1OTU5NTQ3MTB9.eZ73uEi770JYyri3PpSXToaQf34pZG7_RnYZTyzDk6A"
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().required().email().label('Email'),
-    passWord: Yup.string().required().matches(passWordRegExp, 'Password not valid').label('Password'),
-    passWord2: Yup.string().required().matches(passWordRegExp, 'Password not valid').label('Password2'),
+    password: Yup.string().required().matches(passWordRegExp, 'Password not valid').label('Password'),
     firstName: Yup.string().required().nullable(),
     lastName: Yup.string().required().nullable(),
     street: Yup.string().required().nullable(),
@@ -34,6 +34,23 @@ const validationSchema = Yup.object().shape({
     phone: Yup.string().required().nullable().matches(phoneRegExp, 'Enter valid phone number'),
     country: Yup.string().required().nullable().min(3)
 });
+
+
+const registerUser = (registerData) => {
+    console.log(`Here is the login data:${JSON.stringify(registerData)}`)
+    Axios({
+        method: 'post',
+        url: 'https://d0caab433f52.ngrok.io/api/signup',
+        data: {
+            ...registerData
+        }
+    })
+        .then(res => {
+            console.log(`Here is the response data:   ${res.data.error}`)
+        })
+        .catch(err => console.log(err))
+}
+
 
 
 
@@ -46,6 +63,11 @@ const UserRegister = ({ history, ...props }) => {
                 <ScrollView style={{ flex: 1 }}>
 
                     <AppBackButton onPress={() => history.push('/')} />
+                    <AppModal
+                        buttonText={'Show Appointment'}
+                        modalButtonText={'Go Back'}
+                        modalText='Diane Simmons 12:30am $120'
+                    />
                     <Formik
                         initialValues={{
                             firstName: null,
@@ -56,11 +78,10 @@ const UserRegister = ({ history, ...props }) => {
                             zip: null,
                             phone: null,
                             email: null,
-                            passWord: null,
-                            passWord2: null,
+                            password: null,
                             country: null
                         }}
-                        onSubmit={values => console.log(values)}
+                        onSubmit={values => registerUser(values)}
                         validationSchema={validationSchema}
                     >
                         {({ handleChange, handleSubmit, handleBlur, errors, values }) => (
@@ -96,7 +117,7 @@ const UserRegister = ({ history, ...props }) => {
                                     <AppTextInput2
                                         placeholder="City"
                                         onChangeText={handleChange('city')}
-                                        width='40%'
+                                        width='75%'
                                     />
                                     <AppTextInput2
                                         placeholder="State"
@@ -132,21 +153,14 @@ const UserRegister = ({ history, ...props }) => {
                                     />
                                     {errors.email && <Text style={styles.errors}>Enter valid email</Text>}
                                     <AppTextInput2
-                                        placeholder="PassWord"
+                                        placeholder="Password"
                                         width='75%'
                                         secureTextEntry={true}
-                                        onChangeText={handleChange('passWord')}
+                                        onChangeText={handleChange('password')}
                                     />
-                                    {errors.passWord && <Text style={styles.errors}>Valid password Required</Text>}
-                                    <AppTextInput2
-                                        placeholder="PassWord2"
-                                        width='75%'
-                                        secureTextEntry={true}
-                                        password={true}
-                                        onChangeText={handleChange('passWord2')}
-                                    />
-                                    {errors.passWord2 && <Text style={styles.errors}>Valid password Required</Text>}
-                                    {/* {errors && <Text>{JSON.stringify(errors)}</Text>} */}
+                                    {errors.password && <Text style={styles.errors}>Valid password Required</Text>}
+
+                                    {errors && <Text>{JSON.stringify(errors)}</Text>}
                                 </View>
                                 <AppButton
                                     icon='account-box'

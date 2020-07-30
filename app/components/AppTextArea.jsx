@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import colors from '../config/colors'
 
-const AppTextArea = ({ placeholder, style, ...props }) => {
+const AppTextArea = ({ placeholder, style, onChange, ...props }) => {
     return (
         <View style={[styles.container, { style }]}>
             <TextInput
@@ -17,6 +17,7 @@ const AppTextArea = ({ placeholder, style, ...props }) => {
                 numberOfLines={12}
                 textAlignVertical="top"
                 placeholder={placeholder}
+                onChange={onChange}
             />
         </View>
     );

@@ -15,6 +15,21 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 
+const userVerify = (token) => {
+    console.log(`Here is the login data:${JSON.stringify(token)}`)
+    Axios({
+        method: 'get',
+        url: 'https://d0caab433f52.ngrok.io/api/verify',
+        headers: {
+            Authorization: token
+        }
+
+    })
+        .then(res => {
+            console.log(res)
+            // return res.data.error
+        })
+}
 
 const Verify = () => {
 
@@ -33,7 +48,7 @@ const Verify = () => {
 
                     <Text style={styles.header}>Enter Your token to verify user</Text>
                     <AppTextArea />
-
+                    <AppButton />
                 </View>
             </ImageBackground>
 

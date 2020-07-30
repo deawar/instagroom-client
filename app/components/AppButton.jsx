@@ -16,7 +16,11 @@ const AppButton = (props) => {
 
     return (
         <TouchableOpacity style={[styles.button, { backgroundColor: colors[color] }, { opacity: op }, { height: height }]} onPress={onPress}>
-            {icon && <MaterialCommunityIcons name={icon} size={25} style={styles.icon} />}
+            {icon && <MaterialCommunityIcons
+                name={icon}
+                size={25}
+                style={styles.icon}
+            />}
             <Text style={styles.text}>
                 {title}
             </Text>

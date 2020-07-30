@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
     View,
     Button,
@@ -6,9 +6,11 @@ import {
     StyleSheet
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import Moment from 'moment-timezone'
 
 import colors from '../config/colors'
 import AppButton from '../components/AppButton'
+import { UserContext } from '../util/UserContext';
 
 
 const TimeDatePicker = () => {
@@ -16,11 +18,23 @@ const TimeDatePicker = () => {
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
 
-    const onChange = (event, selectedDate) => {
+    const { schedule } = useContext(UserContext);
+    const [scheduleValue, setSchedule] = schedule;
+
+
+    const onChange = async (event, selectedDate) => {
         const currentDate = selectedDate || date;
         setShow(Platform.OS === 'ios');
         setDate(currentDate);
-        console.log(date)
+        let day = Moment(currentDate).tz('America/New_York').format('MMMM Do YYYY')
+        let time = Moment(currentDate).tz('America/New_York').format('h:mm a z')
+        setSchedule({
+            ...scheduleValue,
+            timeToSet: time,
+            dayToSet: day
+        })
+
+
     };
 
     const showMode = currentMode => {
@@ -42,7 +56,7 @@ const TimeDatePicker = () => {
                 <Button style={{ fontWeight: 'bold' }} onPress={showDatepicker} title="APPOINTMENT DATE" />
             </View>
             <View style={styles.button}>
-                <Button onPress={showTimepicker} title="APPOINTMENT TIME" />
+                <Button onPress={showTimepicker} title={'Time'} />
             </View>
             {show && (
                 <DateTimePicker

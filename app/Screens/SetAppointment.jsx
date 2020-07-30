@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
     Text,
     View,
@@ -6,7 +6,10 @@ import {
     ImageBackground,
     ScrollView
 } from 'react-native';
-import Constants from 'expo-constants'
+import * as Yup from 'yup'
+import { Formik } from 'formik'
+
+
 
 import TimeDatePicker from '../components/DatePicker'
 import AppButton from '../components/AppButton';
@@ -16,66 +19,114 @@ import AppTextInput2 from '../components/AppTextInput2';
 import colors from '../config/colors';
 import AppBackButton from '../components/AppBackButton';
 import AppTextArea from '../components/AppTextArea'
+import { UserContext } from '../util/UserContext'
+
+
+const validationSchema = Yup.object().shape({
+    email: Yup.string().required().nullable().label('Email'),
+    clientName: Yup.string().required().nullable().label('Client Name')
+});
+
+
 
 
 const SetAppointment = ({ history }) => {
+    const { user, schedule } = useContext(UserContext);
+    const [userValue, setUser] = user;
+    const [scheduleValue, setSchedule] = schedule;
 
-    const [appointment, setAppointment] = useState({
-        date: null,
-        time: null,
-        clientName: '',
-        notes: '',
-        travelTime: 0
-    })
+
+    const checkAndCreateAppointment = (values) => {
+        console.log(values)
+
+
+    }
+
+
+
+
+
+
     return (
 
         <AppScreen>
             <ImageBackground style={styles.container} blurRadius={10} source={require('../../assets/dog_schedule.jpg')} >
                 <ScrollView>
                     <View style={{ alignContent: 'center', paddingHorizontal: '10%' }}>
+                        <Formik
+                            initialValues={{
+                                clientName: 'Andrew Murray',
+                                email: 'atmurray@bellsur.net',
+                                services: ['haircut $22.00', 'shampoo $10.00 ', 'fluff $7.00'],
+                                fee: '$39.00',
+                                date: 'October 21st 2020',
+                                time: '7:15 pm EDT',
+                                notes: 'Pepper (Dalmation) is allergic to teatree shampoo'
+                            }}
+                            onSubmit={values => checkAndCreateAppointment(values)}
+                            validationSchema={validationSchema}
+                        >
+                            {({ handleChange, handleSubmit, handleBlur, errors, values }) => (
+                                <>
+                                    <AppBackButton onPress={() => history.push('/userpage')} />
+                                    <Text style={styles.header}>Set Next Appointment</Text>
+                                    <View style={styles.picker}>
+                                        <TimeDatePicker onChange={console.log(scheduleValue.timeToSet + ' ' + scheduleValue.dayToSet)} />
+                                    </View>
+                                    <View style={{ alignContent: 'flex-start' }}>
+                                        <Text style={styles.header} >Services Detail</Text>
+                                        <AppTextInput2
+                                            placeholder='Client Name'
+                                            width='90%'
+                                            name='clientName'
+                                            onChangeText={handleChange('clientName')}
+                                            value={values.clientName}
+                                        />
+                                        <AppTextInput2
+                                            placeholder='Client email'
+                                            width='90%'
+                                            name='email'
+                                            onChangeText={handleChange('email')}
+                                            value={values.email} />
+                                        <AppTextArea
+                                            placeholder='Services'
+                                            name='services'
+                                            // onChangeText={handleChange('services')}
+                                            value={values.services}
+                                        />
+                                        <AppTextArea
+                                            placeholder='Comments/Notes/Medical'
+                                            name='notes'
+                                            onChange={handleChange('notes')}
+                                            value={values.notes}
+                                        />
+                                    </View>
+                                    <View style={{ alignContent: 'flex-start', justifyContent: 'center' }}>
 
-                        <AppBackButton onPress={() => history.push('/userpage')} />
-                        <Text style={styles.header}>Set Next Appointment</Text>
-                        <View style={styles.picker}>
-                            <TimeDatePicker
-                                onChange={event => console.log(event.nativeEvent)}
-                            />
-                        </View>
-                        <View style={{ alignContent: 'flex-start' }}>
-                            <Text style={styles.header} >Services Detail</Text>
-                            <AppTextInput2
-                                placeholder='Client Name'
-                                width='90%'
-                            />
-                            <AppTextArea
-                                placeholder='Services'
-                            />
-                            <AppTextArea
-                                placeholder='Comments/Notes/Medical'
-                            />
-                        </View>
-                        <View style={{ alignContent: 'flex-start', justifyContent: 'center' }}>
+                                        <Text style={styles.header}>Send ETA to next Appointment</Text>
+                                        <AppRadioButton
+                                            style={styles.button}
+                                            textcolor='white'
+                                            text='Add 30 minutes to travel time'
+                                        />
+                                        <AppRadioButton
+                                            style={styles.button}
+                                            textcolor='white'
+                                            text='Use ETA given by Google Maps'
+                                        />
+                                    </View>
+                                    <AppButton
+                                        icon='dog'
+                                        title='Confirm'
+                                        color='medium'
+                                        op={.75}
+                                        onPress={handleSubmit}
+                                        height={'12%'}
+                                    />
+                                </>
+                            )}
+                        </Formik>
 
-                            <Text style={styles.header}>Send ETA to next Appointment</Text>
-                            <AppRadioButton
-                                style={styles.button}
-                                textcolor='white'
-                                text='Add 30 minutes to travel time'
-                            />
-                            <AppRadioButton
-                                style={styles.button}
-                                textcolor='white'
-                                text='Use ETA given by Google Maps'
-                            />
-                        </View>
-                        <AppButton
-                            icon='dog'
-                            title='submit'
-                            color='medium'
-                            op={.75}
-                            onPress={console.log('submitted')}
-                            height={'12%'}
-                        />
                     </View>
                 </ScrollView>
             </ImageBackground>
