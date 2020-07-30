@@ -8,7 +8,7 @@ import {
     View
 } from "react-native";
 
-const App = () => {
+const App = ({ buttonText = 'show', modalButtonText = 'hide', modalText = 'modal text', children }) => {
     const [modalVisible, setModalVisible] = useState(false);
     return (
         <View style={styles.centeredView}>
@@ -22,7 +22,7 @@ const App = () => {
             >
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
-                        <Text style={styles.modalText}>Hello World!</Text>
+                        <Text style={styles.modalText}>{modalText}</Text>
 
                         <TouchableHighlight
                             style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
@@ -30,7 +30,7 @@ const App = () => {
                                 setModalVisible(!modalVisible);
                             }}
                         >
-                            <Text style={styles.textStyle}>Hide Modal</Text>
+                            <Text style={styles.textStyle}>{modalButtonText}</Text>
                         </TouchableHighlight>
                     </View>
                 </View>
@@ -42,7 +42,7 @@ const App = () => {
                     setModalVisible(true);
                 }}
             >
-                <Text style={styles.textStyle}>Show Modal</Text>
+                <Text style={styles.textStyle}>{buttonText}</Text>
             </TouchableHighlight>
         </View>
     );
@@ -56,9 +56,10 @@ const styles = StyleSheet.create({
         marginTop: 22
     },
     modalView: {
+        width: '75%',
         margin: 20,
         backgroundColor: "white",
-        borderRadius: 20,
+        borderRadius: 10,
         padding: 35,
         alignItems: "center",
         shadowColor: "#000",
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
     modalText: {
-        marginBottom: 15,
+        marginBottom: 16,
         textAlign: "center"
     }
 });

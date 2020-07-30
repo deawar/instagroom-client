@@ -4,9 +4,10 @@ import {
     View,
     StyleSheet,
     ImageBackground,
-    ScrollView
+    ScrollView,
 } from 'react-native';
 import Constants from 'expo-constants'
+import Moment from 'moment'
 
 import TimeDatePicker from '../components/DatePicker'
 import AppButton from '../components/AppButton';
@@ -17,7 +18,18 @@ import colors from '../config/colors';
 import AppBackButton from '../components/AppBackButton';
 import AppRouteButton from '../components/AppRouteButton';
 import AppTextArea from '../components/AppTextArea';
+import DatePicker from '../components/DatePicker'
 
+
+
+const clients = {
+
+}
+
+const currentTime = (time) => {
+
+
+}
 
 const Schedule = ({ history }) => {
     return (
@@ -30,8 +42,9 @@ const Schedule = ({ history }) => {
                         <AppBackButton onPress={() => history.push('/userpage')} />
                         <AppRouteButton onPress={() => history.push('/route')} />
                     </View>
-                    <AppTextArea />
-                    <View>
+                    <View style={[styles.styleVertical, { alignItems: 'center' }]}>
+                        <Text style={styles.textHeader}> Schedule for Andrew Murray</Text>
+                        <DatePicker />
                     </View>
 
                 </ScrollView>
@@ -76,15 +89,12 @@ const styles = StyleSheet.create({
     styleVertical: {
         flexDirection: 'column'
     },
-    headerContainer: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderBottomColor: colors.white,
-        borderBottomWidth: 2,
+    textHeader: {
+        color: colors.white,
+        fontSize: 18,
+        alignSelf: 'center'
 
-    },
+    }
 
 })
 export default Schedule;

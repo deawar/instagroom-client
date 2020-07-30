@@ -22,26 +22,22 @@ const validationSchema = Yup.object().shape({
     password: Yup.string().required().nullable().label('Password')
 });
 
-const submitLogin = (loginData) => {
-    console.log(`Here is the login data:${JSON.stringify(loginData)}`)
-    Axios({
-        method: 'post',
-        url: 'https://d0caab433f52.ngrok.io/api/signin',
-        data: {
-            ...loginData
-        }
-    })
-        .then(res => {
-            console.log(res.data.error)
-            return res.data.error
-        })
-
-}
-
-
 
 const LoginScreen = ({ history }) => {
-
+    const submitLogin = (loginData) => {
+        console.log(`Here is the login data:${JSON.stringify(loginData)}`)
+        Axios({
+            method: 'post',
+            url: 'https://d0caab433f52.ngrok.io/api/signin',
+            data: {
+                ...loginData
+            }
+        })
+            .then(res => {
+                console.log(res.data.error)
+                !res.data.error ? history.push('/userpage') : null
+            }).catch(err => console.log(err))
+    }
 
     return (
         <AppScreen>
@@ -55,7 +51,7 @@ const LoginScreen = ({ history }) => {
                         password: null,
                     }}
                     onSubmit={values =>
-                        !submitLogin(values) ? history.push('/verify') : null
+                        submitLogin(values)
 
 
 
@@ -81,9 +77,27 @@ const LoginScreen = ({ history }) => {
                             />
 
 
-                            <AppButton name='submit' style={styles.button} title="Login" color='black' op={.5} onPress={handleSubmit} />
-                            <AppButton style={styles.button} title="Register" color='black' op={.5} onPress={() => history.push('/register')} />
-                            <AppButton icon='google' style={styles.button} title='Login with Google' color='black' op={.5} />
+                            <AppButton
+                                name='submit'
+                                style={styles.button}
+                                title="Login" color='black'
+                                op={.5}
+                                onPress={handleSubmit}
+                            />
+                            <AppButton
+                                style={styles.button}
+                                title="Register"
+                                color='black' op={.5}
+                                onPress={() => history.push('/register')}
+                            />
+                            <AppButton
+                                icon='google'
+                                style={styles.button}
+                                title='Login with Google'
+                                color='black'
+                                op={.5}
+                                onPress={() => history.push('./verify')}
+                            />
                         </>
                     )
                     }
