@@ -63,11 +63,11 @@ const UserRegister = ({ history, ...props }) => {
                 <ScrollView style={{ flex: 1 }}>
 
                     <AppBackButton onPress={() => history.push('/')} />
-                    <AppModal
+                    {/* <AppModal
                         buttonText={'Show Appointment'}
                         modalButtonText={'Go Back'}
                         modalText='Diane Simmons 12:30am $120'
-                    />
+                    /> */}
                     <Formik
                         initialValues={{
                             firstName: null,
