@@ -5,7 +5,6 @@ import {
     View,
     Text,
     ScrollView,
-
 } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -63,11 +62,11 @@ const UserRegister = ({ history, ...props }) => {
                 <ScrollView style={{ flex: 1 }}>
 
                     <AppBackButton onPress={() => history.push('/')} />
-                    <AppModal
+                    {/* <AppModal
                         buttonText={'Show Appointment'}
                         modalButtonText={'Go Back'}
                         modalText='Diane Simmons 12:30am $120'
-                    />
+                    /> */}
                     <Formik
                         initialValues={{
                             firstName: null,
@@ -100,6 +99,7 @@ const UserRegister = ({ history, ...props }) => {
                                         placeholder="Last Name"
                                         width='40%'
                                         onChangeText={handleChange('lastName')}
+                                        value={values.lastName}
                                     />
                                 </View>
                                 {errors.firstName && <Text style={styles.errors}>Enter first name</Text>}
@@ -159,8 +159,6 @@ const UserRegister = ({ history, ...props }) => {
                                         onChangeText={handleChange('password')}
                                     />
                                     {errors.password && <Text style={styles.errors}>Valid password Required</Text>}
-
-                                    {errors && <Text>{JSON.stringify(errors)}</Text>}
                                 </View>
                                 <AppButton
                                     icon='account-box'
