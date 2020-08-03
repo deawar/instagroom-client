@@ -259,7 +259,7 @@ const ClientInfo = ({ history }) => {
                                             style={{
                                                 fontSize: 18,
                                                 fontWeight: 'bold',
-                                                color: colors.primary
+                                                color: colors.secondary
                                             }}>Pets that have been added to client</Text>
                                         <ListItemSeperator />
                                         {values.petDetail.map((el) => {
