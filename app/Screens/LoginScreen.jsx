@@ -34,7 +34,7 @@ const LoginScreen = ({ history }) => {
             }
         })
             .then(res => {
-                console.log(res.data.error)
+                console.log(res.data)
                 !res.data.error ? history.push('/userpage') : null
             }).catch(err => console.log(err))
     }

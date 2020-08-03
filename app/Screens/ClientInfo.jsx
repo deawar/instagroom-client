@@ -9,10 +9,12 @@ import {
 import Constants from 'expo-constants'
 import { Formik } from 'formik';
 import * as Yup from 'yup'
+import Axios from 'axios'
 
 import AppTextInput2 from '../components/AppTextInput2';
 import AppButton from '../components/AppButton';
 import AppBackButton from '../components/AppBackButton';
+import ListItemSeperator from '../components/ListItemSeperator'
 import colors from '../config/colors';
 
 
@@ -27,12 +29,76 @@ const validationSchema = Yup.object().shape({
     state: Yup.string().required().nullable().min(2).max(2),
     zip: Yup.string().required().nullable().min(5),
     phone: Yup.string().required().nullable().matches(phoneRegExp, 'Enter valid phone number'),
-    country: Yup.string().required().nullable().min(3)
+    country: Yup.string().required().nullable().min(3),
+    petName: Yup.string().required().nullable(),
+    breed: Yup.string().required().nullable(),
+    gender: Yup.string().required().nullable(),
+    weight: Yup.number().required().nullable(),
+    age: Yup.number().required().nullable(),
+    medicalCondition: Yup.string().required().nullable(),
+    petDetail: Yup.array()
 });
 
 
 
 const ClientInfo = ({ history }) => {
+
+    const addPet = (petObj) => {
+
+        const { petName, breed, gender, weight, age, medicalCondition } = petObj;
+        let pet = {
+            petName,
+            breed,
+            gender,
+            weight,
+            age,
+            medicalCondition
+        }
+        console.log(pet)
+        return pet
+
+    };
+
+    const registerClient = (values) => {
+
+        const { firstName, lastName, street, city, state, zip, phone, email, petDetail } = values;
+        let numberOfPets = petDetail.length
+        let registerInfo = {
+            firstName,
+            lastName,
+            street,
+            city,
+            state,
+            zip,
+            phone,
+            email,
+            petDetail,
+            numberOfPets
+
+        }
+        console.log(registerInfo)
+        // let config = {
+        //     headers: {
+        //         Authorization: 'Bearer ' + 
+        //     }
+        // }
+
+        Axios({
+            method: 'post',
+            url: 'https://d0caab433f52.ngrok.io/api/addcustomer',
+            data: {
+                ...registerInfo
+            }
+        })
+            .then(resp => (console.log(resp.data)
+                , history.push('/clientinfo')
+            )
+
+            )
+            .catch(err => { console.log(err) })
+    }
+
+
 
     return (
 
@@ -52,13 +118,14 @@ const ClientInfo = ({ history }) => {
                         password: null,
                         country: null,
                         breed: null,
-                        dogName: null,
-                        coatLength: null,
+                        petName: null,
+                        gender: null,
                         weight: null,
                         age: null,
-                        medical: null
+                        medicalCondition: null,
+                        petDetail: [],
                     }}
-                    onSubmit={values => registerUser(values)}
+                    onSubmit={values => registerClient(values)}
                     validationSchema={validationSchema}
                 >
                     {({ handleChange, handleSubmit, errors, values }) => (
@@ -142,61 +209,83 @@ const ClientInfo = ({ history }) => {
                                     placeholder='Enter Dog Breed'
                                     width='80%'
                                     name='breed'
-                                    onChange={handleChange('breed')}
+                                    onChangeText={handleChange('breed')}
                                     value={values.breed}
                                 />
                                 <AppTextInput2
+                                    spellcheck={false}
                                     placeholder='Dogs Name'
                                     width='80%'
-                                    name='dogName'
-                                    onChange={handleChange('dogName')}
-                                    value={values.dogName}
+                                    name='perName'
+                                    onChangeText={handleChange('petName')}
+                                    value={values.petName}
                                 />
                                 <AppTextInput2
-                                    placeholder='Coat Long/Short'
+                                    placeholder='Pet Gender'
                                     width='80%'
-                                    name='coatLength'
-                                    onChange={handleChange('coatLength')}
-                                    value={values.coatLength}
+                                    name='gender'
+                                    onChangeText={handleChange('gender')}
+                                    value={values.gender}
                                 />
                                 <View style={styles.inputContainerH}>
                                     <AppTextInput2
                                         placeholder='Weight'
                                         width='45%'
                                         name='weight'
-                                        onChange={handleChange('weight')}
+                                        onChangeText={handleChange('weight')}
                                         value={values.weight}
                                     />
                                     <AppTextInput2
                                         placeholder='Age/Birthday'
                                         width='45%'
                                         name='age'
-                                        onChange={handleChange('age')}
+                                        onChangeText={handleChange('age')}
                                         value={values.age}
                                     />
                                 </View >
                                 <View style={[styles.inputContainerV, { height: 120 }]}>
                                     <AppTextInput2
-                                        placeholder='Medical Issues/Medication'
+                                        placeholder='medicalCondition Issues/Medication'
                                         width='95%'
-                                        name='medical'
-                                        onChange={handleChange('medical')}
-                                        value={values.medical}
+                                        name='medicalCondition'
+                                        onChangeText={handleChange('medicalCondition')}
+                                        value={values.medicalCondition}
                                     />
+                                    {values.petDetail[0] != undefined ? <View
+                                        style={styles.seePets}
+
+                                    >
+                                        <Text
+                                            style={{
+                                                fontSize: 18,
+                                                fontWeight: 'bold',
+                                                color: colors.secondary
+                                            }}>Pets that have been added to client</Text>
+                                        <ListItemSeperator />
+                                        {values.petDetail.map((el) => {
+                                            return <Text
+                                                style={{ alignSelf: 'center', fontSize: 16, marginBottom: 4 }}>
+                                                {`${el.petName}  ${el.breed}`}
+                                            </Text>
+
+                                        })}
+                                    </View> :
+                                        null}
                                     <AppButton
                                         icon='plus-circle'
                                         color='black'
                                         op={.7}
                                         height='45%'
                                         title='Add Pet'
+                                        onPress={() => values.petDetail.push(addPet(values))}
                                     />
                                     <AppButton
                                         icon='plus-circle-outline'
-                                        title='Add All Info'
-                                        height='45%'
                                         color='black'
                                         op={.7}
-                                        onPress={() => console.log(values)}
+                                        height='45%'
+                                        title='Add All Info'
+                                        onPress={handleSubmit}
                                     />
                                 </View>
                             </View>
@@ -248,6 +337,14 @@ const styles = StyleSheet.create({
         width: '100%',
         marginTop: 25,
         padding: 0,
+    },
+    seePets: {
+        backgroundColor: colors.white,
+        width: 350,
+        alignSelf: 'center',
+        alignItems: 'center',
+        justifyContent: "center",
+        borderRadius: 50
     }
 })
 
