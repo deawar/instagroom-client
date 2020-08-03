@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import {
     Text,
     View,
@@ -6,9 +6,9 @@ import {
     ImageBackground,
 } from 'react-native';
 
-import AppNavBar from '../components/AppNavBar'
 import AppUserButton from '../components/AppUserButton';
 import AppScreen from '../components/AppScreen';
+
 
 class UserPage extends Component {
     constructor(props) {

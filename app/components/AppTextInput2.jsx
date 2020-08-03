@@ -8,7 +8,7 @@ import {
 import colors from '../config/colors'
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
-const AppTextInput2 = ({ onChangeText, placeholder, onChange, width, name, ...props }) => {
+const AppTextInput2 = ({ onChangeText, placeholder, onChange, width, name, value, ...props }) => {
 
     return (
 
@@ -18,6 +18,7 @@ const AppTextInput2 = ({ onChangeText, placeholder, onChange, width, name, ...pr
             onChangeText={onChangeText}
             name={name}
             selectionColor={colors.danger}
+            value={value}
 
         />
 

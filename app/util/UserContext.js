@@ -2,14 +2,15 @@ import React, { useState, createContext } from 'react';
 export const UserContext = createContext();
 
 export const UserProvider = (props) => {
-    const [user, setUser] = useState(
-        {
+    const [user, setUser] = useState({
+        user: {
             userName: 'Andrew Murray',
             email: 'atmurray@bellsur.net',
             address: '3982 Beansprout ct., Atlanta, GA 30092, USA',
             phone: '123-456-7890'
-        }
-
+        },
+        token: ''
+    }
     )
 
     const [schedule, setSchedule] = useState(

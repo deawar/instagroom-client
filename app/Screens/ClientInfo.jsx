@@ -42,9 +42,7 @@ const validationSchema = Yup.object().shape({
 
 
 const ClientInfo = ({ history }) => {
-
     const addPet = (petObj) => {
-
         const { petName, breed, gender, weight, age, medicalCondition } = petObj;
         let pet = {
             petName,
@@ -56,7 +54,6 @@ const ClientInfo = ({ history }) => {
         }
         console.log(pet)
         return pet
-
     };
 
     const registerClient = (values) => {
@@ -76,7 +73,6 @@ const ClientInfo = ({ history }) => {
             numberOfPets
 
         }
-        console.log(registerInfo)
         // let config = {
         //     headers: {
         //         Authorization: 'Bearer ' + 
@@ -91,14 +87,9 @@ const ClientInfo = ({ history }) => {
             }
         })
             .then(resp => (console.log(resp.data)
-                , history.push('/clientinfo')
-            )
-
-            )
+            ))
             .catch(err => { console.log(err) })
     }
-
-
 
     return (
 
@@ -125,7 +116,10 @@ const ClientInfo = ({ history }) => {
                         medicalCondition: null,
                         petDetail: [],
                     }}
-                    onSubmit={values => registerClient(values)}
+                    onSubmit={(values, { resetForm }) => {
+                        registerClient(values)
+                        resetForm({ values: '' })
+                    }}
                     validationSchema={validationSchema}
                 >
                     {({ handleChange, handleSubmit, errors, values }) => (
@@ -289,7 +283,7 @@ const ClientInfo = ({ history }) => {
                                     />
                                 </View>
                             </View>
-                            <Text>{JSON.stringify(errors)}</Text>
+                            {/* <Text>{JSON.stringify(errors)}</Text> */}
                         </>
 
                     )
