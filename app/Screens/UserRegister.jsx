@@ -83,7 +83,7 @@ const UserRegister = ({ history, ...props }) => {
                         onSubmit={values => registerUser(values)}
                         validationSchema={validationSchema}
                     >
-                        {({ handleChange, handleSubmit, handleBlur, errors, values }) => (
+                        {({ handleChange, handleSubmit, errors, values }) => (
                             <>
                                 <View style={styles.inputsHor}>
                                     <AppTextInput2
