@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 
 import colors from '../config/colors'
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const AppTextInput2 = ({ onChangeText, placeholder, onChange, width, name, ...props }) => {
 
@@ -16,6 +17,8 @@ const AppTextInput2 = ({ onChangeText, placeholder, onChange, width, name, ...pr
             onChange={onChange}
             onChangeText={onChangeText}
             name={name}
+            selectionColor={colors.danger}
+
         />
 
     );

@@ -14,6 +14,7 @@ import Axios from 'axios'
 import AppTextInput2 from '../components/AppTextInput2';
 import AppButton from '../components/AppButton';
 import AppBackButton from '../components/AppBackButton';
+import ListItemSeperator from '../components/ListItemSeperator'
 import colors from '../config/colors';
 
 
@@ -89,7 +90,10 @@ const ClientInfo = ({ history }) => {
                 ...registerInfo
             }
         })
-            .then(resp => console.log(resp.data)
+            .then(resp => (console.log(resp.data)
+                , history.push('/clientinfo')
+            )
+
             )
             .catch(err => { console.log(err) })
     }
@@ -209,6 +213,7 @@ const ClientInfo = ({ history }) => {
                                     value={values.breed}
                                 />
                                 <AppTextInput2
+                                    spellcheck={false}
                                     placeholder='Dogs Name'
                                     width='80%'
                                     name='perName'
@@ -246,8 +251,26 @@ const ClientInfo = ({ history }) => {
                                         onChangeText={handleChange('medicalCondition')}
                                         value={values.medicalCondition}
                                     />
+                                    {values.petDetail[0] != undefined ? <View
+                                        style={styles.seePets}
 
-                                    {/* This button is to add an array to the pet array */}
+                                    >
+                                        <Text
+                                            style={{
+                                                fontSize: 18,
+                                                fontWeight: 'bold',
+                                                color: colors.primary
+                                            }}>Pets that have been added to client</Text>
+                                        <ListItemSeperator />
+                                        {values.petDetail.map((el) => {
+                                            return <Text
+                                                style={{ alignSelf: 'center', fontSize: 16, marginBottom: 4 }}>
+                                                {`${el.petName}  ${el.breed}`}
+                                            </Text>
+
+                                        })}
+                                    </View> :
+                                        null}
                                     <AppButton
                                         icon='plus-circle'
                                         color='black'
@@ -314,6 +337,14 @@ const styles = StyleSheet.create({
         width: '100%',
         marginTop: 25,
         padding: 0,
+    },
+    seePets: {
+        backgroundColor: colors.white,
+        width: 350,
+        alignSelf: 'center',
+        alignItems: 'center',
+        justifyContent: "center",
+        borderRadius: 50
     }
 })
 
