@@ -14,7 +14,6 @@ import AppButton from './AppButton'
 
 
 const DropDown = (props) => {
-
     const listData = props.data || [
         {
             key: '1',
@@ -86,21 +85,31 @@ const DropDown = (props) => {
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={styles.listItem}
-                        onPress={() => console.log(item)}
+                    // onPress={() => console.log(item)}
                     >
                         <Text style={styles.listItemText}>{item.service}  ${item.price}</Text>
                         <AppButton
                             // title='+'
                             icon='plus-box'
-                            width={70}
-                            height={70}
+                            width={80}
+                            height={80}
+                            onPress={() => props.pressAddButton({
+                                key: item.key,
+                                service: item.service,
+                                fee: item.price
+                            })}
+
                         />
                         <AppButton
                             // title='+'
                             icon='minus-box'
-                            width={70}
-                            height={70}
-                        />
+                            width={80}
+                            height={80}
+                            onPress={() => props.pressRemButton({
+                                key: item.key,
+                                service: item.service,
+                                fee: item.price
+                            })} />
                     </TouchableOpacity>
                 )}
 

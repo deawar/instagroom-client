@@ -81,7 +81,7 @@ const ClientInfo = ({ history }) => {
 
         Axios({
             method: 'post',
-            url: 'https://d0caab433f52.ngrok.io/api/addcustomer',
+            url: 'http://219fa0c35def.ngrok.io/api/addcustomer',
             data: {
                 ...registerInfo
             }

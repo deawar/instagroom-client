@@ -35,25 +35,31 @@ const validationSchema = Yup.object().shape({
 });
 
 
-const registerUser = (registerData) => {
-    console.log(`Here is the login data:${JSON.stringify(registerData)}`)
-    Axios({
-        method: 'post',
-        url: 'https://d0caab433f52.ngrok.io/api/signup',
-        data: {
-            ...registerData
-        }
-    })
-        .then(res => {
-            console.log(`Here is the response data:   ${res.data.error}`)
-        })
-        .catch(err => console.log(err))
-}
+
 
 
 
 
 const UserRegister = ({ history, ...props }) => {
+
+
+    const registerUser = (registerData) => {
+        console.log(`Here is the login data:${JSON.stringify(registerData)}`)
+        Axios({
+            method: 'post',
+            url: 'http://219fa0c35def.ngrok.io/api/signup',
+            data: {
+                ...registerData
+            }
+        })
+            .then(res => {
+                console.log(`Here is the response data:   ${res.data.error}`)
+
+            })
+            .catch(err => console.log(err))
+    }
+
+
 
 
     return (
@@ -62,11 +68,11 @@ const UserRegister = ({ history, ...props }) => {
                 <ScrollView style={{ flex: 1 }}>
 
                     <AppBackButton onPress={() => history.push('/')} />
-                    {/* <AppModal
+                    <AppModal
                         buttonText={'Show Appointment'}
                         modalButtonText={'Go Back'}
                         modalText='Diane Simmons 12:30am $120'
-                    /> */}
+                    />
                     <Formik
                         initialValues={{
                             firstName: null,

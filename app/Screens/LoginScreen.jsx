@@ -34,7 +34,7 @@ const LoginScreen = ({ history }) => {
         console.log(`Here is the login data:${JSON.stringify(loginData)}`)
         Axios({
             method: 'post',
-            url: 'https://d0caab433f52.ngrok.io/api/signin',
+            url: 'http://219fa0c35def.ngrok.io/api/signin',
             data: {
                 ...loginData
             }
@@ -60,8 +60,7 @@ const LoginScreen = ({ history }) => {
                     }}
                     onSubmit={values =>
                         submitLogin(values)
-
-
+                        // history.push('./userpage')
 
                     }
                     validationSchema={validationSchema}

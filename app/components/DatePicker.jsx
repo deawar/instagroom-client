@@ -14,7 +14,7 @@ import { UserContext } from '../util/UserContext';
 
 
 const TimeDatePicker = () => {
-    const [date, setDate] = useState(new Date(1598051730000));
+    const [date, setDate] = useState(new Date());
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
 
