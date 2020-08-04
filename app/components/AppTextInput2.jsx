@@ -36,8 +36,9 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: colors.black,
         textAlign: 'left',
-        padding: 3,
-        marginHorizontal: 5,
+        paddingVertical: 3,
+        paddingHorizontal: 10,
+        marginHorizontal: 10,
         marginVertical: 5,
 
     }

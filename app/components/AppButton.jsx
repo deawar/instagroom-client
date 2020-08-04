@@ -11,11 +11,11 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import colors from '../config/colors'
 
 const AppButton = (props) => {
-    const { title, onPress, icon, color = colors.primary, op, height = '8%' } = props;
+    const { style, title, onPress, icon, color = colors.primary, op, width = '75%', height = 50 } = props;
 
 
     return (
-        <TouchableOpacity style={[styles.button, { backgroundColor: colors[color] }, { opacity: op }, { height: height }]} onPress={onPress}>
+        <TouchableOpacity style={[styles.button, { width: width }, { backgroundColor: colors[color] }, { opacity: op }, { height: height }, { style }]} onPress={onPress}>
             {icon && <MaterialCommunityIcons
                 name={icon}
                 size={25}
