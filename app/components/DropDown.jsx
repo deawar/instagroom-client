@@ -90,14 +90,17 @@ const DropDown = (props) => {
                     >
                         <Text style={styles.listItemText}>{item.service}  ${item.price}</Text>
                         <AppButton
-                            name='plus-box'
-                            color='dark'
-                            width={35}
-                            height={35}
+                            // title='+'
+                            icon='plus-box'
+                            width={70}
+                            height={70}
                         />
-                        {/* <TouchableOpacity
-                            style={styles.listButton}
-                        ><Text style={{ fontSize: 24, color: colors.white }}>+</Text></TouchableOpacity> */}
+                        <AppButton
+                            // title='+'
+                            icon='minus-box'
+                            width={70}
+                            height={70}
+                        />
                     </TouchableOpacity>
                 )}
 
@@ -127,26 +130,22 @@ const styles = StyleSheet.create({
     listItem: {
         height: 50,
         width: 300,
-        backgroundColor: colors.light,
-        borderWidth: 2,
-        borderColor: colors.danger,
+        backgroundColor: colors.dark,
         borderRadius: 3,
         marginVertical: 3,
+        marginHorizontal: 5,
         alignItems: 'center',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        borderRadius: 30,
+        opacity: .75
     },
     listItemText: {
         fontSize: 16,
         fontWeight: 'bold',
+        color: colors.white,
+        marginLeft: 8
     },
-    listButton: {
-        height: 25,
-        width: 25,
-        backgroundColor: colors.dark,
-        borderRadius: 2,
-        borderColor: colors.black,
-        alignItems: 'center',
-    }
+
 })
 
 export default DropDown;
