@@ -44,7 +44,10 @@ const SetAppointment = ({ history }) => {
             fee += parseFloat(el.fee)
         })
         values.totalFee = fee.toString()
+        // values.appointmentDate = '2020-03-10T23'
         console.log(values)
+
+
 
         // Axios({
         //     method: 'post',
@@ -57,6 +60,9 @@ const SetAppointment = ({ history }) => {
         //         console.log(res.data)
         //     })
         //     .catch(err => console.log(err))
+
+
+
 
     }
     let currentDate = new Date();
