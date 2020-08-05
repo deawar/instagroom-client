@@ -44,7 +44,7 @@ const SetAppointment = ({ history }) => {
             fee += parseFloat(el.fee)
         })
         values.totalFee = fee.toString()
-        values.appointmentDate = 'Aug 4 2020'
+        values.appointmentDate = scheduleValue.dayToSet
         values.appointmentTime = scheduleValue.timeToSet
         console.log(values.appointmentTime + ' :' + values.appointmentDate)
         console.log(values)

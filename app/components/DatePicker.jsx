@@ -13,10 +13,12 @@ import AppButton from '../components/AppButton'
 import { UserContext } from '../util/UserContext';
 
 
-const TimeDatePicker = () => {
+const TimeDatePicker = ({ showTime }) => {
     const [date, setDate] = useState(new Date());
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
+
+    // const [showTime, setShowTime] = useState(showTime)
 
     const { schedule } = useContext(UserContext);
     const [scheduleValue, setSchedule] = schedule;
@@ -26,8 +28,9 @@ const TimeDatePicker = () => {
         const currentDate = selectedDate || date;
         setShow(Platform.OS === 'ios');
         setDate(currentDate);
-        let day = Moment(currentDate).tz('America/New_York').format('MMMM Do YYYY')
+        let day = Moment(currentDate).tz('America/New_York').format('ll')
         let time = Moment(currentDate).tz('America/New_York').format('h:mm a z')
+        console.log(day)
         console.log(time)
 
         setSchedule({
@@ -57,9 +60,11 @@ const TimeDatePicker = () => {
             <View style={styles.button} >
                 <Button style={{ fontWeight: 'bold' }} onPress={showDatepicker} title="APPOINTMENT DATE" />
             </View>
-            <View style={styles.button}>
-                <Button onPress={showTimepicker} title={'Time'} />
-            </View>
+            {showTime &&
+                <View style={styles.button}>
+                    <Button onPress={showTimepicker} title={'Time'} />
+                </View>
+            }
             {show && (
                 <DateTimePicker
                     style={styles.picker}
