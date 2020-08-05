@@ -8,6 +8,8 @@ import {
 } from 'react-native';
 import * as Yup from 'yup'
 import { Formik } from 'formik'
+import Moment from 'moment-timezone'
+import Axios from 'axios'
 
 
 
@@ -20,11 +22,13 @@ import colors from '../config/colors';
 import AppBackButton from '../components/AppBackButton';
 import AppTextArea from '../components/AppTextArea'
 import { UserContext } from '../util/UserContext'
+import DropDown from '../components/DropDown';
+import ListItemSeperator from '../components/ListItemSeperator'
 
 
 const validationSchema = Yup.object().shape({
-    email: Yup.string().required().nullable().label('Email'),
-    clientName: Yup.string().required().nullable().label('Client Name')
+    customerEmail: Yup.string().required().email().label('Email'),
+    customerName: Yup.string().required().nullable().label('Client Name')
 });
 
 
@@ -32,106 +36,150 @@ const validationSchema = Yup.object().shape({
 
 const SetAppointment = ({ history }) => {
     const { user, schedule } = useContext(UserContext);
-    const [userValue, setUser] = user;
     const [scheduleValue, setSchedule] = schedule;
 
-
     const checkAndCreateAppointment = (values) => {
+        let fee = 0
+        values.petServices.map(el => {
+            fee += parseFloat(el.fee)
+        })
+        values.totalFee = fee.toString()
+        values.appointmentDate = 'Aug 4 2020'
+        values.appointmentTime = scheduleValue.timeToSet
+        console.log(values.appointmentTime + ' :' + values.appointmentDate)
         console.log(values)
 
 
+
+        Axios({
+            method: 'post',
+            url: 'http://219fa0c35def.ngrok.io/api/addAppointment',
+            data: {
+                ...values
+            }
+        })
+            .then(res => {
+                console.log(res.data)
+            })
+            .catch(err => console.log(err))
+
+
+
+
     }
+    let currentDate = new Date();
 
+    const addService = (service) => {
 
-
-
-
+    }
 
     return (
 
         <AppScreen>
-            <ImageBackground style={styles.container} blurRadius={10} source={require('../../assets/dog_schedule.jpg')} >
-                <ScrollView>
-                    <View style={{ alignContent: 'center', paddingHorizontal: '10%' }}>
-                        <Formik
-                            initialValues={{
-                                clientName: 'Andrew Murray',
-                                email: 'atmurray@bellsur.net',
-                                services: ['haircut $22.00', 'shampoo $10.00 ', 'fluff $7.00'],
-                                fee: '$39.00',
-                                date: 'October 21st 2020',
-                                time: '7:15 pm EDT',
-                                notes: 'Pepper (Dalmation) is allergic to teatree shampoo'
-                            }}
-                            onSubmit={values => checkAndCreateAppointment(values)}
-                            validationSchema={validationSchema}
-                        >
-                            {({ handleChange, handleSubmit, handleBlur, errors, values }) => (
-                                <>
-                                    <AppBackButton onPress={() => history.push('/userpage')} />
-                                    <Text style={styles.header}>Set Next Appointment</Text>
-                                    <View style={styles.picker}>
-                                        <TimeDatePicker onChange={console.log(scheduleValue.timeToSet + ' ' + scheduleValue.dayToSet)} />
-                                    </View>
-                                    <View style={{ alignContent: 'flex-start' }}>
-                                        <Text style={styles.header} >Services Detail</Text>
-                                        <AppTextInput2
-                                            placeholder='Client Name'
-                                            width='90%'
-                                            name='clientName'
-                                            onChangeText={handleChange('clientName')}
-                                            value={values.clientName}
-                                        />
-                                        <AppTextInput2
-                                            placeholder='Client email'
-                                            width='90%'
-                                            name='email'
-                                            onChangeText={handleChange('email')}
-                                            value={values.email} />
-                                        <AppTextArea
-                                            placeholder='Services'
-                                            name='services'
-                                            // onChangeText={handleChange('services')}
-                                            value={values.services}
-                                        />
-                                        <AppTextArea
-                                            placeholder='Comments/Notes/Medical'
-                                            name='notes'
-                                            onChange={handleChange('notes')}
-                                            value={values.notes}
-                                        />
-                                    </View>
-                                    <View style={{ alignContent: 'flex-start', justifyContent: 'center' }}>
+            <ImageBackground style={styles.container} blurRadius={5} source={require('../../assets/dog_schedule.jpg')} >
+                <View style={{ flex: 1, alignContent: 'center' }}>
+                    <Formik
+                        initialValues={{
+                            customerName: '',
+                            customerEmail: '',
+                            petServices: [],
+                            totalFee: '0',
+                            appointmentDate: Moment(currentDate).tz('America/New_York').format('MMMM Do YYYY'),
+                            appointmentTime: Moment(currentDate).tz('America/New_York').format('h:mm a z'),
+                            notes: 'Pepper (Dalmation) is allergic to teatree shampoo'
+                        }}
+                        onSubmit={values => checkAndCreateAppointment(values)}
+                        validationSchema={validationSchema}
+                    >
+                        {({ handleChange, handleSubmit, errors, values }) => (
+                            <>
+                                <AppBackButton onPress={() => history.push('/userpage')} />
+                                <Text style={styles.header}>Set Next Appointment</Text>
+                                <View style={styles.picker}>
+                                    <TimeDatePicker />
+                                </View>
+                                <View style={{
+                                    marginVertical: 10,
+                                    alignSelf: 'center',
+                                    backgroundColor: colors.dark,
+                                    opacity: .75
 
-                                        <Text style={styles.header}>Send ETA to next Appointment</Text>
-                                        <AppRadioButton
-                                            style={styles.button}
-                                            textcolor='white'
-                                            text='Add 30 minutes to travel time'
-                                        />
-                                        <AppRadioButton
-                                            style={styles.button}
-                                            textcolor='white'
-                                            text='Use ETA given by Google Maps'
-                                        />
-                                    </View>
-                                    <AppButton
-                                        icon='dog'
-                                        title='Confirm'
-                                        color='medium'
-                                        op={.75}
-                                        onPress={handleSubmit}
-                                        height={'12%'}
+
+                                }}>
+                                    <Text style={styles.header}>Current Appointment Time to Set</Text>
+                                    <Text style={styles.header}>{scheduleValue.dayToSet}    {scheduleValue.timeToSet}</Text>
+                                </View>
+
+                                <View style={{ flex: 1, alignContent: 'flex-start' }}>
+                                    <Text style={styles.header} >Services Detail</Text>
+                                    <AppTextInput2
+                                        placeholder='Client Name'
+                                        width='90%'
+                                        name='customerName'
+                                        onChangeText={handleChange('customerName')}
+                                        value={values.customerName}
                                     />
-                                </>
-                            )}
-                        </Formik>
+                                    <AppTextInput2
+                                        placeholder='Client Email'
+                                        width='90%'
+                                        name='customerEmail'
+                                        onChangeText={handleChange('customerEmail')}
+                                        value={values.customerEmail}
+                                    />
+                                    {errors.customerEmail && <Text style={styles.errors}>Enter Valid Email</Text>}
+                                    <AppTextInput2
+                                        placeholder='Notes'
+                                        width='90%'
+                                        name='notes'
+                                        onChangeText={handleChange('notes')}
+                                        value={values.notes}
+                                    />
+                                    <DropDown
+                                        height={75}
+                                        title='Services'
+                                        pressAddButton={(item) => {
+                                            (values.petServices.find(el => {
+                                                return el.service === item.service
+                                            }) ?
+                                                console.log('service already exists') :
+                                                values.petServices.push(item)
+                                            )
+                                        }}
+                                        pressRemButton={(item) => {
+                                            (
+                                                values.petServices = values.petServices.filter((el => {
+                                                    return el.service !== item.service
+                                                }))
+                                            )
+                                        }}
+                                    />
 
-                    </View>
-                </ScrollView>
+
+                                </View>
+
+
+                                {values.petServices.map(el => {
+                                    return <Text style={styles.serviceList} key={el.key} >{el.service}  {el.price}</Text>
+
+                                })
+                                }
+                                <AppButton
+                                    icon='dog'
+                                    title='Confirm'
+                                    color='dark'
+                                    type='submit'
+                                    op={.75}
+                                    onPress={handleSubmit}
+                                    height={'15%'}
+                                />
+                            </>
+                        )}
+                    </Formik>
+
+                </View>
             </ImageBackground>
 
-        </AppScreen>
+        </AppScreen >
     );
 
 
@@ -145,14 +193,20 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        alignItems: 'flex-start',
-        paddingLeft: 15,
         paddingTop: 10,
+        paddingHorizontal: 5,
+
+    },
+    errors: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: colors.secondary
     },
     header: {
         fontSize: 20,
         fontWeight: 'bold',
         color: colors.white,
+
     },
     button: {
         marginVertical: 10,
@@ -163,6 +217,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-
+    serviceList: {
+        fontSize: 18,
+        color: colors.white,
+        alignSelf: 'center'
+    }
 })
 export default SetAppointment;

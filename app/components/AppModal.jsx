@@ -8,7 +8,7 @@ import {
     View
 } from "react-native";
 
-const App = ({ buttonText = 'show', modalButtonText = 'hide', modalText = 'modal text', children }) => {
+const AppModal = ({ buttonText = 'show', modalButtonText = 'hide', modalText = 'modal text', children }) => {
     const [modalVisible, setModalVisible] = useState(false);
     return (
         <View style={styles.centeredView}>
@@ -88,4 +88,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default App;
+export default AppModal;

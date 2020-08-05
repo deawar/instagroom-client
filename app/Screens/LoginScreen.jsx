@@ -17,6 +17,7 @@ import AppModal from '../components/AppModal'
 import { UserContext } from '../util/UserContext'
 
 
+
 const validationSchema = Yup.object().shape({
     email: Yup.string().required().nullable().label('Email'),
     password: Yup.string().required().nullable().label('Password')
@@ -24,6 +25,11 @@ const validationSchema = Yup.object().shape({
 
 
 const LoginScreen = ({ history }) => {
+    const { user } = useContext(UserContext);
+
+    const [userValue, setUser] = user;
+
+
     const submitLogin = (loginData) => {
         console.log(`Here is the login data:${JSON.stringify(loginData)}`)
         Axios({
@@ -34,9 +40,11 @@ const LoginScreen = ({ history }) => {
             }
         })
             .then(res => {
-                console.log(res.data)
+                // console.log(res.data.data.token)
+                setUser({ ...userValue, token: res.data.data.token })
                 !res.data.error ? history.push('/userpage') : null
             }).catch(err => console.log(err))
+
     }
 
     return (
@@ -51,9 +59,8 @@ const LoginScreen = ({ history }) => {
                         password: null,
                     }}
                     onSubmit={values =>
-                        submitLogin(values)
-
-
+                        // submitLogin(values)
+                        history.push('./userpage')
 
                     }
                     validationSchema={validationSchema}

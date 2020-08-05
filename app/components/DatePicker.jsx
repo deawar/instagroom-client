@@ -14,7 +14,7 @@ import { UserContext } from '../util/UserContext';
 
 
 const TimeDatePicker = () => {
-    const [date, setDate] = useState(new Date(1598051730000));
+    const [date, setDate] = useState(new Date());
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
 
@@ -28,6 +28,8 @@ const TimeDatePicker = () => {
         setDate(currentDate);
         let day = Moment(currentDate).tz('America/New_York').format('MMMM Do YYYY')
         let time = Moment(currentDate).tz('America/New_York').format('h:mm a z')
+        console.log(time)
+
         setSchedule({
             ...scheduleValue,
             timeToSet: time,
