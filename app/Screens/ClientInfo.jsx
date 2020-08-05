@@ -81,7 +81,7 @@ const ClientInfo = ({ history }) => {
 
         Axios({
             method: 'post',
-            url: 'http://219fa0c35def.ngrok.io/api/addcustomer',
+            url: 'https://www.instagroom.me/api/addcustomer',
             data: {
                 ...registerInfo
             }
