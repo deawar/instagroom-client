@@ -34,13 +34,13 @@ const LoginScreen = ({ history }) => {
         console.log(`Here is the login data:${JSON.stringify(loginData)}`)
         Axios({
             method: 'post',
-            url: 'https://d0caab433f52.ngrok.io/api/signin',
+            url: 'instagroom.me/api/signin',
             data: {
                 ...loginData
             }
         })
             .then(res => {
-                // console.log(res.data.data.token)
+                console.log(res)
                 setUser({ ...userValue, token: res.data.data.token })
                 !res.data.error ? history.push('/userpage') : null
             }).catch(err => console.log(err))

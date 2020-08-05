@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import {
     Text,
     View,
@@ -31,8 +31,22 @@ const currentTime = (time) => {
 
 }
 
+
+
 const Schedule = ({ history }) => {
+
+
+
+    useEffect(() => {
+        console.log('The screen has loaded')
+
+    }, [])
+
+
     return (
+
+
+
 
         <AppScreen>
             <ImageBackground style={styles.container} blurRadius={2} source={require('../../assets/dog_book.jpg')} >
