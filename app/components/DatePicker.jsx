@@ -28,6 +28,8 @@ const TimeDatePicker = () => {
         setDate(currentDate);
         let day = Moment(currentDate).tz('America/New_York').format('MMMM Do YYYY')
         let time = Moment(currentDate).tz('America/New_York').format('h:mm a z')
+        console.log(time)
+
         setSchedule({
             ...scheduleValue,
             timeToSet: time,

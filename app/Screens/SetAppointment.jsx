@@ -44,22 +44,24 @@ const SetAppointment = ({ history }) => {
             fee += parseFloat(el.fee)
         })
         values.totalFee = fee.toString()
-        // values.appointmentDate = '2020-03-10T23'
+        values.appointmentDate = 'Aug 4 2020'
+        values.appointmentTime = scheduleValue.timeToSet
+        console.log(values.appointmentTime + ' :' + values.appointmentDate)
         console.log(values)
 
 
 
-        // Axios({
-        //     method: 'post',
-        //     url: 'http://219fa0c35def.ngrok.io/api/addAppointment',
-        //     data: {
-        //         ...values
-        //     }
-        // })
-        //     .then(res => {
-        //         console.log(res.data)
-        //     })
-        //     .catch(err => console.log(err))
+        Axios({
+            method: 'post',
+            url: 'http://219fa0c35def.ngrok.io/api/addAppointment',
+            data: {
+                ...values
+            }
+        })
+            .then(res => {
+                console.log(res.data)
+            })
+            .catch(err => console.log(err))
 
 
 
