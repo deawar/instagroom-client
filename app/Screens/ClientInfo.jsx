@@ -73,11 +73,7 @@ const ClientInfo = ({ history }) => {
             numberOfPets
 
         }
-        // let config = {
-        //     headers: {
-        //         Authorization: 'Bearer ' + 
-        //     }
-        // }
+
 
         Axios({
             method: 'post',

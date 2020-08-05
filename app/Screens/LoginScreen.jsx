@@ -40,7 +40,7 @@ const LoginScreen = ({ history }) => {
             }
         })
             .then(res => {
-                // console.log(res.data.data.token)
+                console.log(res)
                 setUser({ ...userValue, token: res.data.data.token })
                 !res.data.error ? history.push('/userpage') : null
             }).catch(err => console.log(err))
