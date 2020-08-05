@@ -53,7 +53,7 @@ const SetAppointment = ({ history }) => {
 
         Axios({
             method: 'post',
-            url: 'http://219fa0c35def.ngrok.io/api/addAppointment',
+            url: 'https://www.instagroom.me/api/addAppointment',
             data: {
                 ...values
             }
@@ -179,7 +179,7 @@ const SetAppointment = ({ history }) => {
                 </View>
             </ImageBackground>
 
-        </AppScreen >
+        </AppScreen>
     );
 
 

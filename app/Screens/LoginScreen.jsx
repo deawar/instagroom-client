@@ -34,7 +34,7 @@ const LoginScreen = ({ history }) => {
         console.log(`Here is the login data:${JSON.stringify(loginData)}`)
         Axios({
             method: 'post',
-            url: 'instagroom.me/api/signin',
+            url: 'https://www.instagroom.me/api/signin',
             data: {
                 ...loginData
             }
