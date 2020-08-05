@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         padding: 15,
         borderRadius: 5,
-        // opacity: .7,
     },
     text: {
         fontSize: 18,
@@ -50,7 +49,7 @@ const styles = StyleSheet.create({
     icon: {
         color: colors.white,
         // backgroundColor: colors.white,
-        marginRight: 15,
+        marginRight: 5,
 
 
     }

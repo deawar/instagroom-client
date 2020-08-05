@@ -9,6 +9,7 @@ import {
 import * as Yup from 'yup'
 import { Formik } from 'formik'
 import Moment from 'moment-timezone'
+import Axios from 'axios'
 
 
 
@@ -22,6 +23,7 @@ import AppBackButton from '../components/AppBackButton';
 import AppTextArea from '../components/AppTextArea'
 import { UserContext } from '../util/UserContext'
 import DropDown from '../components/DropDown';
+import ListItemSeperator from '../components/ListItemSeperator'
 
 
 const validationSchema = Yup.object().shape({
@@ -34,12 +36,27 @@ const validationSchema = Yup.object().shape({
 
 const SetAppointment = ({ history }) => {
     const { user, schedule } = useContext(UserContext);
-    const [userValue, setUser] = user;
     const [scheduleValue, setSchedule] = schedule;
 
-
     const checkAndCreateAppointment = (values) => {
+        let fee = 0
+        values.petServices.map(el => {
+            fee += parseFloat(el.fee)
+        })
+        values.totalFee = fee.toString()
         console.log(values)
+
+        // Axios({
+        //     method: 'post',
+        //     url: 'http://219fa0c35def.ngrok.io/api/addAppointment',
+        //     data: {
+        //         ...values
+        //     }
+        // })
+        //     .then(res => {
+        //         console.log(res.data)
+        //     })
+        //     .catch(err => console.log(err))
 
     }
     let currentDate = new Date();
@@ -52,14 +69,13 @@ const SetAppointment = ({ history }) => {
 
         <AppScreen>
             <ImageBackground style={styles.container} blurRadius={5} source={require('../../assets/dog_schedule.jpg')} >
-                {/* <ScrollView> */}
                 <View style={{ flex: 1, alignContent: 'center' }}>
                     <Formik
                         initialValues={{
-                            customerName: 'Andrew Murray',
-                            customerEmail: 'atmurray@bellsur.net',
+                            customerName: '',
+                            customerEmail: '',
                             petServices: [],
-                            fee: '$39.00',
+                            totalFee: '0',
                             appointmentDate: Moment(currentDate).tz('America/New_York').format('MMMM Do YYYY'),
                             appointmentTime: Moment(currentDate).tz('America/New_York').format('h:mm a z'),
                             notes: 'Pepper (Dalmation) is allergic to teatree shampoo'
@@ -74,7 +90,14 @@ const SetAppointment = ({ history }) => {
                                 <View style={styles.picker}>
                                     <TimeDatePicker />
                                 </View>
-                                <View style={{ marginVertical: 10 }}>
+                                <View style={{
+                                    marginVertical: 10,
+                                    alignSelf: 'center',
+                                    backgroundColor: colors.dark,
+                                    opacity: .75
+
+
+                                }}>
                                     <Text style={styles.header}>Current Appointment Time to Set</Text>
                                     <Text style={styles.header}>{scheduleValue.dayToSet}    {scheduleValue.timeToSet}</Text>
                                 </View>
@@ -96,24 +119,42 @@ const SetAppointment = ({ history }) => {
                                         value={values.customerEmail}
                                     />
                                     {errors.customerEmail && <Text style={styles.errors}>Enter Valid Email</Text>}
+                                    <AppTextInput2
+                                        placeholder='Notes'
+                                        width='90%'
+                                        name='notes'
+                                        onChangeText={handleChange('notes')}
+                                        value={values.notes}
+                                    />
                                     <DropDown
                                         height={75}
                                         title='Services'
                                         pressAddButton={(item) => {
-                                            (
-                                                values.petServices.push(item),
-                                                console.log(values.petServices)
+                                            (values.petServices.find(el => {
+                                                return el.service === item.service
+                                            }) ?
+                                                console.log('service already exists') :
+                                                values.petServices.push(item)
                                             )
                                         }}
                                         pressRemButton={(item) => {
-                                            values.petServices = values.petServices.filter((el => {
-                                                return el.service !== item.service
-                                            }))
+                                            (
+                                                values.petServices = values.petServices.filter((el => {
+                                                    return el.service !== item.service
+                                                }))
+                                            )
                                         }}
                                     />
 
+
                                 </View>
 
+
+                                {values.petServices.map(el => {
+                                    return <Text style={styles.serviceList} key={el.key} >{el.service}  {el.price}</Text>
+
+                                })
+                                }
                                 <AppButton
                                     icon='dog'
                                     title='Confirm'
@@ -121,7 +162,7 @@ const SetAppointment = ({ history }) => {
                                     type='submit'
                                     op={.75}
                                     onPress={handleSubmit}
-                                    height={'8%'}
+                                    height={'15%'}
                                 />
                             </>
                         )}
@@ -144,9 +185,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        alignItems: 'center',
-        paddingLeft: 15,
         paddingTop: 10,
+        paddingHorizontal: 5,
 
     },
     errors: {
@@ -158,6 +198,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         color: colors.white,
+
     },
     button: {
         marginVertical: 10,
@@ -168,6 +209,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-
+    serviceList: {
+        fontSize: 18,
+        color: colors.white,
+        alignSelf: 'center'
+    }
 })
 export default SetAppointment;

@@ -91,8 +91,8 @@ const DropDown = (props) => {
                         <AppButton
                             // title='+'
                             icon='plus-box'
-                            width={80}
-                            height={80}
+                            width={60}
+                            height={60}
                             onPress={() => props.pressAddButton({
                                 key: item.key,
                                 service: item.service,
@@ -134,11 +134,13 @@ const styles = StyleSheet.create({
     container: {
         paddingTop: 5,
         alignItems: "center",
-        height: 300,
+        height: 150,
+        width: 400,
+        zIndex: 9999
     },
     listItem: {
         height: 50,
-        width: 300,
+        width: 370,
         backgroundColor: colors.dark,
         borderRadius: 3,
         marginVertical: 3,
@@ -146,7 +148,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         borderRadius: 30,
-        opacity: .75
+        opacity: .75,
     },
     listItemText: {
         fontSize: 16,
