@@ -5,9 +5,13 @@ import {
     StyleSheet,
     ImageBackground,
     ScrollView,
+    FlatList,
+    TouchableHighlight,
+    TouchableOpacity,
 } from 'react-native';
 import Constants from 'expo-constants'
 import Moment from 'moment'
+import Axios from 'axios'
 
 import TimeDatePicker from '../components/DatePicker'
 import AppButton from '../components/AppButton';
@@ -19,6 +23,8 @@ import AppBackButton from '../components/AppBackButton';
 import AppRouteButton from '../components/AppRouteButton';
 import AppTextArea from '../components/AppTextArea';
 import DatePicker from '../components/DatePicker'
+import { date } from 'yup';
+import AppModal from '../components/AppModal';
 
 
 
@@ -28,17 +34,74 @@ const clients = {
 
 const currentTime = (time) => {
 
-
 }
-
-
 
 const Schedule = ({ history }) => {
 
+    const appointments = [
+        {
+            appointmentDate: 'Aug 5, 2020',
+            appointmentTime: '7:15 pm EDT',
+            customerName: 'Jacob Smith',
+            customerEmail: 'jacob_smith@yahoo.com',
+            notes: 'Tomtom (Dachshund) is allergic to teatree shampoo',
+            totalFee: '39.00',
+            petService: [
+                {
+                    'service': 'Haircut',
+                    'fee': '22.00'
+                },
+                {
+                    'service': 'Shampoo',
+                    'fee': '10.00'
+                },
+                {
+                    'service': 'Fluff',
+                    'fee': '7.00'
+                }
+            ]
+        },
+        {
+            appointmentDate: 'Aug 5, 2020',
+            appointmentTime: '8:15 pm EDT',
+            customerName: 'John Smith',
+            customerEmail: 'jsmith@yahoo.com',
+            notes: 'Clarice is allergic to wool',
+            totalFee: '39.00',
+            petService: [
+                {
+                    'service': 'Haircut',
+                    'fee': '22.00'
+                },
+                {
+                    'service': 'Shampoo',
+                    'fee': '10.00'
+                },
+                {
+                    'service': 'Fluff',
+                    'fee': '7.00'
+                }
+            ]
+        }
+
+    ]
 
 
     useEffect(() => {
         console.log('The screen has loaded')
+        let currentDate = new Date();
+        let todayDate = Moment(currentDate).tz('America/New_York').format('ll')
+        console.log(todayDate)
+
+        // Axios({
+        //     method: 'get',
+        //     url: `https://www.instagroom.me/api/:${date}`
+
+        //         .then(res => {
+        //             console.log(res.data)
+        //         })
+        //         .catch(err => console.log(err))
+
 
     }, [])
 
@@ -51,17 +114,40 @@ const Schedule = ({ history }) => {
         <AppScreen>
             <ImageBackground style={styles.container} blurRadius={2} source={require('../../assets/dog_book.jpg')} >
                 <View style={styles.transparent} />
-                <ScrollView style={styles.scroll}>
+                <View style={styles.items}>
                     <View style={[styles.styleHorizontal, { justifyContent: 'space-between' }]}>
                         <AppBackButton onPress={() => history.push('/userpage')} />
                         <AppRouteButton onPress={() => history.push('/route')} />
                     </View>
                     <View style={[styles.styleVertical, { alignItems: 'center' }]}>
                         <Text style={styles.textHeader}> Schedule for Andrew Murray</Text>
-                        <DatePicker />
+                        <DatePicker showTime={false} />
                     </View>
+                    <ScrollView style={styles.appointmentScroll}>
+                        {
+                            appointments.map(el => {
+                                let services = '|'
+                                el.petService.forEach(item => {
+                                    console.log(services)
+                                    services += item.service + ' |'
+                                })
 
-                </ScrollView>
+                                return <AppModal
+                                    buttonText={el.customerName + ' ' + el.appointmentDate + el.appointmentTime}
+                                    modalText={el.fee + services}
+                                    children={
+                                        <TouchableOpacity style={{ backgroundColor: colors.primary, marginTop: 5, height: 25, width: 60 }}>
+                                            <Text style={{ color: colors.white, fontWeight: 'bold' }} >Billed?</Text>
+                                        </TouchableOpacity>
+                                    }
+
+
+                                />
+                            })
+                        }
+                    </ScrollView>
+
+                </View>
 
             </ImageBackground>
 
@@ -75,11 +161,13 @@ const Schedule = ({ history }) => {
 
 
 const styles = StyleSheet.create({
-
+    appointmentScroll: {
+        backgroundColor: colors.white,
+    },
     container: {
         flex: 1,
     },
-    scroll: {
+    items: {
         flex: 1,
         flexDirection: 'column',
         borderWidth: 2,

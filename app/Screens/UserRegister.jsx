@@ -47,7 +47,7 @@ const UserRegister = ({ history, ...props }) => {
         console.log(`Here is the login data:${JSON.stringify(registerData)}`)
         Axios({
             method: 'post',
-            url: 'http://219fa0c35def.ngrok.io/api/signup',
+            url: 'https://www.instagroom.me/api/signup',
             data: {
                 ...registerData
             }

@@ -7,6 +7,7 @@ import {
     TouchableHighlight,
     View
 } from "react-native";
+import colors from "../config/colors";
 
 const AppModal = ({ buttonText = 'show', modalButtonText = 'hide', modalText = 'modal text', children }) => {
     const [modalVisible, setModalVisible] = useState(false);
@@ -32,6 +33,7 @@ const AppModal = ({ buttonText = 'show', modalButtonText = 'hide', modalText = '
                         >
                             <Text style={styles.textStyle}>{modalButtonText}</Text>
                         </TouchableHighlight>
+                        {children}
                     </View>
                 </View>
             </Modal>
@@ -62,7 +64,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 35,
         alignItems: "center",
-        shadowColor: "#000",
+        shadowColor: colors.black,
         shadowOffset: {
             width: 0,
             height: 2
@@ -72,13 +74,13 @@ const styles = StyleSheet.create({
         elevation: 5
     },
     openButton: {
-        backgroundColor: "#F194FF",
+        backgroundColor: colors.dark,
         borderRadius: 20,
         padding: 10,
         elevation: 2
     },
     textStyle: {
-        color: "white",
+        color: colors.white,
         fontWeight: "bold",
         textAlign: "center"
     },

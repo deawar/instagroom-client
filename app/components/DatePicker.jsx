@@ -13,12 +13,11 @@ import AppButton from '../components/AppButton'
 import { UserContext } from '../util/UserContext';
 
 
-const TimeDatePicker = ({ showTime }) => {
+const TimeDatePicker = ({ showTime = true }) => {
     const [date, setDate] = useState(new Date());
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
 
-    // const [showTime, setShowTime] = useState(showTime)
 
     const { schedule } = useContext(UserContext);
     const [scheduleValue, setSchedule] = schedule;

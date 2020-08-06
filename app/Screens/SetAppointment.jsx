@@ -53,7 +53,7 @@ const SetAppointment = ({ history }) => {
 
         Axios({
             method: 'post',
-            url: 'http://219fa0c35def.ngrok.io/api/addAppointment',
+            url: 'https://www.instagroom.me/api/addAppointment',
             data: {
                 ...values
             }
@@ -86,7 +86,7 @@ const SetAppointment = ({ history }) => {
                             totalFee: '0',
                             appointmentDate: Moment(currentDate).tz('America/New_York').format('MMMM Do YYYY'),
                             appointmentTime: Moment(currentDate).tz('America/New_York').format('h:mm a z'),
-                            notes: 'Pepper (Dalmation) is allergic to teatree shampoo'
+                            notes: ''
                         }}
                         onSubmit={values => checkAndCreateAppointment(values)}
                         validationSchema={validationSchema}
