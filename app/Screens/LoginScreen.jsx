@@ -29,9 +29,7 @@ const validationSchema = Yup.object().shape({
 
 const LoginScreen = ({ history }) => {
     const { user } = useContext(UserContext);
-
     const [userValue, setUser] = user;
-
 
 
     const submitLogin = (loginData) => {
@@ -111,14 +109,14 @@ const LoginScreen = ({ history }) => {
                                 color='black' op={.5}
                                 onPress={() => history.push('/register')}
                             />
-                            <AppButton
+                            {/* <AppButton
                                 icon='google'
                                 style={styles.button}
                                 title='Login with Google'
                                 color='black'
                                 op={.5}
                                 onPress={() => history.push('./verify')}
-                            />
+                            /> */}
                         </>
                     )
                     }
@@ -143,7 +141,7 @@ const styles = StyleSheet.create({
     },
     button: {
 
-        bottom: 20,
+        bottom: 50
 
     }
 });

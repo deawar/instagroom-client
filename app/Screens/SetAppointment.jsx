@@ -49,8 +49,6 @@ const SetAppointment = ({ history }) => {
         console.log(values.appointmentTime + ' :' + values.appointmentDate)
         console.log(values)
 
-
-
         Axios({
             method: 'post',
             url: 'https://www.instagroom.me/api/addAppointment',

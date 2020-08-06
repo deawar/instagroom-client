@@ -1,13 +1,11 @@
-import React, { Component, useEffect } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import {
     Text,
     View,
     StyleSheet,
     ImageBackground,
     ScrollView,
-    FlatList,
-    TouchableHighlight,
-    TouchableOpacity,
+
 } from 'react-native';
 import Constants from 'expo-constants'
 import Moment from 'moment'
@@ -23,8 +21,9 @@ import AppBackButton from '../components/AppBackButton';
 import AppRouteButton from '../components/AppRouteButton';
 import AppTextArea from '../components/AppTextArea';
 import DatePicker from '../components/DatePicker'
-import { date } from 'yup';
 import AppModal from '../components/AppModal';
+import { UserContext } from '../util/UserContext'
+
 
 
 
@@ -32,12 +31,13 @@ const clients = {
 
 }
 
-const currentTime = (time) => {
 
-}
 
 const Schedule = ({ history }) => {
 
+    const { schedule } = useContext(UserContext);
+    const [scheduleValue, setSchedule] = schedule;
+    const currentDate = Moment(new Date()).tz('America/New_York').format('ll')
     const appointments = [
         {
             appointmentDate: 'Aug 5, 2020',
@@ -85,34 +85,61 @@ const Schedule = ({ history }) => {
         }
 
     ]
+    const [displayAppointments, setDisplayAppointments] = useState(appointments)
+
+    const currentAppontments = (date) => {
+        date === null ? console.log(currentDate) : console.log(date)
+        date === null ?
+            Axios({
+                method: 'get',
+                url: `https://www.instagroom.me/api/findappointment/${currentDate}`
+            })
+                .then(res => {
+                    console.log(res.data)
+                })
+                .catch(err => console.log(err.response))
+
+            :
+            Axios({
+                method: 'get',
+                url: `https://www.instagroom.me/api/findappointment/${date}`
+            })
+                .then(res => {
+                    console.log(res.data.data)
+                    setDisplayAppointments([...res.data.data])
+                    console.log(displayAppointments)
+                })
+                .catch(err => console.log(err.response))
+
+
+
+    }
+
+
+
 
 
     useEffect(() => {
         console.log('The screen has loaded')
         let currentDate = new Date();
         let todayDate = Moment(currentDate).tz('America/New_York').format('ll')
-
-
         Axios({
             method: 'get',
-            url: `https://www.instagroom.me/api/findappointment/Aug 6, 2020`
+            url: `https://www.instagroom.me/api/findappointment/${todayDate}`
         })
-
             .then(res => {
                 console.log(res.data)
             })
             .catch(err => console.log(err.response))
-
-
     }, [])
+
+
+
 
 
     return (
 
-
-
-
-        <AppScreen>
+        < AppScreen >
             <ImageBackground style={styles.container} blurRadius={2} source={require('../../assets/dog_book.jpg')} >
                 <View style={styles.transparent} />
                 <View style={styles.items}>
@@ -123,25 +150,37 @@ const Schedule = ({ history }) => {
                     <View style={[styles.styleVertical, { alignItems: 'center' }]}>
                         <Text style={styles.textHeader}> Schedule for Andrew Murray</Text>
                         <DatePicker showTime={false} />
+                        <AppButton
+                            icon='calendar-clock'
+                            title='Check Appointments'
+                            color='black'
+                            op={.75}
+                            height={55}
+                            onPress={() => currentAppontments(scheduleValue.dayToSet)}
+                        />
                     </View>
-                    {/* <ScrollView style={styles.appointmentScroll}>
+                    <ScrollView style={styles.appointmentScroll}>
                         {
-                            appointments.map(el => {
+                            displayAppointments.map((el, index) => {
+                                let services = el.petService.map(item => {
+                                    return item.service + ' | '
+                                })
 
                                 return <AppModal
-                                    buttonText={el.customerName + ' ' + el.appointmentDate + el.appointmentTime}
+                                    key={index}
+                                    buttonText={el.customerName + ' '.repeat(4) + Moment(el.appointmentDate).tz('America/New_York').format('ll') + ', ' + el.appointmentTime}
                                     modalText={el.notes}
-                                    children={<Text style={{ marginTop: 7 }} >Total Fees: ${el.totalFee}</Text>}
+                                    children={<Text style={{ marginBottom: 14 }}> {services}  totalFee: ${el.totalFee}</Text>}
                                 />
                             })
                         }
-                    </ScrollView> */}
+                    </ScrollView>
 
                 </View>
 
             </ImageBackground>
 
-        </AppScreen>
+        </AppScreen >
     );
 
 

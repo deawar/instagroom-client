@@ -54,6 +54,7 @@ const UserRegister = ({ history, ...props }) => {
         })
             .then(res => {
                 console.log(`Here is the response data:   ${res.data.error}`)
+                history.push('/')
 
             })
             .catch(err => console.log(err))

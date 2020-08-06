@@ -23,6 +23,7 @@ const AppModal = ({ buttonText = 'show', modalButtonText = 'hide', modalText = '
             >
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
+                        {children}
                         <Text style={styles.modalText}>{modalText}</Text>
 
                         <TouchableHighlight
@@ -33,7 +34,7 @@ const AppModal = ({ buttonText = 'show', modalButtonText = 'hide', modalText = '
                         >
                             <Text style={styles.textStyle}>{modalButtonText}</Text>
                         </TouchableHighlight>
-                        {children}
+
                     </View>
                 </View>
             </Modal>
