@@ -91,16 +91,17 @@ const Schedule = ({ history }) => {
         console.log('The screen has loaded')
         let currentDate = new Date();
         let todayDate = Moment(currentDate).tz('America/New_York').format('ll')
-        console.log(todayDate)
 
-        // Axios({
-        //     method: 'get',
-        //     url: `https://www.instagroom.me/api/:${date}`
 
-        //         .then(res => {
-        //             console.log(res.data)
-        //         })
-        //         .catch(err => console.log(err))
+        Axios({
+            method: 'get',
+            url: `https://www.instagroom.me/api/findappointment/Aug 6, 2020`
+        })
+
+            .then(res => {
+                console.log(res.data)
+            })
+            .catch(err => console.log(err.response))
 
 
     }, [])
@@ -123,29 +124,18 @@ const Schedule = ({ history }) => {
                         <Text style={styles.textHeader}> Schedule for Andrew Murray</Text>
                         <DatePicker showTime={false} />
                     </View>
-                    <ScrollView style={styles.appointmentScroll}>
+                    {/* <ScrollView style={styles.appointmentScroll}>
                         {
                             appointments.map(el => {
-                                let services = '|'
-                                el.petService.forEach(item => {
-                                    console.log(services)
-                                    services += item.service + ' |'
-                                })
 
                                 return <AppModal
                                     buttonText={el.customerName + ' ' + el.appointmentDate + el.appointmentTime}
-                                    modalText={el.fee + services}
-                                    children={
-                                        <TouchableOpacity style={{ backgroundColor: colors.primary, marginTop: 5, height: 25, width: 60 }}>
-                                            <Text style={{ color: colors.white, fontWeight: 'bold' }} >Billed?</Text>
-                                        </TouchableOpacity>
-                                    }
-
-
+                                    modalText={el.notes}
+                                    children={<Text style={{ marginTop: 7 }} >Total Fees: ${el.totalFee}</Text>}
                                 />
                             })
                         }
-                    </ScrollView>
+                    </ScrollView> */}
 
                 </View>
 

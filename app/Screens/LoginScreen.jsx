@@ -4,6 +4,9 @@ import {
     StyleSheet,
     View,
     Text,
+    ToastAndroid,
+    Platform,
+    AlertIOS,
 } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup'
@@ -30,6 +33,7 @@ const LoginScreen = ({ history }) => {
     const [userValue, setUser] = user;
 
 
+
     const submitLogin = (loginData) => {
         Axios({
             method: 'post',
@@ -41,7 +45,17 @@ const LoginScreen = ({ history }) => {
             .then(res => {
                 setUser({ ...userValue, token: res.data.data.token })
                 !res.data.error ? history.push('/userpage') : null
-            }).catch(err => console.log(err))
+            })
+            .catch(err => (
+                (
+                    console.log(err.response.data.message),
+                    err.response.data.message.trim() === 'Invalid email/password or User not verified'
+                        ? history.push('/register') : null
+                )
+
+
+            )
+            )
 
     }
 
@@ -56,14 +70,15 @@ const LoginScreen = ({ history }) => {
                         email: null,
                         password: null,
                     }}
-                    onSubmit={values =>
+                    onSubmit={(values, { resetForm }) => {
                         submitLogin(values)
-                        // history.push('./userpage')
+                        // resetForm({ values: '' })
+                    }
 
                     }
                     validationSchema={validationSchema}
                 >
-                    {({ handleChange, handleSubmit, handleBlur, errors, values }) => (
+                    {({ handleChange, handleSubmit, errors, values }) => (
                         <>
                             {errors.email && <Text>{values.email}</Text>}
                             <AppTextInput
@@ -74,6 +89,7 @@ const LoginScreen = ({ history }) => {
                                 value={values.email}
                             />
                             <AppTextInput
+                                id='password'
                                 name='password'
                                 icon='lock'
                                 secureTextEntry={true}
@@ -108,7 +124,7 @@ const LoginScreen = ({ history }) => {
                     }
                 </Formik>
             </ImageBackground>
-        </AppScreen>
+        </AppScreen >
 
     );
 }
