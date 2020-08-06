@@ -59,8 +59,8 @@ const LoginScreen = ({ history }) => {
                         password: null,
                     }}
                     onSubmit={values =>
-                        // submitLogin(values)
-                        history.push('./userpage')
+                        submitLogin(values)
+                        // history.push('./userpage')
 
                     }
                     validationSchema={validationSchema}
