@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
     Alert,
     Modal,
@@ -6,19 +6,19 @@ import {
     Text,
     TouchableHighlight,
     View
-} from "react-native";
-import colors from "../config/colors";
+} from 'react-native';
+import colors from '../config/colors';
 
 const AppModal = ({ buttonText = 'show', modalButtonText = 'hide', modalText = 'modal text', children }) => {
     const [modalVisible, setModalVisible] = useState(false);
     return (
         <View style={styles.centeredView}>
             <Modal
-                animationType="slide"
+                animationType='slide'
                 transparent={true}
                 visible={modalVisible}
                 onRequestClose={() => {
-                    Alert.alert("Modal has been closed.");
+                    Alert.alert('Modal has been closed.');
                 }}
             >
                 <View style={styles.centeredView}>
@@ -27,7 +27,7 @@ const AppModal = ({ buttonText = 'show', modalButtonText = 'hide', modalText = '
                         <Text style={styles.modalText}>{modalText}</Text>
 
                         <TouchableHighlight
-                            style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
+                            style={{ ...styles.openButton, backgroundColor: '#2196F3' }}
                             onPress={() => {
                                 setModalVisible(!modalVisible);
                             }}
@@ -54,17 +54,17 @@ const AppModal = ({ buttonText = 'show', modalButtonText = 'hide', modalText = '
 const styles = StyleSheet.create({
     centeredView: {
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
+        justifyContent: 'center',
+        alignItems: 'center',
         marginTop: 22
     },
     modalView: {
         width: '75%',
         margin: 20,
-        backgroundColor: "white",
+        backgroundColor: 'white',
         borderRadius: 10,
         padding: 35,
-        alignItems: "center",
+        alignItems: 'center',
         shadowColor: colors.black,
         shadowOffset: {
             width: 0,
@@ -82,12 +82,12 @@ const styles = StyleSheet.create({
     },
     textStyle: {
         color: colors.white,
-        fontWeight: "bold",
-        textAlign: "center"
+        fontWeight: 'bold',
+        textAlign: 'center'
     },
     modalText: {
         marginBottom: 16,
-        textAlign: "center"
+        textAlign: 'center'
     }
 });
 

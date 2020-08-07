@@ -99,13 +99,13 @@ const LoginScreen = ({ history }) => {
                             <AppButton
                                 name='submit'
                                 style={styles.button}
-                                title="Login" color='black'
+                                title='Login' color='black'
                                 op={.5}
                                 onPress={handleSubmit}
                             />
                             <AppButton
                                 style={styles.button}
-                                title="Register"
+                                title='Register'
                                 color='black' op={.5}
                                 onPress={() => history.push('/register')}
                             />

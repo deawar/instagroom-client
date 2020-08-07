@@ -164,28 +164,28 @@ const ClientInfo = ({ history }) => {
                                 />
                                 <View style={[styles.inputContainerH, { flexWrap: 'wrap' }]}>
                                     <AppTextInput2
-                                        placeholder="City"
+                                        placeholder='City'
                                         width='40%'
                                         name='city'
                                         onChangeText={handleChange('city')}
                                         value={values.city}
                                     />
                                     <AppTextInput2
-                                        placeholder="State"
+                                        placeholder='State'
                                         width='20%'
                                         name='state'
                                         onChangeText={handleChange('state')}
                                         value={values.state}
                                     />
                                     <AppTextInput2
-                                        placeholder="Postal/Zip"
+                                        placeholder='Postal/Zip'
                                         width='25%'
                                         name='zip'
                                         onChangeText={handleChange('zip')}
                                         value={values.zip}
                                     />
                                     <AppTextInput2
-                                        placeholder="Country"
+                                        placeholder='Country'
                                         width='40%'
                                         name='country'
                                         onChangeText={handleChange('country')}
@@ -333,7 +333,7 @@ const styles = StyleSheet.create({
         width: 350,
         alignSelf: 'center',
         alignItems: 'center',
-        justifyContent: "center",
+        justifyContent: 'center',
         borderRadius: 50
     }
 })

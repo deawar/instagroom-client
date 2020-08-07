@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     iconContainer: {
         flexDirection: 'row',
         alignSelf: 'center',
-        justifyContent: "center",
+        justifyContent: 'center',
         alignContent: 'center'
     },
     transparent: {

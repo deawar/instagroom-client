@@ -57,7 +57,7 @@ const TimeDatePicker = ({ showTime = true }) => {
     return (
         <View style={styles.container}>
             <View style={styles.button} >
-                <Button style={{ fontWeight: 'bold' }} onPress={showDatepicker} title="APPOINTMENT DATE" />
+                <Button style={{ fontWeight: 'bold' }} onPress={showDatepicker} title='APPOINTMENT DATE' />
             </View>
             {showTime &&
                 <View style={styles.button}>
@@ -67,11 +67,11 @@ const TimeDatePicker = ({ showTime = true }) => {
             {show && (
                 <DateTimePicker
                     style={styles.picker}
-                    testID="dateTimePicker"
+                    testID='dateTimePicker'
                     value={date}
                     mode={mode}
                     is24Hour={true}
-                    display="default"
+                    display='default'
                     onChange={onChange}
                 />
             )}

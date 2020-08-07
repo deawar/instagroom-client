@@ -19,7 +19,7 @@ import colors from '../config/colors';
 
 
 const phoneRegExp = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/
-const passWordRegExp = /^[0-9A-Za-z]*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?][0-9a-zA-Z]*$/
+const passWordRegExp = /^[0-9A-Za-z]*[!@#$%^&*()_+\-=\[\]{};':'\\|,.<>\/?][0-9a-zA-Z]*$/
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().required().email().label('Email'),
@@ -95,7 +95,7 @@ const UserRegister = ({ history, ...props }) => {
                                 <View style={styles.inputsHor}>
                                     <AppTextInput2
                                         name='firstName'
-                                        placeholder="First Name"
+                                        placeholder='First Name'
                                         width='40%'
                                         onChangeText={handleChange('firstName')}
                                         value={values.firstName}
@@ -103,7 +103,7 @@ const UserRegister = ({ history, ...props }) => {
                                     />
                                     <AppTextInput2
                                         name='lastName'
-                                        placeholder="Last Name"
+                                        placeholder='Last Name'
                                         width='40%'
                                         onChangeText={handleChange('lastName')}
                                         value={values.lastName}
@@ -114,7 +114,7 @@ const UserRegister = ({ history, ...props }) => {
 
                                 <View style={styles.inputsHor}>
                                     <AppTextInput2
-                                        placeholder="Street"
+                                        placeholder='Street'
                                         onChangeText={handleChange('street')}
                                         width='75%'
                                     />
@@ -122,23 +122,23 @@ const UserRegister = ({ history, ...props }) => {
 
                                 <View style={[styles.inputsHor, { flexWrap: 'wrap' }]}>
                                     <AppTextInput2
-                                        placeholder="City"
+                                        placeholder='City'
                                         onChangeText={handleChange('city')}
                                         width='75%'
                                     />
                                     <AppTextInput2
-                                        placeholder="State"
+                                        placeholder='State'
                                         maxLength={2}
                                         onChangeText={handleChange('state')}
                                         width='20%'
                                     />
                                     <AppTextInput2
-                                        placeholder="Postal/Zip"
+                                        placeholder='Postal/Zip'
                                         onChangeText={handleChange('zip')}
                                         width='30%'
                                     />
                                     <AppTextInput2
-                                        placeholder="Country"
+                                        placeholder='Country'
                                         width='40%'
                                         onChangeText={handleChange('country')}
                                     />
@@ -147,20 +147,20 @@ const UserRegister = ({ history, ...props }) => {
                                 </View>
                                 <View style={styles.inputsVert}>
                                     <AppTextInput2
-                                        placeholder="Phone"
+                                        placeholder='Phone'
                                         width='50%'
                                         onChangeText={handleChange('phone')}
                                     />
                                     {errors.phone && <Text style={styles.errors}>enter valid phone number</Text>}
                                     <AppTextInput2
-                                        placeholder="Email"
+                                        placeholder='Email'
                                         width='75%'
                                         textContentType='emailAddress'
                                         onChangeText={handleChange('email')}
                                     />
                                     {errors.email && <Text style={styles.errors}>Enter valid email</Text>}
                                     <AppTextInput2
-                                        placeholder="Password"
+                                        placeholder='Password'
                                         width='75%'
                                         secureTextEntry={true}
                                         onChangeText={handleChange('password')}

@@ -37,7 +37,8 @@ const Schedule = ({ history }) => {
 
     const { schedule } = useContext(UserContext);
     const [scheduleValue, setSchedule] = schedule;
-    const currentDate = Moment(new Date()).tz('America/New_York').format('ll')
+    const date = new Date();
+    const currentDate = Moment(date).tz('America/New_York').format('ll')
     const appointments = [
         {
             appointmentDate: 'Aug 5, 2020',
@@ -123,6 +124,7 @@ const Schedule = ({ history }) => {
         console.log('The screen has loaded')
         let currentDate = new Date();
         let todayDate = Moment(currentDate).tz('America/New_York').format('ll')
+        setSchedule({ ...scheduleValue, dayToSet: todayDate })
         Axios({
             method: 'get',
             url: `https://www.instagroom.me/api/findappointment/${todayDate}`
@@ -150,6 +152,8 @@ const Schedule = ({ history }) => {
                     <View style={[styles.styleVertical, { alignItems: 'center' }]}>
                         <Text style={styles.textHeader}> Schedule for Andrew Murray</Text>
                         <DatePicker showTime={false} />
+                        <Text style={{ color: colors.white, fontSize: 16, alignSelf: 'center' }}>
+                            DATE: {scheduleValue.dayToSet}</Text>
                         <AppButton
                             icon='calendar-clock'
                             title='Check Appointments'
@@ -160,12 +164,15 @@ const Schedule = ({ history }) => {
                         />
                     </View>
                     <ScrollView style={styles.appointmentScroll}>
+
+
+
                         {
                             displayAppointments.map((el, index) => {
                                 let services = el.petService.map(item => {
                                     return item.service + ' | '
                                 })
-
+                                console.log(services)
                                 return <AppModal
                                     key={index}
                                     buttonText={el.customerName + ' '.repeat(4) + Moment(el.appointmentDate).tz('America/New_York').format('ll') + ', ' + el.appointmentTime}
@@ -191,7 +198,12 @@ const Schedule = ({ history }) => {
 
 const styles = StyleSheet.create({
     appointmentScroll: {
+        width: '90%',
         backgroundColor: colors.white,
+        opacity: .7,
+        borderRadius: 7,
+        alignSelf: 'center'
+
     },
     container: {
         flex: 1,
