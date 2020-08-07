@@ -37,7 +37,7 @@ const validationSchema = Yup.object().shape({
 const SetAppointment = ({ history }) => {
     const { user, schedule } = useContext(UserContext);
     const [scheduleValue, setSchedule] = schedule;
-
+    const [userValue, setUserValue] = user;
     const checkAndCreateAppointment = (values) => {
         let fee = 0
         values.petServices.map(el => {
@@ -47,20 +47,17 @@ const SetAppointment = ({ history }) => {
         values.appointmentDate = scheduleValue.dayToSet
         values.appointmentTime = scheduleValue.timeToSet
         console.log(values.appointmentTime + ' :' + values.appointmentDate)
-        console.log(values)
+        // console.log(values)
+        console.log(userValue.token)
 
-        Axios({
-            method: 'post',
-            url: 'https://www.instagroom.me/api/addAppointment',
-            data: {
-                ...values
+
+        Axios.post('https://www.instagroom.me/api/addAppointment', values, {
+            headers: {
+                'Authorization': 'Bearer ' + userValue.token
             }
-        })
-            .then(res => {
-                console.log(res.data)
-            })
-            .catch(err => console.log(err))
-
+        }).then(res => {
+            console.log(res.data.data)
+        }).catch(err => console.lof(err))
 
 
 

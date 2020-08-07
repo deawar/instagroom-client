@@ -14,6 +14,9 @@ import AppButton from './AppButton'
 
 
 const DropDown = (props) => {
+
+    const [showBadge, setShowBadge] = useState(false);
+
     const listData = props.data || [
         {
             key: '1',
@@ -93,11 +96,14 @@ const DropDown = (props) => {
                             icon='plus-box'
                             width={60}
                             height={60}
-                            onPress={() => props.pressAddButton({
-                                key: item.key,
-                                service: item.service,
-                                fee: item.price
-                            })}
+                            onPress={() => props.pressAddButton(
+                                {
+                                    key: item.key,
+                                    service: item.service,
+                                    fee: item.price
+                                }
+                            )
+                            }
 
                         />
                         <AppButton
@@ -110,6 +116,11 @@ const DropDown = (props) => {
                                 service: item.service,
                                 fee: item.price
                             })} />
+                        {showBadge && <AppButton
+                            icon='check-decagram'
+                            width={80}
+                            height={80}
+                        />}
                     </TouchableOpacity>
                 )}
 
