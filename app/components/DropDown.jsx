@@ -14,47 +14,73 @@ import AppButton from './AppButton'
 
 
 const DropDown = (props) => {
-    const listData = props.data || [
+
+
+
+    const [show, setShow] = useState(false)
+    const [data, setData] = useState(listData)
+    const [listData, setListData] = useState([
         {
             key: '1',
             service: 'Shampoo',
-            price: '15.00'
+            fee: '15.00',
+            value: false
         },
         {
             key: '2',
             service: 'Haircut',
-            price: '25.00',
+            fee: '25.00',
+            value: false
         },
         {
             key: '3',
             service: 'Dental',
-            price: '10.00',
+            fee: '10.00',
+            value: false
         },
         {
             key: '4',
             service: 'Nail Clip',
-            price: '20.00',
+            fee: '20.00',
+            value: false
         },
         {
             key: '5',
             service: 'Cut and Perm',
-            price: '80.00',
+            fee: '80.00',
+            value: false
         },
         {
             key: '6',
             service: 'Dye job',
-            price: '150.00',
+            fee: '150.00',
+            value: false
         },
         {
             key: '7',
             service: 'The full package',
-            price: '75.00',
+            fee: '75.00',
+            value: false
         },
 
-    ]
+    ]);
+    const addBadge = (obj) => {
+        let state = listData;
+        state = state.map(el => {
+            return obj.service === el.service ?
+                obj : el
+        })
+        setListData([...state])
+    }
 
-    const [show, setShow] = useState(false)
-    const [data, setData] = useState(listData)
+    const removeBadge = (obj) => {
+        let state = listData;
+        state = state.map(el => {
+            return obj.service === el.service ?
+                obj : el
+        })
+        setListData([...state])
+    }
 
 
 
@@ -80,36 +106,63 @@ const DropDown = (props) => {
                         />
                     </>
                 }
-                data={data}
-                value={props.value}
+                data={listData}
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={styles.listItem}
-                    // onPress={() => console.log(item)}
+                        onPress={() => console.log(item)}
                     >
-                        <Text style={styles.listItemText}>{item.service}  ${item.price}</Text>
+                        <Text style={styles.listItemText}>{item.service}  ${item.fee} </Text>
                         <AppButton
                             // title='+'
                             icon='plus-box'
-                            width={60}
+                            width={'15%'}
                             height={60}
-                            onPress={() => props.pressAddButton({
-                                key: item.key,
-                                service: item.service,
-                                fee: item.price
-                            })}
+                            onPress={() => (props.pressAddButton(
+                                {
+                                    key: item.key,
+                                    service: item.service,
+                                    fee: item.fee,
+                                }
+                            ), addBadge(
+                                {
+                                    key: item.key,
+                                    service: item.service,
+                                    fee: item.fee,
+                                    value: true
+                                }
+                            )
+                            )
+                            }
 
                         />
                         <AppButton
                             // title='+'
                             icon='minus-box'
-                            width={80}
+                            width={'15%'}
                             height={80}
-                            onPress={() => props.pressRemButton({
+                            onPress={() => (props.pressRemButton({
                                 key: item.key,
                                 service: item.service,
-                                fee: item.price
-                            })} />
+                                fee: item.fee
+                            }),
+                                addBadge(
+                                    {
+                                        key: item.key,
+                                        service: item.service,
+                                        fee: item.fee,
+                                        value: false
+                                    }
+                                )
+                            )
+
+                            }
+                        />
+                        {item.value && <AppButton
+                            icon='check-decagram'
+                            width={'15%'}
+                            height={80}
+                        />}
                     </TouchableOpacity>
                 )}
 
@@ -133,20 +186,21 @@ const DropDown = (props) => {
 const styles = StyleSheet.create({
     container: {
         paddingTop: 5,
-        alignItems: "center",
-        height: 150,
+        alignItems: 'center',
+        height: 220,
         width: 400,
         zIndex: 9999
     },
     listItem: {
         height: 50,
-        width: 370,
+        width: 400,
         backgroundColor: colors.dark,
         borderRadius: 3,
         marginVertical: 3,
-        marginHorizontal: 5,
+        marginHorizontal: 0,
         alignItems: 'center',
         flexDirection: 'row',
+        justifyContent: 'flex-start',
         borderRadius: 30,
         opacity: .75,
     },
@@ -154,7 +208,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         color: colors.white,
-        marginLeft: 8
+        marginLeft: 8,
+        marginRight: 50
     },
 
 })

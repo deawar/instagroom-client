@@ -15,15 +15,12 @@ import Axios from 'axios'
 
 import TimeDatePicker from '../components/DatePicker'
 import AppButton from '../components/AppButton';
-import AppRadioButton from '../components/AppRadioButton';
 import AppScreen from '../components/AppScreen';
 import AppTextInput2 from '../components/AppTextInput2';
 import colors from '../config/colors';
 import AppBackButton from '../components/AppBackButton';
-import AppTextArea from '../components/AppTextArea'
 import { UserContext } from '../util/UserContext'
 import DropDown from '../components/DropDown';
-import ListItemSeperator from '../components/ListItemSeperator'
 
 
 const validationSchema = Yup.object().shape({
@@ -37,32 +34,29 @@ const validationSchema = Yup.object().shape({
 const SetAppointment = ({ history }) => {
     const { user, schedule } = useContext(UserContext);
     const [scheduleValue, setSchedule] = schedule;
-
+    const [userValue, setUserValue] = user;
     const checkAndCreateAppointment = (values) => {
         let fee = 0
-        values.petServices.map(el => {
+        values.petService.map(el => {
             fee += parseFloat(el.fee)
         })
+
         values.totalFee = fee.toString()
         values.appointmentDate = scheduleValue.dayToSet
         values.appointmentTime = scheduleValue.timeToSet
         console.log(values.appointmentTime + ' :' + values.appointmentDate)
         console.log(values)
+        console.log(userValue.token)
 
 
-
-        Axios({
-            method: 'post',
-            url: 'https://www.instagroom.me/api/addAppointment',
-            data: {
-                ...values
+        Axios.post('https://www.instagroom.me/api/addAppointment', values, {
+            headers: {
+                'Authorization': 'Bearer ' + userValue.token
             }
-        })
-            .then(res => {
-                console.log(res.data)
-            })
-            .catch(err => console.log(err))
-
+        
+        }).then(res => {
+            console.log(res.data.data)
+        }).catch(err => console.lof(err))
 
 
 
@@ -82,11 +76,11 @@ const SetAppointment = ({ history }) => {
                         initialValues={{
                             customerName: '',
                             customerEmail: '',
-                            petServices: [],
+                            petService: [],
                             totalFee: '0',
                             appointmentDate: Moment(currentDate).tz('America/New_York').format('MMMM Do YYYY'),
                             appointmentTime: Moment(currentDate).tz('America/New_York').format('h:mm a z'),
-                            notes: 'Pepper (Dalmation) is allergic to teatree shampoo'
+                            notes: ''
                         }}
                         onSubmit={values => checkAndCreateAppointment(values)}
                         validationSchema={validationSchema}
@@ -135,19 +129,19 @@ const SetAppointment = ({ history }) => {
                                         value={values.notes}
                                     />
                                     <DropDown
-                                        height={75}
+                                        height={65}
                                         title='Services'
                                         pressAddButton={(item) => {
-                                            (values.petServices.find(el => {
+                                            (values.petService.find(el => {
                                                 return el.service === item.service
                                             }) ?
                                                 console.log('service already exists') :
-                                                values.petServices.push(item)
+                                                values.petService.push(item)
                                             )
                                         }}
                                         pressRemButton={(item) => {
                                             (
-                                                values.petServices = values.petServices.filter((el => {
+                                                values.petService = values.petService.filter((el => {
                                                     return el.service !== item.service
                                                 }))
                                             )
@@ -158,11 +152,11 @@ const SetAppointment = ({ history }) => {
                                 </View>
 
 
-                                {values.petServices.map(el => {
+                                {/* {values.petService.map(el => {
                                     return <Text style={styles.serviceList} key={el.key} >{el.service}  {el.price}</Text>
 
                                 })
-                                }
+                                } */}
                                 <AppButton
                                     icon='dog'
                                     title='Confirm'
@@ -170,7 +164,7 @@ const SetAppointment = ({ history }) => {
                                     type='submit'
                                     op={.75}
                                     onPress={handleSubmit}
-                                    height={'15%'}
+                                    height={'10%'}
                                 />
                             </>
                         )}
@@ -203,7 +197,7 @@ const styles = StyleSheet.create({
         color: colors.secondary
     },
     header: {
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: 'bold',
         color: colors.white,
 

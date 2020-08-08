@@ -21,9 +21,11 @@ const AppButton = (props) => {
                 size={25}
                 style={styles.icon}
             />}
-            <Text style={styles.text}>
-                {title}
-            </Text>
+            {title &&
+                <Text style={styles.text}>
+                    {title}
+                </Text>
+            }
         </TouchableOpacity>
     );
 }
@@ -45,6 +47,8 @@ const styles = StyleSheet.create({
         color: colors.white,
         textTransform: 'uppercase',
         fontWeight: '500',
+        margin: 0,
+        padding: 0
     },
     icon: {
         color: colors.white,

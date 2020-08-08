@@ -13,12 +13,11 @@ import AppButton from '../components/AppButton'
 import { UserContext } from '../util/UserContext';
 
 
-const TimeDatePicker = ({ showTime }) => {
+const TimeDatePicker = ({ showTime = true }) => {
     const [date, setDate] = useState(new Date());
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
 
-    // const [showTime, setShowTime] = useState(showTime)
 
     const { schedule } = useContext(UserContext);
     const [scheduleValue, setSchedule] = schedule;
@@ -58,7 +57,7 @@ const TimeDatePicker = ({ showTime }) => {
     return (
         <View style={styles.container}>
             <View style={styles.button} >
-                <Button style={{ fontWeight: 'bold' }} onPress={showDatepicker} title="APPOINTMENT DATE" />
+                <Button style={{ fontWeight: 'bold' }} onPress={showDatepicker} title='APPOINTMENT DATE' />
             </View>
             {showTime &&
                 <View style={styles.button}>
@@ -68,11 +67,11 @@ const TimeDatePicker = ({ showTime }) => {
             {show && (
                 <DateTimePicker
                     style={styles.picker}
-                    testID="dateTimePicker"
+                    testID='dateTimePicker'
                     value={date}
                     mode={mode}
                     is24Hour={true}
-                    display="default"
+                    display='default'
                     onChange={onChange}
                 />
             )}
