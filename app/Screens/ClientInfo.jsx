@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import {
     View,
     Text,
@@ -42,6 +42,9 @@ const validationSchema = Yup.object().shape({
 
 
 const ClientInfo = ({ history }) => {
+
+    const [pets, setPets] = useState([])
+
     const addPet = (petObj) => {
         const { petName, breed, gender, weight, age, medicalCondition } = petObj;
         let pet = {
@@ -52,13 +55,24 @@ const ClientInfo = ({ history }) => {
             age,
             medicalCondition
         }
-        console.log(pet)
+
         return pet
     };
-
     const registerClient = (values) => {
 
         const { firstName, lastName, street, city, state, zip, phone, email, petDetail } = values;
+        petDetail.length === 0 ?
+            petDetail.push({
+                petName: values.petName,
+                breed: values.breed,
+                gender: values.gender,
+                weight: values.weight,
+                age: values.age,
+                medicalcondition: values.medicalCondition
+
+            }) : null
+
+        console.log(values.petDetail)
         let numberOfPets = petDetail.length
         let registerInfo = {
             firstName,
@@ -73,8 +87,6 @@ const ClientInfo = ({ history }) => {
             numberOfPets
 
         }
-
-
         Axios({
             method: 'post',
             url: 'https://www.instagroom.me/api/addcustomer',
@@ -87,10 +99,12 @@ const ClientInfo = ({ history }) => {
             .catch(err => { console.log(err) })
     }
 
+
+
     return (
 
         <ImageBackground style={styles.container} blurRadius={4} source={require('../../assets/dog_haircut.jpg')}>
-            <ScrollView>
+            <ScrollView style={styles.scroll}>
                 <AppBackButton onPress={() => history.push('/userpage')} />
                 <Formik
                     initialValues={{
@@ -114,7 +128,7 @@ const ClientInfo = ({ history }) => {
                     }}
                     onSubmit={(values, { resetForm }) => {
                         registerClient(values)
-                        resetForm({ values: '' })
+                        // resetForm({ values: '' })
                     }}
                     validationSchema={validationSchema}
                 >
@@ -241,25 +255,14 @@ const ClientInfo = ({ history }) => {
                                         onChangeText={handleChange('medicalCondition')}
                                         value={values.medicalCondition}
                                     />
-                                    {values.petDetail[0] != undefined ? <View
-                                        style={styles.seePets}
-
-                                    >
-                                        <Text
-                                            style={{
-                                                fontSize: 18,
-                                                fontWeight: 'bold',
-                                                color: colors.secondary
-                                            }}>Pets that have been added to client</Text>
-                                        <ListItemSeperator />
-                                        {values.petDetail.map((el) => {
-                                            return <Text
-                                                style={{ alignSelf: 'center', fontSize: 16, marginBottom: 4 }}>
-                                                {`${el.petName}  ${el.breed}`}
-                                            </Text>
-
-                                        })}
-                                    </View> :
+                                    {pets.length > 0 ?
+                                        <View style={styles.seePets}>
+                                            <Text style={[styles.header, { textDecorationLine: 'underline' }]}>Pets Added So far</Text>
+                                            {pets.map((el, index) => {
+                                                return <Text style={styles.pets} key={index} >{el.petName}    {el.breed}</Text>
+                                            })
+                                            }
+                                        </View> :
                                         null}
                                     <AppButton
                                         icon='plus-circle'
@@ -267,7 +270,14 @@ const ClientInfo = ({ history }) => {
                                         op={.7}
                                         height='45%'
                                         title='Add Pet'
-                                        onPress={() => values.petDetail.push(addPet(values))}
+                                        onPress={() => (
+                                            pets.findIndex(el => {
+                                                return el.petName === values.petName
+                                            }) === -1 ?
+                                                values.petDetail.push(addPet(values)) : null
+                                            ,
+                                            setPets([...values.petDetail])
+                                        )}
                                     />
                                     <AppButton
                                         icon='plus-circle-outline'
@@ -279,7 +289,7 @@ const ClientInfo = ({ history }) => {
                                     />
                                 </View>
                             </View>
-                            {/* <Text>{JSON.stringify(errors)}</Text> */}
+                            <View style={{ height: 200 }} />
                         </>
 
                     )
@@ -327,6 +337,15 @@ const styles = StyleSheet.create({
         width: '100%',
         marginTop: 25,
         padding: 0,
+    },
+    pets: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: colors.primary
+    },
+    scroll: {
+        height: 1200,
+        marginBottom: 20
     },
     seePets: {
         backgroundColor: colors.white,
