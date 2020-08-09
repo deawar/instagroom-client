@@ -8,6 +8,7 @@ import {
 
 import AppUserButton from '../components/AppUserButton';
 import AppScreen from '../components/AppScreen';
+import { UserContext } from '../util/UserContext'
 
 
 class UserPage extends Component {
@@ -18,6 +19,8 @@ class UserPage extends Component {
         };
 
     }
+
+
     render() {
         return (
             <AppScreen>
@@ -29,7 +32,10 @@ class UserPage extends Component {
                     </View >
                     <View style={styles.buttonContainer}>
                         <AppUserButton icon='logout' color='light' op={.75} title='Logout'
-                            onPress={() => this.props.history.push('/')} />
+                            onPress={() => (
+                                this.props.history.push('/'))
+                            }
+                        />
                     </View>
                     <View style={styles.buttonContainer}>
                         <AppUserButton icon='book' color='light' op={.75} title='Billing Form' onPress={() => this.props.history.push('/billing')} />

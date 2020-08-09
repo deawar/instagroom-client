@@ -62,10 +62,6 @@ const SetAppointment = ({ history }) => {
     }
     let currentDate = new Date();
 
-    const addService = (service) => {
-
-    }
-
     return (
 
         <AppScreen>

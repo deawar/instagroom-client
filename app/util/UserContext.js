@@ -4,10 +4,10 @@ export const UserContext = createContext();
 export const UserProvider = (props) => {
     const [user, setUser] = useState({
         user: {
-            userName: 'Andrew Murray',
-            email: 'atmurray@bellsur.net',
-            address: '3982 Beansprout ct., Atlanta, GA 30092, USA',
-            phone: '123-456-7890'
+            userName: '',
+            email: '',
+            address: '',
+            phone: ''
         },
         token: ''
     }

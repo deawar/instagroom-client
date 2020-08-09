@@ -33,6 +33,7 @@ const LoginScreen = ({ history }) => {
 
 
     const submitLogin = (loginData) => {
+        setUser({ ...userValue, user: { ...userValue.user, email: loginData.email } })
         Axios({
             method: 'post',
             url: 'https://www.instagroom.me/api/signin',
@@ -50,8 +51,6 @@ const LoginScreen = ({ history }) => {
                     err.response.data.message.trim() === 'Invalid email/password or User not verified'
                         ? history.push('/register') : null
                 )
-
-
             )
             )
 
@@ -70,9 +69,7 @@ const LoginScreen = ({ history }) => {
                     }}
                     onSubmit={(values, { resetForm }) => {
                         submitLogin(values)
-                        // resetForm({ values: '' })
                     }
-
                     }
                     validationSchema={validationSchema}
                 >

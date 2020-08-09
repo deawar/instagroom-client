@@ -15,6 +15,7 @@ import colors from '../config/colors'
 import AppBackButton from '../components/AppBackButton';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Polyline from '@mapbox/polyline'
+import AppButton from '../components/AppButton'
 
 const GoogleApiKey = 'AIzaSyA4R5VAItbCh_G_3-mxJ9zg2U7YvVjcSjI'
 
@@ -76,7 +77,17 @@ const Route = ({ history }) => {
             justifyContent: 'center'
         }}>
             <ScrollView style={styles.container}>
-                <AppBackButton onPress={() => history.push('/schedule')} />
+                <View style={{ flexDirection: 'row' }}>
+                    <AppBackButton onPress={() => history.push('/schedule')} />
+                    <AppButton
+                        title='See Route'
+                        icon='map-check'
+                        height={50}
+                        width={150}
+                        color='primary'
+                        onPress={() => console.log(location)}
+                    />
+                </View>
                 <MapView
                     style={styles.map}
                     provider={PROVIDER_GOOGLE}
