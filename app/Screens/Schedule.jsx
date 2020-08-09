@@ -5,6 +5,8 @@ import {
     StyleSheet,
     ImageBackground,
     ScrollView,
+    Button,
+    Alert,
 
 } from 'react-native';
 import Constants from 'expo-constants'
@@ -35,12 +37,14 @@ const clients = {
 
 const Schedule = ({ history }) => {
 
-    const { schedule } = useContext(UserContext);
+    const { schedule, client, user } = useContext(UserContext);
     const [scheduleValue, setSchedule] = schedule;
+    const [userValue, setUser] = user;
+    const [clientValue, setClient] = client;
     const date = new Date();
-    const currentDate = Moment(date).tz('America/New_York').format('ll')
+    const currentDate = Moment(date).tz('America/New_York').format('ll');
 
-    const [displayAppointments, setDisplayAppointments] = useState([])
+    const [displayAppointments, setDisplayAppointments] = useState([]);
 
     const currentAppontments = (date) => {
         date === null ? console.log(currentDate) : console.log(date)
@@ -50,7 +54,6 @@ const Schedule = ({ history }) => {
                 url: `https://www.instagroom.me/api/findappointment/${currentDate}`
             })
                 .then(res => {
-                    console.log(res.data)
                 })
                 .catch(err => console.log(err.response))
             :
@@ -59,9 +62,7 @@ const Schedule = ({ history }) => {
                 url: `https://www.instagroom.me/api/findappointment/${date}`
             })
                 .then(res => {
-                    console.log(res.data.data)
                     setDisplayAppointments([...res.data.data])
-                    console.log(displayAppointments)
                 })
                 .catch(err => console.log(err.response))
     }
@@ -85,6 +86,24 @@ const Schedule = ({ history }) => {
             .catch(err => console.log(err.response))
     }, [])
 
+    const getCustomerAddress = (customerEmail) => {
+
+        Axios.get(`https://www.instagroom.me/api/customerEmail/${customerEmail}`, {
+            headers: {
+                'Authorization': 'Bearer ' + userValue.token
+            }
+        }).then(res => {
+            console.log(res.data.data)
+            const { firstName, lastName, street, city, state, zip } = res.data.data;
+            console.log(clientValue)
+            setClient({
+                customerName: `${firstName} ${lastName}`,
+                customerAddress: `${street},${city}, ${state} ${zip}`
+            })
+        }).catch(err => console.log(err))
+
+
+    }
 
 
 
@@ -130,6 +149,15 @@ const Schedule = ({ history }) => {
                                     buttonText={el.customerName + ' '.repeat(4) + el.appointmentTime}
                                     modalText={el.notes}
                                     children={<Text style={{ marginBottom: 14 }}> {services}  totalFee: ${el.totalFee}</Text>}
+                                    buttonChild={
+                                        <Button
+                                            onPress={() => (Alert.alert('Route Added'),
+                                                getCustomerAddress(el.customerEmail)
+                                            )
+                                            }
+                                            title="Add Route"
+                                            colors={colors.primary}
+                                        />}
                                 />
                             })
                         }

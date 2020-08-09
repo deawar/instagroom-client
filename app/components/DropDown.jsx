@@ -6,6 +6,7 @@ import {
     StyleSheet,
     TouchableOpacity,
     Button,
+    Alert,
 
 } from 'react-native';
 
@@ -131,8 +132,7 @@ const DropDown = (props) => {
                                     fee: item.fee,
                                     value: true
                                 }
-                            )
-                            )
+                            ))
                             }
 
                         />

@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import colors from '../config/colors';
 
-const AppModal = ({ buttonText = 'show', modalButtonText = 'hide', modalText = 'modal text', children }) => {
+const AppModal = ({ buttonText = 'show', modalButtonText = 'hide', modalText = 'modal text', children, buttonChild }) => {
     const [modalVisible, setModalVisible] = useState(false);
     return (
         <View style={styles.centeredView}>
@@ -34,7 +34,7 @@ const AppModal = ({ buttonText = 'show', modalButtonText = 'hide', modalText = '
                         >
                             <Text style={styles.textStyle}>{modalButtonText}</Text>
                         </TouchableHighlight>
-
+                        {buttonChild}
                     </View>
                 </View>
             </Modal>

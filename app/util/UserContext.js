@@ -21,13 +21,22 @@ export const UserProvider = (props) => {
         }
 
     )
+    const [client, setClient] = useState(
+        {
+            customerName: '',
+            customerAddress: ''
+
+        }
+
+    )
 
 
 
     return (
         <UserContext.Provider value={{
             user: [user, setUser],
-            schedule: [schedule, setSchedule]
+            schedule: [schedule, setSchedule],
+            client: [client, setClient]
         }}>
             {props.children}
         </UserContext.Provider>

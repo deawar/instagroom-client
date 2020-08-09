@@ -21,7 +21,6 @@ import AppButton from '../components/AppButton'
 
 const phoneRegExp = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;
 const expRegExp = /^\d{2}\/\d{2}/;
-// const creditCardNumberRegExp = //
 
 
 const validationSchema = Yup.object().shape({
@@ -43,22 +42,9 @@ const validationSchema = Yup.object().shape({
 
 
 
-
-
-
-
-
-
-
-
-
-
 const Billing = ({ history }) => {
 
-
-
-    const checkAndCreateAppointment = (values) => {
-
+    const processBill = (values) => {
         Axios.post('https://www.instagroom.me/api/processpayment', values, {
             headers: {
                 'Authorization': 'Bearer ' + userValue.token
@@ -66,16 +52,7 @@ const Billing = ({ history }) => {
         }).then(res => {
             console.log(res.data.data)
         }).catch(err => console.lof(err))
-
-
-
     }
-
-
-
-
-
-
     return (
         <AppScreen>
             <ImageBackground
@@ -107,6 +84,7 @@ const Billing = ({ history }) => {
                     }}
                     onSubmit={(values) => {
                         console.log(values)
+                        //, processBill(values)
                         // resetForm({ values: '' })
                     }}
                     validationSchema={validationSchema}

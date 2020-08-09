@@ -35,6 +35,7 @@ const SetAppointment = ({ history }) => {
     const { user, schedule } = useContext(UserContext);
     const [scheduleValue, setSchedule] = schedule;
     const [userValue, setUserValue] = user;
+
     const checkAndCreateAppointment = (values) => {
         let fee = 0
         values.petService.map(el => {
