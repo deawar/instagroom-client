@@ -19,7 +19,10 @@ import { MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 import AppButton from '../components/AppButton'
 
 
-const phoneRegExp = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/
+const phoneRegExp = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;
+const expRegExp = /^\d{2}\/\d{2}/;
+// const creditCardNumberRegExp = //
+
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().required().email().label('Email'),
@@ -31,6 +34,10 @@ const validationSchema = Yup.object().shape({
     zip: Yup.string().required().nullable().min(5),
     phone: Yup.string().required().nullable().matches(phoneRegExp, 'Enter valid phone number'),
     country: Yup.string().required().nullable().min(3),
+    cardName: Yup.string().required().nullable(),
+    cardNumber: Yup.string().required().nullable().min(13).max(19),
+    expDate: Yup.string().required().min(4).matches(expRegExp, 'Enter valid exp date'),
+    chargeFees: Yup.string().required().nullable()
 
 });
 
@@ -47,6 +54,28 @@ const validationSchema = Yup.object().shape({
 
 
 const Billing = ({ history }) => {
+
+
+
+    const checkAndCreateAppointment = (values) => {
+
+        Axios.post('https://www.instagroom.me/api/processpayment', values, {
+            headers: {
+                'Authorization': 'Bearer ' + userValue.token
+            }
+        }).then(res => {
+            console.log(res.data.data)
+        }).catch(err => console.lof(err))
+
+
+
+    }
+
+
+
+
+
+
     return (
         <AppScreen>
             <ImageBackground
@@ -54,6 +83,9 @@ const Billing = ({ history }) => {
                 blurRadius={2}
                 source={require('../../assets/dog_banker.jpg')}
             >
+                <AppBackButton
+                    onPress={() => history.push('/userpage')}
+                />
                 <Formik
                     initialValues={{
                         firstName: null,
@@ -64,19 +96,24 @@ const Billing = ({ history }) => {
                         zip: null,
                         phone: null,
                         email: null,
+                        country: null,
+                        cardName: null,
+                        cardNumber: null,
+                        cardType: null,
+                        expDate: null,
+                        chargeFees: null,
+                        notes: null
 
                     }}
-                    onSubmit={(values, { resetForm }) => {
-                        registerClient(values)
-                        resetForm({ values: '' })
+                    onSubmit={(values) => {
+                        console.log(values)
+                        // resetForm({ values: '' })
                     }}
                     validationSchema={validationSchema}
                 >
                     {({ handleChange, handleSubmit, errors, values }) => (
                         <ScrollView style={styles.scroll}>
-                            <AppBackButton
-                                onPress={() => history.push('/userpage')}
-                            />
+
                             <View style={styles.headerContainer}>
                                 <MaterialCommunityIcons style={{ color: colors.white }} name='account' size={25} />
                                 <Text style={styles.header}>CUSTOMER BILLING</Text>
@@ -85,39 +122,71 @@ const Billing = ({ history }) => {
                                 <AppTextInput2
                                     placeholder='First Name'
                                     width='45%'
+                                    name='firstName'
+                                    onChangeText={handleChange('firstName')}
+                                    value={values.firstName}
                                 />
                                 <AppTextInput2
                                     placeholder='Last Name'
                                     width='45%'
+                                    name='lastName'
+                                    onChangeText={handleChange('lastName')}
+                                    value={values.lastName}
                                 />
                             </View>
                             <View>
                                 <AppTextInput2
                                     placeholder='Phone'
                                     width='60%'
+                                    name='phone'
+                                    onChangeText={handleChange('phone')}
+                                    value={values.phone}
                                 />
                                 <AppTextInput2
                                     placeholder='Email'
                                     width='60%'
+                                    name='email'
+                                    onChangeText={handleChange('email')}
+                                    value={values.email}
+
                                 />
                                 <AppTextInput2
                                     placeholder='Street'
                                     width='80%'
+                                    name='street'
+                                    onChangeText={handleChange('street')}
+                                    value={values.street}
                                 />
                             </View>
                             <View style={styles.styleHorizontal}>
                                 <AppTextInput2
                                     placeholder='City'
-                                    width='40%' />
+                                    width='40%'
+                                    name='city'
+                                    onChangeText={handleChange('city')}
+                                    value={values.city}
+                                />
                                 <AppTextInput2
                                     placeholder='State'
-                                    width='20%' />
+                                    width='20%'
+                                    name='state'
+                                    onChangeText={handleChange('state')}
+                                    value={values.state}
+                                />
                                 <AppTextInput2
                                     placeholder='Postal/Zip'
-                                    width='25%' />
+                                    width='35%'
+                                    name='zip'
+                                    onChangeText={handleChange('zip')}
+                                    value={values.zip}
+                                />
                                 <AppTextInput2
                                     placeholder='Country'
-                                    width='40%' />
+                                    width='40%'
+                                    name='country'
+                                    onChangeText={handleChange('country')}
+                                    value={values.country}
+                                />
                             </View>
                             <View style={styles.headerContainer}>
                                 <Entypo name='scissors' size={25} color={colors.white} />
@@ -127,35 +196,57 @@ const Billing = ({ history }) => {
                                 <AppTextInput2
                                     placeholder='Name on Card'
                                     width='80%'
+                                    name='cardName'
+                                    onChangeText={handleChange('cardName')}
+                                    value={values.cardName}
                                 />
                                 <AppTextInput2
                                     placeholder='Card Number'
                                     width='80%'
+                                    name='cardNumber'
+                                    onChangeText={handleChange('cardNumber')}
+                                    value={values.cardNumber}
                                 />
                                 <AppTextInput2
                                     placeholder='Card Type'
                                     width='40%'
+                                    name='cardType'
+                                    onChangeText={handleChange('cardType')}
+                                    value={values.cardType}
                                 />
                                 <AppTextInput2
-                                    placeholder='exp ##/##'
-                                    width='20%'
+                                    placeholder='exp date ddmm'
+                                    width='40%'
+                                    name='expDate'
+                                    onChangeText={handleChange('expDate')}
+                                    value={values.expDate}
                                 />
                                 <AppTextInput2
                                     placeholder='Fees'
                                     width='80%'
+                                    name='chargeFees'
+                                    onChangeText={handleChange('chargeFees')}
+                                    value={values.chargeFees}
                                 />
                                 <AppTextInput2
                                     placeholder='Transaction Notes'
                                     width='80%'
+                                    name='notes'
+                                    onChangeText={handleChange('notes')}
+                                    value={values.notes}
                                 />
                                 <AppButton
                                     icon='credit-card-outline'
                                     title='Submit Payment'
                                     height='20%'
                                     color='black'
+                                    type='submit'
                                     op={.7}
-                                    onPress={() => history.push('./userpage')}
+                                    onPress={handleSubmit}
                                 />
+                                <Text style={{ color: colors.white, fontWeight: 'bold' }}>{JSON.stringify(errors)}</Text>
+                                <Text style={{ color: colors.white, fontWeight: 'bold' }}>{JSON.stringify(values)}</Text>
+
                             </View>
                             <View />
                         </ScrollView>
@@ -186,6 +277,7 @@ const styles = StyleSheet.create({
         padding: 5,
         borderColor: colors.white,
         borderWidth: 1,
+        marginTop: 10
 
     },
     styleHorizontal: {

@@ -145,13 +145,6 @@ const SetAppointment = ({ history }) => {
 
 
                                 </View>
-
-
-                                {/* {values.petService.map(el => {
-                                    return <Text style={styles.serviceList} key={el.key} >{el.service}  {el.price}</Text>
-
-                                })
-                                } */}
                                 <AppButton
                                     icon='dog'
                                     title='Confirm'
