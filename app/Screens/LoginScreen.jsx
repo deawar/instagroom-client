@@ -33,7 +33,8 @@ const LoginScreen = ({ history }) => {
 
 
     const submitLogin = (loginData) => {
-        setUser({ ...userValue, user: { ...userValue.user, email: loginData.email } })
+        const { email } = loginData;
+
         Axios({
             method: 'post',
             url: 'https://www.instagroom.me/api/signin',
@@ -42,7 +43,7 @@ const LoginScreen = ({ history }) => {
             }
         })
             .then(res => {
-                setUser({ ...userValue, token: res.data.data.token })
+                setUser({ userName: email, token: res.data.data.token })
                 !res.data.error ? history.push('/userpage') : null
             })
             .catch(err => (

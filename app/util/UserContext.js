@@ -3,12 +3,7 @@ export const UserContext = createContext();
 
 export const UserProvider = (props) => {
     const [user, setUser] = useState({
-        user: {
-            userName: '',
-            email: '',
-            address: '',
-            phone: ''
-        },
+        userName: '',
         token: ''
     }
     )
@@ -19,15 +14,12 @@ export const UserProvider = (props) => {
             dayToSet: null,
             currentDayAppointments: [{}, {}, {}]
         }
-
     )
     const [client, setClient] = useState(
         {
             customerName: '',
             customerAddress: ''
-
         }
-
     )
 
 

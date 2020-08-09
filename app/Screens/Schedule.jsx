@@ -72,7 +72,7 @@ const Schedule = ({ history }) => {
 
 
     useEffect(() => {
-        console.log('The screen has loaded')
+        console.log(userValue)
         let currentDate = new Date().toISOString();
         let todayDate = Moment(currentDate).tz('America/New_York').format('ll')
         setSchedule({ ...scheduleValue, dayToSet: todayDate })
@@ -151,11 +151,11 @@ const Schedule = ({ history }) => {
                                     children={<Text style={{ marginBottom: 14 }}> {services}  totalFee: ${el.totalFee}</Text>}
                                     buttonChild={
                                         <Button
-                                            onPress={() => (Alert.alert('Route Added'),
+                                            onPress={() => (Alert.alert('Customer address set.'),
                                                 getCustomerAddress(el.customerEmail)
                                             )
                                             }
-                                            title="Add Route"
+                                            title="Set Address"
                                             colors={colors.primary}
                                         />}
                                 />
