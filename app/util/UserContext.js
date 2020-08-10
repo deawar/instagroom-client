@@ -3,12 +3,7 @@ export const UserContext = createContext();
 
 export const UserProvider = (props) => {
     const [user, setUser] = useState({
-        user: {
-            userName: 'Andrew Murray',
-            email: 'atmurray@bellsur.net',
-            address: '3982 Beansprout ct., Atlanta, GA 30092, USA',
-            phone: '123-456-7890'
-        },
+        userName: '',
         token: ''
     }
     )
@@ -19,7 +14,12 @@ export const UserProvider = (props) => {
             dayToSet: null,
             currentDayAppointments: [{}, {}, {}]
         }
-
+    )
+    const [client, setClient] = useState(
+        {
+            customerName: '',
+            customerAddress: ''
+        }
     )
 
 
@@ -27,7 +27,8 @@ export const UserProvider = (props) => {
     return (
         <UserContext.Provider value={{
             user: [user, setUser],
-            schedule: [schedule, setSchedule]
+            schedule: [schedule, setSchedule],
+            client: [client, setClient]
         }}>
             {props.children}
         </UserContext.Provider>

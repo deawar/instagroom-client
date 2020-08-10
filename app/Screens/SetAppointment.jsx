@@ -35,18 +35,16 @@ const SetAppointment = ({ history }) => {
     const { user, schedule } = useContext(UserContext);
     const [scheduleValue, setSchedule] = schedule;
     const [userValue, setUserValue] = user;
+
     const checkAndCreateAppointment = (values) => {
         let fee = 0
         values.petService.map(el => {
             fee += parseFloat(el.fee)
         })
-
         values.totalFee = fee.toString()
         values.appointmentDate = scheduleValue.dayToSet
         values.appointmentTime = scheduleValue.timeToSet
-        console.log(values.appointmentTime + ' :' + values.appointmentDate)
-        console.log(values)
-        console.log(userValue.token)
+
 
 
         Axios.post('https://www.instagroom.me/api/addAppointment', values, {
@@ -62,10 +60,6 @@ const SetAppointment = ({ history }) => {
 
     }
     let currentDate = new Date();
-
-    const addService = (service) => {
-
-    }
 
     return (
 
@@ -150,13 +144,6 @@ const SetAppointment = ({ history }) => {
 
 
                                 </View>
-
-
-                                {/* {values.petService.map(el => {
-                                    return <Text style={styles.serviceList} key={el.key} >{el.service}  {el.price}</Text>
-
-                                })
-                                } */}
                                 <AppButton
                                     icon='dog'
                                     title='Confirm'

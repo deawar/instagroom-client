@@ -4,9 +4,6 @@ import {
     StyleSheet,
     View,
     Text,
-    ToastAndroid,
-    Platform,
-    AlertIOS,
 } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup'
@@ -16,7 +13,6 @@ import AppScreen from '../components/AppScreen'
 import LogoIcon from '../components/LogoIcon';
 import AppButton from '../components/AppButton';
 import AppTextInput from '../components/AppTextInput'
-import AppModal from '../components/AppModal'
 import { UserContext } from '../util/UserContext'
 
 
@@ -33,6 +29,8 @@ const LoginScreen = ({ history }) => {
 
 
     const submitLogin = (loginData) => {
+        const { email } = loginData;
+
         Axios({
             method: 'post',
             url: 'https://www.instagroom.me/api/signin',
@@ -41,7 +39,7 @@ const LoginScreen = ({ history }) => {
             }
         })
             .then(res => {
-                setUser({ ...userValue, token: res.data.data.token })
+                setUser({ userName: email, token: res.data.data.token })
                 !res.data.error ? history.push('/userpage') : null
             })
             .catch(err => (
@@ -50,8 +48,6 @@ const LoginScreen = ({ history }) => {
                     err.response.data.message.trim() === 'Invalid email/password or User not verified'
                         ? history.push('/register') : null
                 )
-
-
             )
             )
 
@@ -70,9 +66,7 @@ const LoginScreen = ({ history }) => {
                     }}
                     onSubmit={(values, { resetForm }) => {
                         submitLogin(values)
-                        // resetForm({ values: '' })
                     }
-
                     }
                     validationSchema={validationSchema}
                 >

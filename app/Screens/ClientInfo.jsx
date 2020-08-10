@@ -5,6 +5,7 @@ import {
     StyleSheet,
     ImageBackground,
     ScrollView,
+    Alert,
 } from 'react-native';
 import Constants from 'expo-constants'
 import { Formik } from 'formik';
@@ -14,7 +15,6 @@ import Axios from 'axios'
 import AppTextInput2 from '../components/AppTextInput2';
 import AppButton from '../components/AppButton';
 import AppBackButton from '../components/AppBackButton';
-import ListItemSeperator from '../components/ListItemSeperator'
 import colors from '../config/colors';
 
 
@@ -72,7 +72,6 @@ const ClientInfo = ({ history }) => {
 
             }) : null
 
-        console.log(values.petDetail)
         let numberOfPets = petDetail.length
         let registerInfo = {
             firstName,
@@ -104,199 +103,198 @@ const ClientInfo = ({ history }) => {
     return (
 
         <ImageBackground style={styles.container} blurRadius={4} source={require('../../assets/dog_haircut.jpg')}>
-            <ScrollView style={styles.scroll}>
-                <AppBackButton onPress={() => history.push('/userpage')} />
-                <Formik
-                    initialValues={{
-                        firstName: null,
-                        lastName: null,
-                        street: null,
-                        city: null,
-                        state: null,
-                        zip: null,
-                        phone: null,
-                        email: null,
-                        password: null,
-                        country: null,
-                        breed: null,
-                        petName: null,
-                        gender: null,
-                        weight: null,
-                        age: null,
-                        medicalCondition: null,
-                        petDetail: [],
-                    }}
-                    onSubmit={(values, { resetForm }) => {
-                        registerClient(values)
-                        // resetForm({ values: '' })
-                    }}
-                    validationSchema={validationSchema}
-                >
-                    {({ handleChange, handleSubmit, errors, values }) => (
-                        <>
-                            <Text style={styles.header}>Customer Address/Phone/Email</Text>
+            <AppBackButton onPress={() => history.push('/userpage')} />
+            <Formik
+                initialValues={{
+                    firstName: null,
+                    lastName: null,
+                    street: null,
+                    city: null,
+                    state: null,
+                    zip: null,
+                    phone: null,
+                    email: null,
+                    country: null,
+                    breed: null,
+                    petName: null,
+                    gender: null,
+                    weight: null,
+                    age: null,
+                    medicalCondition: null,
+                    petDetail: [],
+                }}
+                onSubmit={(values, { resetForm }) => {
+                    registerClient(values)
+                    resetForm({ values: '' })
+                    Alert.alert('client registered')
+                }}
+                validationSchema={validationSchema}
+            >
+                {({ handleChange, handleSubmit, errors, values }) => (
+                    <ScrollView style={styles.scroll}>
+
+                        <Text style={styles.header}>Customer Address/Phone/Email</Text>
+                        <View style={styles.inputContainerH}>
+                            <AppTextInput2
+                                placeholder='First Name'
+                                width='45%'
+                                name='firstName'
+                                onChangeText={handleChange('firstName')}
+                                value={values.firstName}
+
+                            />
+                            <AppTextInput2
+                                placeholder='Last Name'
+                                width='45%'
+                                name='lastName'
+                                onChangeText={handleChange('lastName')}
+                                value={values.lastName}
+                            />
+                        </View >
+                        {errors.firstName && <Text style={styles.errorMessage}>All text fields are required</Text>}
+
+                        <View style={styles.inputContainerV}>
+                            <AppTextInput2
+                                placeholder='Phone'
+                                width='60%'
+                                name='phone'
+                                onChangeText={handleChange('phone')}
+                                value={values.phone}
+                            />
+                            <AppTextInput2
+                                placeholder='Email'
+                                width='60%'
+                                name='email'
+                                onChangeText={handleChange('email')}
+                                value={values.email}
+                            />
+                            <AppTextInput2
+                                placeholder='Street'
+                                width='80%'
+                                name='street'
+                                onChangeText={handleChange('street')}
+                                value={values.street}
+                            />
+                            <View style={[styles.inputContainerH, { flexWrap: 'wrap' }]}>
+                                <AppTextInput2
+                                    placeholder='City'
+                                    width='40%'
+                                    name='city'
+                                    onChangeText={handleChange('city')}
+                                    value={values.city}
+                                />
+                                <AppTextInput2
+                                    placeholder='State'
+                                    width='20%'
+                                    name='state'
+                                    onChangeText={handleChange('state')}
+                                    value={values.state}
+                                />
+                                <AppTextInput2
+                                    placeholder='Postal/Zip'
+                                    width='25%'
+                                    name='zip'
+                                    onChangeText={handleChange('zip')}
+                                    value={values.zip}
+                                />
+                                <AppTextInput2
+                                    placeholder='Country'
+                                    width='40%'
+                                    name='country'
+                                    onChangeText={handleChange('country')}
+                                    value={values.country}
+                                />
+                            </View>
+                        </View>
+                        <View style={[styles.inputContainerV, { marginTop: 45, paddingTop: 15 }]}>
+                            <Text style={styles.header}>Pet Information</Text>
+                            <AppTextInput2
+                                placeholder='Enter Dog Breed'
+                                width='80%'
+                                name='breed'
+                                onChangeText={handleChange('breed')}
+                                value={values.breed}
+                            />
+                            <AppTextInput2
+                                spellcheck={false}
+                                placeholder='Dogs Name'
+                                width='80%'
+                                name='petName'
+                                onChangeText={handleChange('petName')}
+                                value={values.petName}
+                            />
+                            <AppTextInput2
+                                placeholder='Pet Gender'
+                                width='80%'
+                                name='gender'
+                                onChangeText={handleChange('gender')}
+                                value={values.gender}
+                            />
                             <View style={styles.inputContainerH}>
                                 <AppTextInput2
-                                    placeholder='First Name'
+                                    placeholder='Weight'
                                     width='45%'
-                                    name='firstName'
-                                    onChangeText={handleChange('firstName')}
-                                    value={values.firstName}
-
+                                    name='weight'
+                                    onChangeText={handleChange('weight')}
+                                    value={values.weight}
                                 />
                                 <AppTextInput2
-                                    placeholder='Last Name'
+                                    placeholder='Age/Birthday'
                                     width='45%'
-                                    name='lastName'
-                                    onChangeText={handleChange('lastName')}
-                                    value={values.lastName}
+                                    name='age'
+                                    onChangeText={handleChange('age')}
+                                    value={values.age}
                                 />
                             </View >
-                            {errors.firstName && <Text style={styles.errorMessage}>All text fields are required</Text>}
-
-                            <View style={styles.inputContainerV}>
+                            <View style={[styles.inputContainerV, { height: 120 }]}>
                                 <AppTextInput2
-                                    placeholder='Phone'
-                                    width='60%'
-                                    name='phone'
-                                    onChangeText={handleChange('phone')}
-                                    value={values.phone}
+                                    placeholder='medicalCondition Issues/Medication'
+                                    width='95%'
+                                    name='medicalCondition'
+                                    onChangeText={handleChange('medicalCondition')}
+                                    value={values.medicalCondition}
                                 />
-                                <AppTextInput2
-                                    placeholder='Email'
-                                    width='60%'
-                                    name='email'
-                                    onChangeText={handleChange('email')}
-                                    value={values.email}
+                                {pets.length > 0 ?
+                                    <View style={styles.seePets}>
+                                        <Text style={[styles.header, { textDecorationLine: 'underline' }]}>Pets Added So far</Text>
+                                        {pets.map((el, index) => {
+                                            return <Text style={styles.pets} key={index} >{el.petName}    {el.breed}</Text>
+                                        })
+                                        }
+                                    </View> :
+                                    null}
+                                <AppButton
+                                    icon='plus-circle'
+                                    color='black'
+                                    op={.7}
+                                    height='45%'
+                                    title='Add Pet'
+                                    onPress={() => (
+                                        pets.findIndex(el => {
+                                            return el.petName === values.petName
+                                        }) === -1 ?
+                                            values.petDetail.push(addPet(values)) : null
+                                        ,
+                                        setPets([...values.petDetail])
+                                    )}
                                 />
-                                <AppTextInput2
-                                    placeholder='Street'
-                                    width='80%'
-                                    name='street'
-                                    onChangeText={handleChange('street')}
-                                    value={values.street}
+                                <AppButton
+                                    icon='plus-circle-outline'
+                                    color='black'
+                                    op={.7}
+                                    height='45%'
+                                    title='Add All Info'
+                                    onPress={handleSubmit}
                                 />
-                                <View style={[styles.inputContainerH, { flexWrap: 'wrap' }]}>
-                                    <AppTextInput2
-                                        placeholder='City'
-                                        width='40%'
-                                        name='city'
-                                        onChangeText={handleChange('city')}
-                                        value={values.city}
-                                    />
-                                    <AppTextInput2
-                                        placeholder='State'
-                                        width='20%'
-                                        name='state'
-                                        onChangeText={handleChange('state')}
-                                        value={values.state}
-                                    />
-                                    <AppTextInput2
-                                        placeholder='Postal/Zip'
-                                        width='25%'
-                                        name='zip'
-                                        onChangeText={handleChange('zip')}
-                                        value={values.zip}
-                                    />
-                                    <AppTextInput2
-                                        placeholder='Country'
-                                        width='40%'
-                                        name='country'
-                                        onChangeText={handleChange('country')}
-                                        value={values.country}
-                                    />
-                                </View>
                             </View>
-                            <View style={[styles.inputContainerV, { marginTop: 45, paddingTop: 15 }]}>
-                                <Text style={styles.header}>Pet Information</Text>
-                                <AppTextInput2
-                                    placeholder='Enter Dog Breed'
-                                    width='80%'
-                                    name='breed'
-                                    onChangeText={handleChange('breed')}
-                                    value={values.breed}
-                                />
-                                <AppTextInput2
-                                    spellcheck={false}
-                                    placeholder='Dogs Name'
-                                    width='80%'
-                                    name='perName'
-                                    onChangeText={handleChange('petName')}
-                                    value={values.petName}
-                                />
-                                <AppTextInput2
-                                    placeholder='Pet Gender'
-                                    width='80%'
-                                    name='gender'
-                                    onChangeText={handleChange('gender')}
-                                    value={values.gender}
-                                />
-                                <View style={styles.inputContainerH}>
-                                    <AppTextInput2
-                                        placeholder='Weight'
-                                        width='45%'
-                                        name='weight'
-                                        onChangeText={handleChange('weight')}
-                                        value={values.weight}
-                                    />
-                                    <AppTextInput2
-                                        placeholder='Age/Birthday'
-                                        width='45%'
-                                        name='age'
-                                        onChangeText={handleChange('age')}
-                                        value={values.age}
-                                    />
-                                </View >
-                                <View style={[styles.inputContainerV, { height: 120 }]}>
-                                    <AppTextInput2
-                                        placeholder='medicalCondition Issues/Medication'
-                                        width='95%'
-                                        name='medicalCondition'
-                                        onChangeText={handleChange('medicalCondition')}
-                                        value={values.medicalCondition}
-                                    />
-                                    {pets.length > 0 ?
-                                        <View style={styles.seePets}>
-                                            <Text style={[styles.header, { textDecorationLine: 'underline' }]}>Pets Added So far</Text>
-                                            {pets.map((el, index) => {
-                                                return <Text style={styles.pets} key={index} >{el.petName}    {el.breed}</Text>
-                                            })
-                                            }
-                                        </View> :
-                                        null}
-                                    <AppButton
-                                        icon='plus-circle'
-                                        color='black'
-                                        op={.7}
-                                        height='45%'
-                                        title='Add Pet'
-                                        onPress={() => (
-                                            pets.findIndex(el => {
-                                                return el.petName === values.petName
-                                            }) === -1 ?
-                                                values.petDetail.push(addPet(values)) : null
-                                            ,
-                                            setPets([...values.petDetail])
-                                        )}
-                                    />
-                                    <AppButton
-                                        icon='plus-circle-outline'
-                                        color='black'
-                                        op={.7}
-                                        height='45%'
-                                        title='Add All Info'
-                                        onPress={handleSubmit}
-                                    />
-                                </View>
-                            </View>
-                            <View style={{ height: 200 }} />
-                        </>
+                        </View>
+                        <View style={{ height: 200 }} />
+                    </ScrollView>
 
-                    )
-                    }
-                </Formik>
+                )
+                }
+            </Formik>
 
-            </ScrollView>
         </ImageBackground>
 
 
@@ -345,7 +343,7 @@ const styles = StyleSheet.create({
     },
     scroll: {
         height: 1200,
-        marginBottom: 20
+        marginVertical: 20
     },
     seePets: {
         backgroundColor: colors.white,

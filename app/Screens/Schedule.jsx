@@ -5,6 +5,8 @@ import {
     StyleSheet,
     ImageBackground,
     ScrollView,
+    Button,
+    Alert,
 
 } from 'react-native';
 import Constants from 'expo-constants'
@@ -25,68 +27,16 @@ import AppModal from '../components/AppModal';
 import { UserContext } from '../util/UserContext'
 
 
-
-
-const clients = {
-
-}
-
-
-
 const Schedule = ({ history }) => {
 
-    const { schedule } = useContext(UserContext);
+    const { schedule, client, user } = useContext(UserContext);
     const [scheduleValue, setSchedule] = schedule;
+    const [userValue, setUser] = user;
+    const [clientValue, setClient] = client;
     const date = new Date();
-    const currentDate = Moment(date).tz('America/New_York').format('ll')
-    const appointments = [
-        {
-            appointmentDate: 'Aug 5, 2020',
-            appointmentTime: '7:15 pm EDT',
-            customerName: 'Jacob Smith',
-            customerEmail: 'jacob_smith@yahoo.com',
-            notes: 'Tomtom (Dachshund) is allergic to teatree shampoo',
-            totalFee: '39.00',
-            petService: [
-                {
-                    'service': 'Haircut',
-                    'fee': '22.00'
-                },
-                {
-                    'service': 'Shampoo',
-                    'fee': '10.00'
-                },
-                {
-                    'service': 'Fluff',
-                    'fee': '7.00'
-                }
-            ]
-        },
-        {
-            appointmentDate: 'Aug 5, 2020',
-            appointmentTime: '8:15 pm EDT',
-            customerName: 'John Smith',
-            customerEmail: 'jsmith@yahoo.com',
-            notes: 'Clarice is allergic to wool',
-            totalFee: '39.00',
-            petService: [
-                {
-                    'service': 'Haircut',
-                    'fee': '22.00'
-                },
-                {
-                    'service': 'Shampoo',
-                    'fee': '10.00'
-                },
-                {
-                    'service': 'Fluff',
-                    'fee': '7.00'
-                }
-            ]
-        }
+    const currentDate = Moment(date).tz('America/New_York').format('ll');
 
-    ]
-    const [displayAppointments, setDisplayAppointments] = useState(appointments)
+    const [displayAppointments, setDisplayAppointments] = useState([]);
 
     const currentAppontments = (date) => {
         date === null ? console.log(currentDate) : console.log(date)
@@ -96,24 +46,17 @@ const Schedule = ({ history }) => {
                 url: `https://www.instagroom.me/api/findappointment/${currentDate}`
             })
                 .then(res => {
-                    console.log(res.data)
                 })
                 .catch(err => console.log(err.response))
-
             :
             Axios({
                 method: 'get',
                 url: `https://www.instagroom.me/api/findappointment/${date}`
             })
                 .then(res => {
-                    console.log(res.data.data)
                     setDisplayAppointments([...res.data.data])
-                    console.log(displayAppointments)
                 })
                 .catch(err => console.log(err.response))
-
-
-
     }
 
 
@@ -121,8 +64,8 @@ const Schedule = ({ history }) => {
 
 
     useEffect(() => {
-        console.log('The screen has loaded')
-        let currentDate = new Date();
+
+        let currentDate = new Date().toISOString();
         let todayDate = Moment(currentDate).tz('America/New_York').format('ll')
         setSchedule({ ...scheduleValue, dayToSet: todayDate })
         Axios({
@@ -135,6 +78,26 @@ const Schedule = ({ history }) => {
             .catch(err => console.log(err.response))
     }, [])
 
+    const getCustomerAddress = (customerEmail) => {
+
+        Axios.get(`https://www.instagroom.me/api/customerEmail/${customerEmail}`, {
+            headers: {
+                'Authorization': 'Bearer ' + userValue.token
+            }
+        }).then(async res => {
+            const { firstName, lastName, street, city, state, zip } = res.data.data;
+            setClient({
+                customerName: `${firstName} ${lastName}`,
+                customerAddress: `${street},${city}, ${state} ${zip}`
+            })
+
+        }).catch(err => console.log(err))
+
+
+
+
+
+    }
 
 
 
@@ -163,7 +126,10 @@ const Schedule = ({ history }) => {
                             onPress={() => currentAppontments(scheduleValue.dayToSet)}
                         />
                     </View>
-                    <ScrollView style={styles.appointmentScroll}>
+                    <ScrollView
+                        style={styles.appointmentScroll}
+                        fadingEdgeLength={50}
+                    >
 
 
 
@@ -172,12 +138,20 @@ const Schedule = ({ history }) => {
                                 let services = el.petService.map(item => {
                                     return item.service + ' | '
                                 })
-                                console.log(services)
                                 return <AppModal
                                     key={index}
-                                    buttonText={el.customerName + ' '.repeat(4) + Moment(el.appointmentDate).tz('America/New_York').format('ll') + ', ' + el.appointmentTime}
+                                    buttonText={el.customerName + ' '.repeat(4) + el.appointmentTime}
                                     modalText={el.notes}
                                     children={<Text style={{ marginBottom: 14 }}> {services}  totalFee: ${el.totalFee}</Text>}
+                                    buttonChild={
+                                        <Button
+                                            onPress={() => (Alert.alert('Customer address set.'),
+                                                getCustomerAddress(el.customerEmail)
+                                            )
+                                            }
+                                            title="Set Address"
+                                            colors={colors.primary}
+                                        />}
                                 />
                             })
                         }
@@ -201,7 +175,7 @@ const styles = StyleSheet.create({
         width: '90%',
         backgroundColor: colors.white,
         opacity: .7,
-        borderRadius: 7,
+        borderRadius: 50,
         alignSelf: 'center'
 
     },
