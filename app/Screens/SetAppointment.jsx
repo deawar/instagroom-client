@@ -51,6 +51,7 @@ const SetAppointment = ({ history }) => {
             headers: {
                 'Authorization': 'Bearer ' + userValue.token
             }
+        
         }).then(res => {
             console.log(res.data.data)
         }).catch(err => console.lof(err))
@@ -159,7 +160,7 @@ const SetAppointment = ({ history }) => {
                 </View>
             </ImageBackground>
 
-        </AppScreen >
+        </AppScreen>
     );
 
 

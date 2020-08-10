@@ -19,7 +19,7 @@ const userVerify = (token) => {
     console.log(`Here is the login data:${JSON.stringify(token)}`)
     Axios({
         method: 'get',
-        url: 'https://d0caab433f52.ngrok.io/api/verify',
+        url: 'https://www.instagroom.me/api/verify',
         headers: {
             Authorization: token
         }
