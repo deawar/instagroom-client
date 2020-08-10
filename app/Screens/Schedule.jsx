@@ -27,14 +27,6 @@ import AppModal from '../components/AppModal';
 import { UserContext } from '../util/UserContext'
 
 
-
-
-const clients = {
-
-}
-
-
-
 const Schedule = ({ history }) => {
 
     const { schedule, client, user } = useContext(UserContext);
@@ -72,6 +64,7 @@ const Schedule = ({ history }) => {
 
 
     useEffect(() => {
+
         let currentDate = new Date().toISOString();
         let todayDate = Moment(currentDate).tz('America/New_York').format('ll')
         setSchedule({ ...scheduleValue, dayToSet: todayDate })

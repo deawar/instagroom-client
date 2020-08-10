@@ -5,6 +5,7 @@ import {
     StyleSheet,
     ImageBackground,
     ScrollView,
+    Alert,
 } from 'react-native';
 import Constants from 'expo-constants'
 import { Formik } from 'formik';
@@ -125,6 +126,7 @@ const ClientInfo = ({ history }) => {
                 onSubmit={(values, { resetForm }) => {
                     registerClient(values)
                     resetForm({ values: '' })
+                    Alert.alert('client registered')
                 }}
                 validationSchema={validationSchema}
             >

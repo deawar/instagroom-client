@@ -29,7 +29,7 @@ export default function App() {
             <Route exact path='/' component={LoginScreen} />
             <Route exact path='/register' component={UserRegister} />
             <Route exact path='/userpage' component={UserPage} />
-            <Route exact path='/route' component={UserRoute} />
+            <Route exact path='/route' component={Route} />
             <Route exact path='/clientinfo' component={ClientInfo} />
             <Route exact path='/schedule' component={Schedule} />
             <Route exact path='/setappointment' component={SetAppointment} />

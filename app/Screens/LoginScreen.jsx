@@ -4,9 +4,6 @@ import {
     StyleSheet,
     View,
     Text,
-    ToastAndroid,
-    Platform,
-    AlertIOS,
 } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup'
@@ -16,7 +13,6 @@ import AppScreen from '../components/AppScreen'
 import LogoIcon from '../components/LogoIcon';
 import AppButton from '../components/AppButton';
 import AppTextInput from '../components/AppTextInput'
-import AppModal from '../components/AppModal'
 import { UserContext } from '../util/UserContext'
 
 
