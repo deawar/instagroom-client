@@ -15,7 +15,7 @@ const AppTextArea = ({ placeholder, style, onChange, ...props }) => {
                 style={styles.input}
                 multiline={true}
                 numberOfLines={12}
-                textAlignVertical="top"
+                textAlignVertical='top'
                 placeholder={placeholder}
                 onChange={onChange}
             />

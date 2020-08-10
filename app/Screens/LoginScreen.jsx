@@ -4,6 +4,9 @@ import {
     StyleSheet,
     View,
     Text,
+    ToastAndroid,
+    Platform,
+    AlertIOS,
 } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup'
@@ -26,12 +29,10 @@ const validationSchema = Yup.object().shape({
 
 const LoginScreen = ({ history }) => {
     const { user } = useContext(UserContext);
-
     const [userValue, setUser] = user;
 
 
     const submitLogin = (loginData) => {
-        console.log(`Here is the login data:${JSON.stringify(loginData)}`)
         Axios({
             method: 'post',
             url: 'https://www.instagroom.me/api/signin',
@@ -40,10 +41,19 @@ const LoginScreen = ({ history }) => {
             }
         })
             .then(res => {
-                console.log(res)
                 setUser({ ...userValue, token: res.data.data.token })
                 !res.data.error ? history.push('/userpage') : null
-            }).catch(err => console.log(err))
+            })
+            .catch(err => (
+                (
+                    console.log(err.response.data.message),
+                    err.response.data.message.trim() === 'Invalid email/password or User not verified'
+                        ? history.push('/register') : null
+                )
+
+
+            )
+            )
 
     }
 
@@ -58,14 +68,15 @@ const LoginScreen = ({ history }) => {
                         email: null,
                         password: null,
                     }}
-                    onSubmit={values =>
-                        // submitLogin(values)
-                        history.push('./userpage')
+                    onSubmit={(values, { resetForm }) => {
+                        submitLogin(values)
+                        // resetForm({ values: '' })
+                    }
 
                     }
                     validationSchema={validationSchema}
                 >
-                    {({ handleChange, handleSubmit, handleBlur, errors, values }) => (
+                    {({ handleChange, handleSubmit, errors, values }) => (
                         <>
                             {errors.email && <Text>{values.email}</Text>}
                             <AppTextInput
@@ -76,6 +87,7 @@ const LoginScreen = ({ history }) => {
                                 value={values.email}
                             />
                             <AppTextInput
+                                id='password'
                                 name='password'
                                 icon='lock'
                                 secureTextEntry={true}
@@ -87,30 +99,30 @@ const LoginScreen = ({ history }) => {
                             <AppButton
                                 name='submit'
                                 style={styles.button}
-                                title="Login" color='black'
+                                title='Login' color='black'
                                 op={.5}
                                 onPress={handleSubmit}
                             />
                             <AppButton
                                 style={styles.button}
-                                title="Register"
+                                title='Register'
                                 color='black' op={.5}
                                 onPress={() => history.push('/register')}
                             />
-                            <AppButton
+                            {/* <AppButton
                                 icon='google'
                                 style={styles.button}
                                 title='Login with Google'
                                 color='black'
                                 op={.5}
                                 onPress={() => history.push('./verify')}
-                            />
+                            /> */}
                         </>
                     )
                     }
                 </Formik>
             </ImageBackground>
-        </AppScreen>
+        </AppScreen >
 
     );
 }
@@ -129,7 +141,7 @@ const styles = StyleSheet.create({
     },
     button: {
 
-        bottom: 20,
+        bottom: 50
 
     }
 });

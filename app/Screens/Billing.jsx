@@ -35,16 +35,16 @@ const Billing = ({ history }) => {
                     </View>
                     <View style={styles.styleHorizontal}>
                         <AppTextInput2
-                            placeholder="City"
+                            placeholder='City'
                             width='40%' />
                         <AppTextInput2
-                            placeholder="State"
+                            placeholder='State'
                             width='20%' />
                         <AppTextInput2
-                            placeholder="Postal/Zip"
+                            placeholder='Postal/Zip'
                             width='25%' />
                         <AppTextInput2
-                            placeholder="Country"
+                            placeholder='Country'
                             width='40%' />
                     </View>
                     <View style={styles.headerContainer}>
