@@ -41,13 +41,10 @@ const SetAppointment = ({ history }) => {
         values.petService.map(el => {
             fee += parseFloat(el.fee)
         })
-
         values.totalFee = fee.toString()
         values.appointmentDate = scheduleValue.dayToSet
         values.appointmentTime = scheduleValue.timeToSet
-        console.log(values.appointmentTime + ' :' + values.appointmentDate)
-        console.log(values)
-        console.log(userValue.token)
+
 
 
         Axios.post('https://www.instagroom.me/api/addAppointment', values, {

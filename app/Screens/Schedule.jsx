@@ -72,7 +72,6 @@ const Schedule = ({ history }) => {
 
 
     useEffect(() => {
-        console.log(userValue)
         let currentDate = new Date().toISOString();
         let todayDate = Moment(currentDate).tz('America/New_York').format('ll')
         setSchedule({ ...scheduleValue, dayToSet: todayDate })
@@ -92,15 +91,17 @@ const Schedule = ({ history }) => {
             headers: {
                 'Authorization': 'Bearer ' + userValue.token
             }
-        }).then(res => {
-            console.log(res.data.data)
+        }).then(async res => {
             const { firstName, lastName, street, city, state, zip } = res.data.data;
-            console.log(clientValue)
             setClient({
                 customerName: `${firstName} ${lastName}`,
                 customerAddress: `${street},${city}, ${state} ${zip}`
             })
+
         }).catch(err => console.log(err))
+
+
+
 
 
     }
