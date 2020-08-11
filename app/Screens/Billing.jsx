@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
     View,
     Text,
@@ -8,15 +8,16 @@ import {
 
 } from 'react-native';
 import { Formik } from 'formik';
-import * as Yup from 'yup'
-import Axios from 'axios'
+import * as Yup from 'yup';
+import Axios from 'axios';
 
-import AppScreen from '../components/AppScreen'
-import colors from '../config/colors'
+import AppScreen from '../components/AppScreen';
+import colors from '../config/colors';
 import AppTextInput2 from '../components/AppTextInput2';
 import AppBackButton from '../components/AppBackButton';
 import { MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
-import AppButton from '../components/AppButton'
+import AppButton from '../components/AppButton';
+import { UserContext } from '../util/UserContext'
 
 
 const phoneRegExp = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;
@@ -43,15 +44,16 @@ const validationSchema = Yup.object().shape({
 
 
 const Billing = ({ history }) => {
-
+    const { user, schedule } = useContext(UserContext);
+    const [userValue, setUser] = user;
     const processBill = (values) => {
-        Axios.post('https://www.instagroom.me/api/processpayment', values, {
+        Axios.post('https://www.instagroom.me/api/postbilling', values, {
             headers: {
                 'Authorization': 'Bearer ' + userValue.token
             }
         }).then(res => {
-            console.log(res.data.data)
-        }).catch(err => console.lof(err))
+            console.log(res.data)
+        }).catch(err => console.log(err))
     }
     return (
         <AppScreen>
@@ -82,9 +84,8 @@ const Billing = ({ history }) => {
                         notes: null
 
                     }}
-                    onSubmit={(values) => {
-                        console.log(values)
-                        //, processBill(values)
+                    onSubmit={(values, { resetForm }) => {
+                        processBill(values)
                         // resetForm({ values: '' })
                     }}
                     validationSchema={validationSchema}
@@ -213,6 +214,12 @@ const Billing = ({ history }) => {
                                     onChangeText={handleChange('notes')}
                                     value={values.notes}
                                 />
+                                {Object.keys(errors).length != 0 ? <Text
+                                    style={{ backgroundColor: colors.secondary, color: colors.white, fontWeight: 'bold', fontSize: 20, alignSelf: 'center' }}
+                                >Fill all fields in Billing form</Text>
+                                    : null
+                                }
+
                                 <AppButton
                                     icon='credit-card-outline'
                                     title='Submit Payment'
@@ -222,8 +229,6 @@ const Billing = ({ history }) => {
                                     op={.7}
                                     onPress={handleSubmit}
                                 />
-                                <Text style={{ color: colors.white, fontWeight: 'bold' }}>{JSON.stringify(errors)}</Text>
-                                <Text style={{ color: colors.white, fontWeight: 'bold' }}>{JSON.stringify(values)}</Text>
 
                             </View>
                             <View />

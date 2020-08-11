@@ -45,9 +45,6 @@ const SetAppointment = ({ history }) => {
         values.totalFee = fee.toString()
         values.appointmentDate = scheduleValue.dayToSet
         values.appointmentTime = scheduleValue.timeToSet
-
-
-
         Axios.post('https://www.instagroom.me/api/addAppointment', values, {
             headers: {
                 'Authorization': 'Bearer ' + userValue.token
@@ -55,13 +52,9 @@ const SetAppointment = ({ history }) => {
 
         }).then(res => {
             console.log(res.data.data)
-        }).catch(err => console.lof(err))
-
-
-
+        }).catch(err => console.log(err))
     }
     let currentDate = new Date();
-
     return (
 
         <AppScreen>
