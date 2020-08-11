@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
     ImageBackground,
     StyleSheet,
@@ -47,11 +47,17 @@ const LoginScreen = ({ history }) => {
                     console.log(err.response.data.message),
                     err.response.data.message.trim() === 'Invalid email/password or User not verified'
                         ? history.push('/register') : null
-                )
-            )
-            )
-
+                )))
     }
+
+    useEffect(() => {
+        setUser({
+            customerName: '',
+            customerAddress: ''
+        })
+    }, [])
+
+
 
     return (
         <AppScreen>
@@ -101,7 +107,10 @@ const LoginScreen = ({ history }) => {
                                 style={styles.button}
                                 title='Register'
                                 color='black' op={.5}
-                                onPress={() => history.push('/register')}
+                                onPress={() => {
+                                    history.push('/register')
+                                    console.log(userValue)
+                                }}
                             />
                             {/* <AppButton
                                 icon='google'

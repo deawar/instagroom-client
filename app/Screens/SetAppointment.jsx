@@ -4,7 +4,8 @@ import {
     View,
     StyleSheet,
     ImageBackground,
-    ScrollView
+    ScrollView,
+    Alert
 } from 'react-native';
 import * as Yup from 'yup'
 import { Formik } from 'formik'
@@ -51,7 +52,7 @@ const SetAppointment = ({ history }) => {
             headers: {
                 'Authorization': 'Bearer ' + userValue.token
             }
-        
+
         }).then(res => {
             console.log(res.data.data)
         }).catch(err => console.lof(err))
@@ -76,7 +77,12 @@ const SetAppointment = ({ history }) => {
                             appointmentTime: Moment(currentDate).tz('America/New_York').format('h:mm a z'),
                             notes: ''
                         }}
-                        onSubmit={values => checkAndCreateAppointment(values)}
+                        onSubmit={(values, { resetForm }) => {
+                            checkAndCreateAppointment(values)
+                            resetForm({ values: '' })
+                            Alert.alert('appointment set')
+                        }
+                        }
                         validationSchema={validationSchema}
                     >
                         {({ handleChange, handleSubmit, errors, values }) => (

@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from 'react';
+import React, { Component, useEffect, useContext } from 'react';
 import {
     Text,
     View,
@@ -20,26 +20,25 @@ class UserPage extends Component {
 
     }
 
-
     render() {
         return (
             <AppScreen>
                 <ImageBackground style={styles.container} blurRadius={3} source={require('../../assets/dog_secretary.png')}>
 
                     <View style={styles.buttonContainer}>
-                        <AppUserButton icon='book' color='light' op={.75} title='View Schedule ' onPress={() => this.props.history.push('/schedule')} />
-                        <AppUserButton icon='book' color='light' op={.75} title=' Set Appointment' onPress={() => this.props.history.push('/setappointment')} />
+                        <AppUserButton icon='book' color='black' op={.75} title='View Schedule ' onPress={() => this.props.history.push('/schedule')} />
+                        <AppUserButton icon='book' color='black' op={.75} title=' Set Appointment' onPress={() => this.props.history.push('/setappointment')} />
                     </View >
                     <View style={styles.buttonContainer}>
-                        <AppUserButton icon='logout' color='light' op={.75} title='Logout'
+                        <AppUserButton icon='logout' color='black' op={.75} title='Logout'
                             onPress={() => (
                                 this.props.history.push('/'))
                             }
                         />
                     </View>
                     <View style={styles.buttonContainer}>
-                        <AppUserButton icon='book' color='light' op={.75} title='Billing Form' onPress={() => this.props.history.push('/billing')} />
-                        <AppUserButton icon='book' color='light' op={.75} title='Enter Client Info'
+                        <AppUserButton icon='book' color='black' op={.75} title='Billing Form' onPress={() => this.props.history.push('/billing')} />
+                        <AppUserButton icon='book' color='black' op={.75} title='Enter Client Info'
                             onPress={() => this.props.history.push('/clientinfo')} />
 
                     </View>

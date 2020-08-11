@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {
   AppRegistry,
   StyleSheet,
@@ -20,22 +20,22 @@ import AppButton from '../components/AppButton';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Polyline from '@mapbox/polyline';
 import Axios from 'axios';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { UserContext } from '../util/UserContext'
 
 const Route = ({ history }) => {
+  const { client } = useContext(UserContext);
+  const [clientValue, setClient] = client;
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [userLocation, setUserLocation] = useState({
     latitude: 0,
     longitude: 0,
   });
-  const [clientLocation, setClientLocation] = useState({
-    latitude: 33.9809694,
-    longitude: -84.2196431,
-  });
+  const [clientLocation, setClientLocation] = useState(false);
   const [coords, setCoords] = useState([]);
 
   useEffect(() => {
+    console.log(clientValue)
     if (Platform.OS === 'android' && !Constants.isDevice) {
       setErrorMsg(
         'Oops, this will not work on Sketch in an Android emulator. Try it on your device!'
@@ -61,15 +61,22 @@ const Route = ({ history }) => {
   const getDirections = (origin, destination) => {
     console.log('StartLocation ', origin);
     console.log('destinationLocation ', destination);
+
     Axios({
       method: 'post',
       url: 'https://www.instagroom.me/api/getDirection',
       data: {
         origin: origin,
-        destination: destination,
+        clientAddress: destination
+
       },
     })
       .then((response) => {
+        console.log(response.data.result.destinationCoords)
+        setClientLocation({
+          latitude: response.data.result.destinationCoords.lat,
+          longitude: response.data.result.destinationCoords.lng,
+        })
         let points = Polyline.decode(response.data.result.directionPoints);
         let coords = points.map((point, index) => {
           return {
@@ -107,10 +114,7 @@ const Route = ({ history }) => {
                   userLat: userLocation.latitude,
                   userLng: userLocation.longitude,
                 },
-                {
-                  clientLat: clientLocation.latitude,
-                  clientLng: clientLocation.longitude,
-                }
+                clientValue.customerAddress
               )
             }
           />
@@ -140,7 +144,7 @@ const Route = ({ history }) => {
             <MaterialCommunityIcons
               name='dog'
               size={30}
-              color={colors.secondary}
+              color={colors.primary}
             />
           </Marker>
           <Marker
@@ -150,11 +154,11 @@ const Route = ({ history }) => {
             }}
             title={'Client'}
           >
-            <MaterialCommunityIcons
+            {clientLocation && <MaterialCommunityIcons
               name='dog'
               size={30}
-              color={colors.secondary}
-            />
+              color={colors.primary}
+            />}
           </Marker>
           <MapView.Polyline
             coordinates={coords}

@@ -9,7 +9,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import colors from '../config/colors'
 
 const AppUserButton = (props) => {
-    const { title, onPress, icon, color = colors.primary, op, height = 180, width } = props;
+    const { title, onPress, icon, color = colors.black, op, height = 180, width } = props;
 
 
     return (
@@ -40,14 +40,14 @@ const styles = StyleSheet.create({
         flex: 1,
         flexWrap: 'wrap',
         fontSize: 18,
-        color: colors.dark,
+        color: colors.white,
         textTransform: 'uppercase',
         fontWeight: 'bold',
         textAlign: 'center',
         marginVertical: '20%'
     },
     icon: {
-        color: colors.dark,
+        color: colors.white,
     }
 })
 
