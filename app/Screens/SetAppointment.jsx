@@ -97,7 +97,7 @@ const SetAppointment = ({ history }) => {
                                     <Text style={styles.header}>{scheduleValue.dayToSet}    {scheduleValue.timeToSet}</Text>
                                 </View>
 
-                                <View style={{ flex: 1, alignContent: 'flex-start' }}>
+                                <View style={{ flex: 1, alignContent: 'center', justifyContent: 'center' }}>
                                     <Text style={styles.header} >Services Detail</Text>
                                     <AppTextInput2
                                         placeholder='Client Name'

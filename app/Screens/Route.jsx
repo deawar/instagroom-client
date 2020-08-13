@@ -31,7 +31,10 @@ const Route = ({ history }) => {
     latitude: 0,
     longitude: 0,
   });
-  const [clientLocation, setClientLocation] = useState(false);
+  const [clientLocation, setClientLocation] = useState({
+    latitude: 0,
+    longitude: 0,
+  });
   const [coords, setCoords] = useState([]);
 
   useEffect(() => {
@@ -154,11 +157,12 @@ const Route = ({ history }) => {
             }}
             title={'Client'}
           >
-            {clientLocation && <MaterialCommunityIcons
+            {clientLocation.latitude != 0 ? <MaterialCommunityIcons
               name='dog'
               size={30}
               color={colors.primary}
-            />}
+            /> : null
+            }
           </Marker>
           <MapView.Polyline
             coordinates={coords}
