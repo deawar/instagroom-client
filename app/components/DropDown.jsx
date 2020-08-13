@@ -117,7 +117,7 @@ const DropDown = (props) => {
                         <AppButton
                             // title='+'
                             icon='plus-box'
-                            width={'15%'}
+                            width={'16%'}
                             height={60}
                             onPress={() => (props.pressAddButton(
                                 {
@@ -139,7 +139,7 @@ const DropDown = (props) => {
                         <AppButton
                             // title='+'
                             icon='minus-box'
-                            width={'15%'}
+                            width={'16%'}
                             height={80}
                             onPress={() => (props.pressRemButton({
                                 key: item.key,
@@ -160,7 +160,7 @@ const DropDown = (props) => {
                         />
                         {item.value && <AppButton
                             icon='check-decagram'
-                            width={'15%'}
+                            width={'16%'}
                             height={80}
                         />}
                     </TouchableOpacity>
@@ -188,14 +188,14 @@ const styles = StyleSheet.create({
         paddingTop: 5,
         alignItems: 'center',
         height: 220,
-        width: 400,
-        zIndex: 9999
+        width: '100%',
+        zIndex: 9999,
+        alignSelf: 'center'
     },
     listItem: {
         height: 50,
-        width: 400,
+        width: '100%',
         backgroundColor: colors.dark,
-        borderRadius: 3,
         marginVertical: 3,
         marginHorizontal: 0,
         alignItems: 'center',
@@ -208,8 +208,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         color: colors.white,
-        marginLeft: 8,
-        marginRight: 50
+        marginLeft: 15,
+        marginRight: 55
     },
 
 })
