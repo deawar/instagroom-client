@@ -5,13 +5,14 @@ Mobile Groomer's need a simple easy to use app to keep track of customers, their
         <img src="https://img.shields.io/badge/license-MIT-green?style=plastic" alt="License Badge">  [![GitHub pull-requests closed](https://img.shields.io/github/issues-pr-closed/deawar/instagroom-client.svg?style=plastic)](https://GitHub.com/deawar/instagroom-client/pull/) [![GitHub stars](https://img.shields.io/github/stars/deawar/instagroom-client.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/deawar/instagroom-client/stargazers/)
 
 # Project-Title: 
-InstaGroom-Client
+InstaGroom-Client  The Android/iOS client to the [InstaGroom.me](https://www.instagroom.me) backend.
 
-## Author: 
-Andrew Murray, Ankit Mudvari, Dean Warren, Jonathan Kelly
+## Author(s): 
+[Andrew Murray](https://github.com/atmurray-fullstack), [Ankit Mudvari](https://github.com/ankmud01), [Dean Warren](https://github.com/deawar), [Jonathan Kelly](https://github.com/itsjonkelley)
 
 ## Table of Contents
-<hr>npm
+<hr>
+
 * [Installation](#installation)
 * [License](#license)
 * [Usage](#usage)
@@ -21,7 +22,13 @@ Andrew Murray, Ankit Mudvari, Dean Warren, Jonathan Kelly
 * [Questions](#questions)
 
 ## Installation
+This app was built in React-Native using the Expo framework.
 To install necessary dependencies, run the following command:<br>
+```
+npm install -g create-react-native-app
+npm install -g expo-cli
+```
+
 ```
 npm install
 ```
@@ -83,14 +90,16 @@ Or if you prefer `nodemon` :<br>
 ```
 
 ## Contributing
-This application will be used for helping small businesses find a better way to conduct their daily business activites. So, please be respectful and mindful to others
+This application will be used for helping small businesses find a better way to conduct their daily business activites. Please be considerate of others when offering ideas/suggestions.
 
 <br>
+
+## Demo
 <img src="https://placeholder.com" alt="Demo">
 
 ## Questions
 
-<img src="https://avatars1.githubusercontent.com/u/15312495?s=400&u=ca57805f0913479f15a13ed8e5a1577eb95c0926&v=4" alt="ME" width="150" height="150"><br>
-If you have any questions about the repo contact deawar directly at deawar@gmail.com, ankmud01@gmail.com, Atmurray-FullStack or itsjonkelley. Thank you for your interest.<br>
-If you want to see more of my work please click here https://api.github.com/users/deawar/repos.
+<img src="https://avatars1.githubusercontent.com/u/15312495?s=400&u=ca57805f0913479f15a13ed8e5a1577eb95c0926&v=4" alt="ME" width="120" height="120"><br>
+If you have any questions about the repo contact deawar directly at deawar@gmail.com, [Ankit Mudvari](https://github.com/ankmud01), [Andrew Murray](https://github.com/atmurray-fullstack) or [Jonathan Kelly](https://github.com/itsjonkelley). Thank you for your interest.<br>
+If you want to see more of my work please click on [my repos](https://github.com/deawar?tab=repositories).
 
