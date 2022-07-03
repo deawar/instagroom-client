@@ -11,7 +11,7 @@
     "@expo/vector-icons": "^10.2.0",
     "@mapbox/polyline": "^1.1.1",
     "@react-native-community/datetimepicker": "2.4.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.2",
     "expo": "~38.0.8",
     "expo-constants": "~9.1.1",
     "expo-location": "~8.2.1",
